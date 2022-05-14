@@ -4,15 +4,15 @@
  * Create at: 14/05/2022
  */
 
-import moment from 'moment';
+const moment = require('moment');
 
-export const yyyy_MM_DD = 'yyyy-MM-DD'
+const yyyy_MM_DD = 'yyyy-MM-DD'
 
 /**
  * Get now with format yyyy_MM_DD
  * @returns 
  */
-export const getDateWithString = () => {
+exports.getDateWithString = () => {
     return moment(new Date()).format(yyyy_MM_DD);
 }
 
@@ -21,11 +21,11 @@ export const getDateWithString = () => {
  * @param {*} date (string with fromat, long)
  * @returns 
  */
-export const getDate = (date) => {
+exports.getDate = (date) => {
     return new Date(date);
 }
 
-export const calculateDaysFromNow = (date) => {
+exports.calculateDaysFromNow = (date) => {
     const today = moment(new Date()).startOf('day');
     const calDate = moment(date, yyyy_MM_DD);
     return today.diff(calDate, 'days');
@@ -36,7 +36,7 @@ export const calculateDaysFromNow = (date) => {
  * 
  * @param {int} date 
  */
-export const getDisplayTime = (date) => {
+exports.getDisplayTime = (date) => {
     const tempDate = new Date(date);
     return ("0" + tempDate.getHours()).slice(-2) + ':' + ("0" + tempDate.getMinutes()).slice(-2);
 }
@@ -46,7 +46,7 @@ export const getDisplayTime = (date) => {
  * @param {int} hour 
  * @param {int} min 
  */
-export const getDisplayTimeByHourMin = (hour, min) => {
+exports.getDisplayTimeByHourMin = (hour, min) => {
     return ("0" + hour).slice(-2) + ':' + ("0" + min).slice(-2);
 }
 
@@ -55,7 +55,7 @@ export const getDisplayTimeByHourMin = (hour, min) => {
  * @param {"yyyy_MM_DD"} date 
  * @returns "yyyy_MM_DD"
  */
-export const getPreviousDate = (date) => {
+exports.getPreviousDate = (date) => {
     return moment(date, yyyy_MM_DD).subtract(1, 'days').format(yyyy_MM_DD);
 }
 
@@ -64,7 +64,7 @@ export const getPreviousDate = (date) => {
  * @param {"yyyy_MM_DD"} date 
  * @returns "yyyy_MM_DD"
  */
-export const getNextDate = (date) => {
+exports.getNextDate = (date) => {
     return moment(date, yyyy_MM_DD).add(1, 'days').format(yyyy_MM_DD);
 }
 
@@ -73,7 +73,7 @@ export const getNextDate = (date) => {
  * @param {Date()} date 
  * @returns 
  */
-export const getDurationFromNow = (date) => {
+exports.getDurationFromNow = (date) => {
     const today = moment(new Date());
     const calDate = moment(date)
     return moment.duration(calDate.diff(today)).seconds();

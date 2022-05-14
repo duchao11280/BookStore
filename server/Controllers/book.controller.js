@@ -1,11 +1,11 @@
-const BookModel = require('../Models/book.model');
-
-exports.getAllBooks = (req,res) =>{
-    BookModel.getAllBooks((err,data) =>{
-        if (err) {
-            res.status(500).json({ status: false, message: "Thất bại" })
-            return;
-        };
-        res.json({ status: true, message: 'Lấy dữ liệu thành công', data: data })
-    })
+const {exeQuery} = require('../utls/database')
+exports.getAllBooks = async (req,res) =>{
+    try {
+        const result = await exeQuery(`Select * from books`);
+        res.status(200).json({message: "Lấy dữ liệu thành công", data: result});
+    } catch (error) {
+        res.status(500).json({message: "Thất bại", data: error});
+    }
+    
 }
+
