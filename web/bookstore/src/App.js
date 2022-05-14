@@ -1,7 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Header from './components/header';
+import Footer from './components/footer';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Header/>
+      <Routes>
+        <Route path='/test' element={<Test/>}></Route>
+      </Routes>
+      <Footer/>
+    </BrowserRouter>
+  );
+}
+
+function Test() {
   return (
     <div className="App">
       <header className="App-header">
@@ -19,7 +35,5 @@ function App() {
         </a>
       </header>
     </div>
-  );
+  )
 }
-
-export default App;
