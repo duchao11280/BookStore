@@ -23,8 +23,10 @@ app.get('/public/images/:filename', (req, res) => {
 
 // import route
 const bookRoutes = require('./Routes/book.route')
-
+const adminRoutes = require('./Routes/admin.route')
 
 // use route
-app.use('/api/book/',bookRoutes)
+app.use('/api/book',bookRoutes)
+app.use('/api/admin', adminRoutes)
+
 module.exports = app;

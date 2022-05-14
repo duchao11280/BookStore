@@ -1,9 +1,9 @@
 const databaseLocal = {
     host: '127.0.0.1',
-    user: '',
+    user: 'root',
     passwrod: '',
-    port: '',
-    database: '',
+    port: '3306',
+    database: 'bookstore',
     charset: 'utf8',
     limit: 3
 }

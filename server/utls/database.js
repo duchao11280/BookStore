@@ -4,8 +4,8 @@
  * Create at: 14/05/2022
  */
 
-import mysql from 'mysql';
-import settings from '../config/settings';
+const mysql = require('mysql');
+const settings = require('../config/settings');
 
 const pool = mysql.createPool({
     connectionLimit : settings.database.limit,
