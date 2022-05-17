@@ -1,4 +1,4 @@
-export default {
+const constants = {
     MODAL_DEFAULT_STATE : 0,
     MODAL_LOGIN_STATE : 1,
     MODAL_SIGNUP_STATE : 2,
@@ -22,4 +22,6 @@ export default {
     INPUT_VERIFY_PASS: "Xác nhận lại mật khẩu của bạn",
     INPUT_ADDRESS: "Nhập địa chỉ hiện tại của bạn",
     INPUT_SEARCH: "Tìm kiếm sản phẩm"
-}
+};
+
+export default constants;

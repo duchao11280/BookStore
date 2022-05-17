@@ -49,25 +49,25 @@ export default function Home() {
                     <div className='col-lg-9 container-carousel-home'>
                         <div className="slideshow-container">
                             <div className={slideIndex === 1 ? "item-slider-home-show" : "item-slider-home-hide fade"}>
-                                <img src={cover} className='image-carousel-home' />
+                                <img alt = "" src={cover} className='image-carousel-home' />
                             </div>
                             <div className={slideIndex === 2 ? "item-slider-home-show" : "item-slider-home-hide fade"}>
-                                <img src={logo2} className='image-carousel-home' />
+                                <img alt = "" src={logo2} className='image-carousel-home' />
                             </div>
                             <div className={slideIndex === 3 ? "item-slider-home-show" : "item-slider-home-hide fade"}>
-                                <img src={logo} className='image-carousel-home' />
+                                <img alt = "" src={logo} className='image-carousel-home' />
                             </div>
-                            <a className="item-prev-slider-home" onClick={() => plusSlides(-1)}>&#10094;</a>
-                            <a className="item-next-slider-home" onClick={() => plusSlides(1)}>&#10095;</a>
+                            <div className="item-prev-slider-home" onClick={() => plusSlides(-1)}>&#10094;</div>
+                            <div className="item-next-slider-home" onClick={() => plusSlides(1)}>&#10095;</div>
                         </div>
                     </div>
                     <div className='col-lg'>
                         <div className='row'>
                             <div className='col-12 container-image-button-home pb-3'>
-                                <img className='image-button-home' src={cover2} />
+                                <img alt = "" className='image-button-home' src={cover2} />
                             </div>
                             <div className='col-12 container-image-button-home pt-3'>
-                                <img className='image-button-home' src={cover3} />
+                                <img alt = "" className='image-button-home' src={cover3} />
                             </div>
                         </div>
                     </div>
@@ -111,7 +111,7 @@ export default function Home() {
 function CardCategory(props) {
     return (
         <div className='col-2 d-flex flex-column align-items-center card-category-home'>
-            <img src={thieunhiThumb} className='image-category-home mb-2' />
+            <img alt = "" src={thieunhiThumb} className='image-category-home mb-2' />
             <p>Thiếu nhi</p>
         </div>
     )
@@ -121,7 +121,7 @@ function CardBook(props) {
     return (
         <div className='col-3 mb-3'>
             <div className='card-book-home d-flex'>
-                <img src={thieunhiThumb} className='image-book-home mb-1 ms-auto me-auto' />
+                <img alt='' src={thieunhiThumb} className='image-book-home mb-1 ms-auto me-auto' />
                 <div className='card-book-title-home'>Sống mòn</div>
                 <div className='card-book-price-home'>170.000 đ</div>
                 <div className='card-book-old-price-home'></div>

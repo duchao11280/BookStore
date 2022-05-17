@@ -1,4 +1,4 @@
-export default {
+const constants = {
     MAX_SLIDE: 3,
     MIN_SLIDE: 1,
     MAX_STAR: 5,
@@ -7,4 +7,6 @@ export default {
     TITLE_NEW: "Sách mới nhất",
     TITLE_BEST_SALER: "Sách bán chạy nhất",
     BUTTON_MORE: "Xem thêm"
-}
+};
+
+export default constants;

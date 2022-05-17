@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'
 import './style.css';
 import constant from './constants';
 import logo from '../../assets/imgs/logo2.png';
@@ -17,8 +18,6 @@ import list from '../../assets/icons/list.png';
 import account from '../../assets/icons/account.png';
 import logout from '../../assets/icons/logout.png';
 
-
-
 export default function Header() {
     const defaultModalState = {
         currentState: constant.MODAL_DEFAULT_STATE,
@@ -26,15 +25,37 @@ export default function Header() {
     }
     const [isLogin, setIsLogin] = React.useState(false);
     const [modalState, setModalState] = React.useState(defaultModalState);
-    const [isOpenModal, setIsOpenModal] = React.useState(false);
+    const [isOpenModalAccount, setIsOpenModalAccount] = React.useState(false);
+    const [isOpenCategory, setIsOpenCategory] = React.useState(false);
+    const navigate = useNavigate();
 
-    const toggleModal = () => {
-        setIsOpenModal(!isOpenModal);
+    const toggleModalAccount = () => {
+        setIsOpenModalAccount(!isOpenModalAccount);
+        if (isOpenCategory) {
+            setIsOpenCategory(false);
+        }
+
     }
 
-    const closeModal = () => {
-        setIsOpenModal(false);
+    const redirect = (url) => {
+        navigate(url, { replace: true });
+        window.scrollTo(0, 0)
+    }
+
+    const closeModalAccount = () => {
+        setIsOpenModalAccount(false);
         setModalState(defaultModalState);
+    }
+
+    const toggleModalCategory = () => {
+        setIsOpenCategory(!isOpenCategory);
+        if (isOpenModalAccount) {
+            setIsOpenModalAccount(false);
+        }
+    }
+
+    const closeModalCategory = () => {
+        setIsOpenCategory(false);
     }
 
     const changeModal = (state) => {
@@ -48,8 +69,8 @@ export default function Header() {
         <div className="container-header">
             <div className="container">
                 <div className='d-flex justify-content-between align-items-center'>
-                    <img alt='' className="icon-header-logo" src={logo} />
-                    <div className="container-header-item">
+                    <img alt='' className="icon-header-logo" src={logo} onClick={() => redirect('/home')} />
+                    <div className={!isOpenCategory ? "container-header-item" : "container-header-item-focus"} onClick={toggleModalCategory}>
                         <img alt='' src={menu} className="icon-header" />
                     </div>
                     <div className="item-header-text">{constant.TITLE_EVENT}</div>
@@ -60,24 +81,96 @@ export default function Header() {
                     <div className="container-header-item">
                         <img alt='' src={cart} className="icon-header" />
                     </div>
-                    <div className="container-header-item">
+                    <div className="container-header-item" onClick={() => redirect('/test')}>
                         <img alt='' src={bell} className="icon-header" />
                     </div>
-                    <div className={!isOpenModal ? "container-header-item" : "container-header-item-focus"} onClick={toggleModal}>
+                    <div className={!isOpenModalAccount ? "container-header-item" : "container-header-item-focus"} onClick={toggleModalAccount}>
                         <img alt='' src={user} className="icon-header" />
                     </div>
                 </div>
 
-                {/* MODAL */}
+                {/* MODAL CATEGORY */}
 
-                {!isOpenModal || <div className='d-flex justify-content-end align-items-center container-header-item-relative'>
+                {!isOpenCategory || <div className='d-flex justify-content-end align-items-center container-header-item-relative'>
+                    <div className='container-header-category-modal'>
+                        <div className='row'>
+                            <div className="d-flex justify-content-end" >
+                                <img alt='' src={close} className="button-icon-header" onClick={closeModalCategory} />
+                            </div>
+                        </div>
+                        <div className='row' style={{ width: '100%' }}>
+                            <div className='col-sm-3 mb-3'>
+                                <p className='text-category-header-modal'>
+                                    Văn học
+                                </p>
+                                <p className='text-subcategory-header-modal'>
+                                    Văn học 1
+                                </p>
+                                <p className='text-subcategory-header-modal'>
+                                    Văn học 2
+                                </p>
+                            </div>
+                            <div className='col-sm-3 mb-3'>
+                                <p className='text-category-header-modal'>
+                                    Văn học
+                                </p>
+                                <p className='text-subcategory-header-modal'>
+                                    Văn học 1
+                                </p>
+                                <p className='text-subcategory-header-modal'>
+                                    Văn học 2
+                                </p>
+                                <p className='text-subcategory-header-modal'>
+                                    Văn học 3
+                                </p>
+                            </div>
+                            <div className='col-sm-3 mb-3'>
+                                <p className='text-category-header-modal'>
+                                    Văn học
+                                </p>
+                                <p className='text-subcategory-header-modal'>
+                                    Văn học 1
+                                </p>
+                                <p className='text-subcategory-header-modal'>
+                                    Văn học 2
+                                </p>
+                            </div>
+                            <div className='col-sm-3 mb-3'>
+                                <p className='text-category-header-modal'>
+                                    Văn học
+                                </p>
+                                <p className='text-subcategory-header-modal'>
+                                    Văn học 1
+                                </p>
+                                <p className='text-subcategory-header-modal'>
+                                    Văn học 2
+                                </p>
+                            </div>
+                            <div className='col-sm-3 mb-3'>
+                                <p className='text-category-header-modal'>
+                                    Văn học
+                                </p>
+                                <p className='text-subcategory-header-modal'>
+                                    Văn học 1
+                                </p>
+                                <p className='text-subcategory-header-modal'>
+                                    Văn học 2
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>}
+
+                {/* MODAL ACCOUNT */}
+
+                {!isOpenModalAccount || <div className='d-flex justify-content-end align-items-center container-header-item-relative'>
 
                     {/* MODAL CHO BAN ĐẦU CHO USER */}
 
                     {modalState.currentState === constant.MODAL_DEFAULT_STATE ?
                         <div className='container-header-account' >
                             <div className="ms-auto mb-2" >
-                                <img alt='' src={close} className="button-icon-header" onClick={closeModal} />
+                                <img alt='' src={close} className="button-icon-header" onClick={closeModalAccount} />
                             </div>
                             {!isLogin ? <div className='text-header-account-modal'>
                                 {constant.TITLE_LOGIN_INFO_1}
@@ -131,7 +224,7 @@ export default function Header() {
                         <div className='container-header-account' >
                             <div className="d-flex justify-content-between" style={{ width: '100%' }} >
                                 <img alt='' src={rightArrow} className="button-icon-header item-rotate-180" onClick={() => { changeModal(constant.MODAL_DEFAULT_STATE) }} />
-                                <img alt='' src={close} className="button-icon-header" onClick={closeModal} />
+                                <img alt='' src={close} className="button-icon-header" onClick={closeModalAccount} />
                             </div>
                             <div className='text-header-account-modal-login mt-5 mb-3'>
                                 {constant.TITLE_LOGIN_INFO_2}
@@ -153,7 +246,7 @@ export default function Header() {
                         <div className='container-header-account' >
                             <div className="d-flex justify-content-between" style={{ width: '100%' }} >
                                 <img alt='' src={rightArrow} className="button-icon-header item-rotate-180" onClick={() => { changeModal(modalState.previousState) }} />
-                                <img alt='' src={close} className="button-icon-header" onClick={closeModal} />
+                                <img alt='' src={close} className="button-icon-header" onClick={closeModalAccount} />
                             </div>
                             <div className='text-header-account-modal-login mt-5 mb-3'>
                                 {constant.TITLE_SIGNUP_INFO}
