@@ -8,7 +8,7 @@ import RatingStar from "react-rating-stars-component";
 import constants from './constants'
 import CardBook from './CardBook/index'
 import Slider from "react-slick";
-
+import cardplusIcon from '../../assets/icons/cart-plus.png'
 import testData from './testData'
 export default function DetailsBook() {
     let book = {
@@ -26,6 +26,7 @@ export default function DetailsBook() {
     }
     let listBook = testData;
     let isFavorited = false;
+    let quantityOrder = 0;
     let listRating = [
         {
             userId: 1,
@@ -101,10 +102,10 @@ export default function DetailsBook() {
                     <div className="col-6 py-3 info-details-book">
                         <div>
                             <div className="row">
-                                <div className="col-10 py-2">
+                                <div className="col-10">
                                     <p className="name-book-details-book">{book.bookName}</p>
                                 </div>
-                                <div className="col-2 py-2">
+                                <div className="col-2 ">
                                     <img alt="" className="icon-favorite-details-book" src={isFavorited ? isFavoritedIcon : favoriteIcon} />
                                 </div>
                             </div>
@@ -139,6 +140,30 @@ export default function DetailsBook() {
                             <div className="text-price-sale-percent-details-book mr-3">
                                 -{((1 - book.sale).toFixed(2) * 100)} %
                             </div>
+                        </div>
+                        <div className="d-flex flex-row">
+                            <div className="title-quantity-details-book">
+                                {constants.TEXT_QUANTITY}
+                            </div>
+                            <div className="mx-4 d-flex flex-row contain-ins-desc-quantity-details-book">
+                                <div className="ins-desc-quantity-details-book">-</div>
+                                <div className="text-quantity-details-book">{quantityOrder}</div>
+                                <div className="ins-desc-quantity-details-book">+</div>
+                            </div>
+                            <div className="title-quantity-details-book">{book.quantity} quyển có sẵn</div>
+                        </div>
+                        <div className="d-flex flex-row">
+                            <button className="px-4 contain-btn-order-details-book">
+                                <div className="d-flex flex-row">
+                                    <img alt="" src={cardplusIcon} className="icon-cart-plus-details-book" />
+                                    <div className="text-btn-order-details-book">&nbsp;{constants.TEXT_ADD_TO_CART}</div>
+                                </div>
+                            </button>
+                            <button className="mx-4 px-4 contain-btn-order-details-book">
+
+                                <div className="text-btn-order-details-book">{constants.TEXT_ORDER}</div>
+
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -9,6 +9,9 @@ const constants = {
     TITLE_FIRST_RATING: "1. Đánh giá của bạn về sản phẩm này:  ",
     TITLE_SECOND_RATING: "2. Viết nhận xét của bạn:  ",
     TEXT_BUTTON_RATING: "Gửi đánh giá",
+    TEXT_QUANTITY: "Số lượng: ",
+    TEXT_ADD_TO_CART: "Thêm vào giỏ hàng",
+    TEXT_ORDER: "Mua hàng",
     MAX_STAR: 5,
 }
 export default constants;

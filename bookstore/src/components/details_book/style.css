@@ -21,7 +21,7 @@
 
 .name-book-details-book{
     font-weight: 650;
-    font-size: 30px;
+    font-size: 27px;
 }
 
 .icon-favorite-details-book{
@@ -29,10 +29,10 @@
     background-color: white;
 }
 .title-info-book-details-book{
-    font-size:23px;
+    font-size:20px;
 }
 .value-info-book-details-book{
-    font-size:23px;
+    font-size:20px;
     font-weight: 700;
 }
 .card-book-star-details-book {
@@ -62,7 +62,45 @@
     font-size: 23px;
     color: #FF5F5F;
 }
-
+.title-quantity-details-book{
+    display: flex;
+    align-items: center;
+}
+.contain-ins-desc-quantity-details-book{
+    border: 1px solid #D9D8D8
+}
+.ins-desc-quantity-details-book{
+    height: 5vh;
+    width: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    background-color: #C4C4C4
+}
+.text-quantity-details-book{
+    height: 5vh;
+    width: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+}
+.contain-btn-order-details-book{
+    margin-top:8px;
+    border-radius: 10px;
+    border: none;
+    padding:10px;
+    background-color: #FD9696;
+}
+.text-btn-order-details-book{
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+}
+.icon-cart-plus-details-book{
+    margin-right: 5px;
+}
 .card-description-details-book{
     background-color: white;
     border-radius: 15px;
