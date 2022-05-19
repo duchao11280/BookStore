@@ -1,6 +1,7 @@
 import React from 'react'
 import constants from './constants'
 import './style.css'
+import { formatNumberToMoney } from '../../utls/number'
 export default function index() {
     let book = {
         bookId: 1,
@@ -96,10 +97,10 @@ function CardItemBookOrder(props) {
             <div className="">
                 <div className="mx-4">
                     <div className=" text-price-sale-cart">
-                        {Number(book.price * book.sale).toLocaleString("es-ES", { minimumFractionDigits: 0 })} đ
+                        {formatNumberToMoney(book.price * book.sale)} đ
                 </div>
                     <div className=" text-price-original-cart">
-                        {Number(book.price).toLocaleString("es-ES", { minimumFractionDigits: 0 })} đ
+                        {formatNumberToMoney(book.price)} đ
                 </div>
                 </div>
 
