@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from './components/header';
 import Footer from './components/footer';
 import Home from './components/home'
+import DetailBook from './components/details_book'
 import Cart from './components/cart';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -14,9 +15,9 @@ export default function App() {
       <Routes>
         <Route path='/test' element={<Test />}></Route>
         <Route path='/home' element={<Home />}></Route>
-        <Route path='/' element={<Home />}></Route>
+        <Route path='/detailsbook' element={<DetailBook />}></Route>
         <Route path='/cart' element={<Cart />}></Route>
-
+        <Route path='/' element={<Home />}></Route>
       </Routes>
       <Footer />
     </BrowserRouter>

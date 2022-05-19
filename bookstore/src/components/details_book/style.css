@@ -1,0 +1,189 @@
+.container-details-book{
+    background-color: #F4F6F4;
+    min-height: 100vh;
+    padding-top: 65px;
+}
+
+.container-info-details-book{
+    background-color: white;
+    border-radius: 15px;
+}
+.container-image-details-book{
+    display: flex;
+    justify-content: center;
+    
+}
+.image-details-book{
+    width: 35vh;
+    height: 57vh;
+    object-fit: cover;
+}
+
+.name-book-details-book{
+    font-weight: 650;
+    font-size: 27px;
+}
+
+.icon-favorite-details-book{
+    cursor: pointer;
+    background-color: white;
+}
+.title-info-book-details-book{
+    font-size:20px;
+}
+.value-info-book-details-book{
+    font-size:20px;
+    font-weight: 700;
+}
+.card-book-star-details-book {
+    pointer-events: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.card-book-text-star-details-book {
+    margin-left: 10px;
+    font-size: 17px;
+    font-weight: 400;
+    color: #F9B300;
+}
+.text-price-sale-details-book{
+    color: red;
+    font-weight: bold;
+    font-size: 28px;
+}
+.text-price-original-details-book{
+    text-decoration: line-through;
+    font-size: 23px;
+    font-weight: 450;
+}
+.text-price-sale-percent-details-book{
+    font-size: 23px;
+    color: #FF5F5F;
+}
+.title-quantity-details-book{
+    display: flex;
+    align-items: center;
+}
+.contain-ins-desc-quantity-details-book{
+    border: 1px solid #D9D8D8
+}
+.ins-desc-quantity-details-book{
+    height: 5vh;
+    width: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    background-color: #C4C4C4
+}
+.text-quantity-details-book{
+    height: 5vh;
+    width: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+}
+.contain-btn-order-details-book{
+    margin-top:8px;
+    border-radius: 10px;
+    border: none;
+    padding:10px;
+    background-color: #FD9696;
+}
+.text-btn-order-details-book{
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+}
+.icon-cart-plus-details-book{
+    margin-right: 5px;
+}
+.card-description-details-book{
+    background-color: white;
+    border-radius: 15px;
+    min-height: 400px;
+}
+.title-description-details-book{
+    font-size: 23px;
+    margin-top: 40px;
+    margin-left: 50px;
+}
+.text-content-description-details-book{
+    margin-top: 30px;
+    margin-left: 55px;
+}
+.title-related-book-details-book{
+    font-size: 22px;
+    margin-left: 10px;
+    font-weight:200,
+}
+.container-icon-slider-details-book{
+    height: 8vh;
+    width: 8vh;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    border: 1px solid #C3C1c1;
+    border-radius: 50%;
+
+}
+.pre-icon-slider-details-book{
+    position: absolute;
+    top:50%;
+    left: 50%;
+}
+.slick-next:before{
+    content: none;
+}
+.slick-prev:before{
+    content: none;
+}
+.icon-slider-details-book{
+    height: 5vh;
+    width: 5vh;
+}
+
+/**
+    Rating
+*/
+.title-rating-details-book{
+    font-size: 23px;
+    margin-bottom: 15px;
+}
+.text-username-rating-details-book{
+    font-weight: bold;
+    font-size: 20px;
+    padding-top: 5px;
+    text-align: justify;
+}
+.card-rating-details-book{
+    background-color: white;
+    border-radius: 15px;
+    min-height: 300px;
+    padding-top:10px
+}
+.card-rating-details-book{
+    background-color: white;
+    border-radius: 15px;
+    padding-left: 40px;
+    padding-top: 20px;
+}
+.text-title-rating-details-book{
+    font-size: 23px;
+}
+.star-rating-details-book{
+    margin-left: 20px;
+}
+.contain-btn-rating-details-book{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 8%;
+}
+.btn-rating-details-book{
+    margin-top:30px;
+    margin-bottom:30px;
+    background-color: #F9B300;
+}
