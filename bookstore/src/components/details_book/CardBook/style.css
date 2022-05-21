@@ -1,0 +1,65 @@
+
+.card-book-details-book {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.card-book-details-book:hover {
+    cursor: pointer;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.10), 0 3px 10px 0 rgba(0, 0, 0, 0.10);
+}
+
+.card-book-title-details-book {
+    font-weight: bold;
+    font-size: 20px;
+    min-height: 60px;
+    margin-left: 15px;
+    margin-right: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* number of lines to show */
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.card-book-price-details-book {
+    font-weight: bold;
+    font-size: 23px;
+    color: red;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.card-book-old-price-details-book {
+    font-weight: bold;
+    font-size: 17px;
+    color: gray;
+    margin-left: 15px;
+    margin-right: 15px;
+    min-height: 26px;
+    text-decoration-line: line-through;
+}
+
+.card-book-star-details-book {
+    pointer-events: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.card-book-text-star-details-book {
+    margin-left: 10px;
+    font-size: 17px;
+    font-weight: 400;
+    color: #F9B300;
+}
+.image-book-details-book {
+    width: 110px;
+    height: 170px;
+    object-fit: cover;
+}
