@@ -17,6 +17,7 @@ import truck from '../../assets/icons/truck.png';
 import list from '../../assets/icons/list.png';
 import account from '../../assets/icons/account.png';
 import logout from '../../assets/icons/logout.png';
+import { useCart } from 'react-use-cart';
 
 export default function Header() {
     const defaultModalState = {
@@ -27,6 +28,7 @@ export default function Header() {
     const [modalState, setModalState] = React.useState(defaultModalState);
     const [isOpenModalAccount, setIsOpenModalAccount] = React.useState(false);
     const [isOpenCategory, setIsOpenCategory] = React.useState(false);
+    const { totalUniqueItems } = useCart()
     const navigate = useNavigate();
 
     const toggleModalAccount = () => {
@@ -79,7 +81,10 @@ export default function Header() {
                         <input className="input-header-search" placeholder={constant.INPUT_SEARCH} />
                     </div>
                     <div className="container-header-item">
-                        <img alt='' src={cart} className="icon-header" />
+                        <div className='container-header-cart-item'>
+                            <img alt='' src={cart} className="icon-header" />
+                            {totalUniqueItems === 0 || <span className='badge'>{totalUniqueItems}</span>}
+                        </div>
                     </div>
                     <div className="container-header-item" onClick={() => redirect('/test')}>
                         <img alt='' src={bell} className="icon-header" />
