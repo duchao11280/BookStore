@@ -33,7 +33,6 @@ export default function Home() {
     // Next/previous controls
     const plusSlides = (n) => {
         let index = slideIndex + n;
-        console.log("state = " + slideIndex)
         if (index > constants.MAX_SLIDE) {
             index = constants.MIN_SLIDE;
         } else if (index < constants.MIN_SLIDE) {

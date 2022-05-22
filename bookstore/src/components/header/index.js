@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom'
 import './style.css';
 import constant from './constants';
+import settings from '../../config/settings';
 import logo from '../../assets/imgs/logo2.png';
 import menu from '../../assets/icons/menu.png';
 import bell from '../../assets/icons/bell.png';
@@ -18,6 +19,10 @@ import list from '../../assets/icons/list.png';
 import account from '../../assets/icons/account.png';
 import logout from '../../assets/icons/logout.png';
 import { useCart } from 'react-use-cart';
+import { postLogin, postSignup } from '../../services/user.service';
+import { getAllCatAndSubCat } from '../../services/category.services';
+import { ToastContainer, toast } from 'react-toastify';
+import { groupArrayByKey } from '../../utls/utilities';
 
 export default function Header() {
     const defaultModalState = {
@@ -28,8 +33,23 @@ export default function Header() {
     const [modalState, setModalState] = React.useState(defaultModalState);
     const [isOpenModalAccount, setIsOpenModalAccount] = React.useState(false);
     const [isOpenCategory, setIsOpenCategory] = React.useState(false);
-    const { totalUniqueItems } = useCart()
+    const [valueLogin, setValueLogin] = React.useState({ phone: "", password: "" });
+    const [valueSignup, setValueSignup] = React.useState({ phone: "", password: "", confPassword: "", address: "" });
+    const [signupResult, setSignupResult] = React.useState(null);
+    const [loginResult, setLoginResult] = React.useState(null);
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [listAllCategory, setListAllCategory] = React.useState({});
+    const { totalUniqueItems } = useCart();
     const navigate = useNavigate();
+
+    React.useEffect(() => {
+        if (window.sessionStorage.getItem(settings.loginKey.isLogin) === 'true') {
+            setIsLogin(true);
+        } else {
+            setIsLogin(false);
+        }
+        getAllCatAndSubCat().then(result => setListAllCategory(groupArrayByKey(result, 'catName')));
+    }, [])
 
     const toggleModalAccount = () => {
         setIsOpenModalAccount(!isOpenModalAccount);
@@ -67,8 +87,43 @@ export default function Header() {
         });
     }
 
+    const onLogin = async (value) => {
+        const result = await postLogin(value.phone, value.password);
+        setLoginResult(result);
+        if (result.status) {
+            window.sessionStorage.setItem(settings.loginKey.isLogin, 'true');
+            window.sessionStorage.setItem(settings.loginKey.phone, result.data.phone);
+            window.sessionStorage.setItem(settings.loginKey.role, result.data.role);
+            setIsLogin(true);
+            closeModalAccount();
+            toast.success('Đăng nhập thành công!', {
+                position: "top-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    }
+
+    const onSignup = async (value) => {
+        const result = await postSignup(value.phone, value.password, value.address);
+        setSignupResult(result);
+    }
+
+    const onLogout = () => {
+        window.sessionStorage.setItem(settings.loginKey.isLogin, '');
+        window.sessionStorage.setItem(settings.loginKey.phone, '');
+        window.sessionStorage.setItem(settings.loginKey.role, '');
+        setIsLogin(false);
+        closeModalAccount();
+    }
+
     return (
         <div className="container-header">
+            <ToastContainer />
             <div className="container">
                 <div className='d-flex justify-content-between align-items-center'>
                     <img alt='' className="icon-header-logo" src={logo} onClick={() => redirect('/home')} />
@@ -104,64 +159,26 @@ export default function Header() {
                             </div>
                         </div>
                         <div className='row' style={{ width: '100%' }}>
-                            <div className='col-sm-3 mb-3'>
-                                <p className='text-category-header-modal'>
-                                    Văn học
-                                </p>
-                                <p className='text-subcategory-header-modal'>
-                                    Văn học 1
-                                </p>
-                                <p className='text-subcategory-header-modal'>
-                                    Văn học 2
-                                </p>
-                            </div>
-                            <div className='col-sm-3 mb-3'>
-                                <p className='text-category-header-modal'>
-                                    Văn học
-                                </p>
-                                <p className='text-subcategory-header-modal'>
-                                    Văn học 1
-                                </p>
-                                <p className='text-subcategory-header-modal'>
-                                    Văn học 2
-                                </p>
-                                <p className='text-subcategory-header-modal'>
-                                    Văn học 3
-                                </p>
-                            </div>
-                            <div className='col-sm-3 mb-3'>
-                                <p className='text-category-header-modal'>
-                                    Văn học
-                                </p>
-                                <p className='text-subcategory-header-modal'>
-                                    Văn học 1
-                                </p>
-                                <p className='text-subcategory-header-modal'>
-                                    Văn học 2
-                                </p>
-                            </div>
-                            <div className='col-sm-3 mb-3'>
-                                <p className='text-category-header-modal'>
-                                    Văn học
-                                </p>
-                                <p className='text-subcategory-header-modal'>
-                                    Văn học 1
-                                </p>
-                                <p className='text-subcategory-header-modal'>
-                                    Văn học 2
-                                </p>
-                            </div>
-                            <div className='col-sm-3 mb-3'>
-                                <p className='text-category-header-modal'>
-                                    Văn học
-                                </p>
-                                <p className='text-subcategory-header-modal'>
-                                    Văn học 1
-                                </p>
-                                <p className='text-subcategory-header-modal'>
-                                    Văn học 2
-                                </p>
-                            </div>
+                            {
+                                Object.keys(listAllCategory).map((category, key) => {
+                                    return (
+                                        <div className='col-sm-3 mb-3'>
+                                            <p className='text-category-header-modal'>
+                                                {category}
+                                            </p>
+                                            {
+                                                listAllCategory[category].map((subcategory, key) => {
+                                                    return (
+                                                        <p className='text-subcategory-header-modal'>
+                                                            {subcategory.subCatName}
+                                                        </p>
+                                                    )
+                                                })
+                                            }
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
                     </div>
                 </div>}
@@ -215,7 +232,7 @@ export default function Header() {
                                 <img alt='' src={rightArrow} className='item-icon-header-account-modal ms-auto' />
                             </div>
                             {isLogin ? <div className='line-header-horizontal' /> : null}
-                            {isLogin ? <div className='item-header-account-modal'>
+                            {isLogin ? <div className='item-header-account-modal' onClick={onLogout}>
                                 <img alt='' src={logout} className='icon-header' />
                                 <div className='item-text-header-account-modal'>{constant.TITLE_LOGOUT}</div>
                                 <img alt='' src={rightArrow} className='item-icon-header-account-modal ms-auto' />
@@ -235,12 +252,28 @@ export default function Header() {
                                 {constant.TITLE_LOGIN_INFO_2}
                             </div>
                             <div className="container-input-header-account-modal mt-3 mb-3">
-                                <input className="input-header-account-modal" placeholder={constant.INPUT_PHONE} />
+                                <input
+                                    className="input-header-account-modal"
+                                    placeholder={constant.INPUT_PHONE}
+                                    value={valueLogin.phone}
+                                    onChange={(value) => {
+                                        valueLogin.phone = value.target.value;
+                                        setValueLogin({ ...valueLogin })
+                                    }} />
                             </div>
                             <div className="container-input-header-account-modal mt-3 mb-3">
-                                <input className="input-header-account-modal" placeholder={constant.INPUT_PASS} />
+                                <input
+                                    type={'password'}
+                                    className="input-header-account-modal"
+                                    placeholder={constant.INPUT_PASS}
+                                    value={valueLogin.password}
+                                    onChange={(value) => {
+                                        valueLogin.password = value.target.value;
+                                        setValueLogin({ ...valueLogin })
+                                    }} />
                             </div>
-                            <div className="button-header-account-modal-primary mt-3">{constant.BUTTON_LOGIN}</div>
+                            {loginResult === null || <div className={loginResult.status ? 'text-success-header-account-modal' : 'text-error-header-account-modal'}>{loginResult.message}</div>}
+                            <button disabled={isLoading} className="button-header-account-modal-primary mt-3" onClick={() => onLogin(valueLogin)}>{constant.BUTTON_LOGIN}</button>
                             <div className="text-button-header-account-modal-signup mt-3">{constant.TITLE_NOT_ACC}<span onClick={() => { changeModal(constant.MODAL_SIGNUP_STATE) }}>{constant.BUTTON_SIGNUP_NOW}</span></div>
                         </div>
                         : null}
@@ -257,18 +290,48 @@ export default function Header() {
                                 {constant.TITLE_SIGNUP_INFO}
                             </div>
                             <div className="container-input-header-account-modal mt-3 mb-3">
-                                <input className="input-header-account-modal" placeholder={constant.INPUT_PHONE} />
+                                <input
+                                    className="input-header-account-modal"
+                                    placeholder={constant.INPUT_PHONE}
+                                    value={valueSignup.phone}
+                                    onChange={(value) => {
+                                        valueSignup.phone = value.target.value;
+                                        setValueSignup({ ...valueSignup })
+                                    }} />
                             </div>
                             <div className="container-input-header-account-modal mt-3 mb-3">
-                                <input className="input-header-account-modal" placeholder={constant.INPUT_PASS} />
+                                <input
+                                    type={'password'}
+                                    className="input-header-account-modal"
+                                    placeholder={constant.INPUT_PASS}
+                                    value={valueSignup.password}
+                                    onChange={(value) => {
+                                        valueSignup.password = value.target.value;
+                                        setValueSignup({ ...valueSignup })
+                                    }} />
                             </div>
                             <div className="container-input-header-account-modal mt-3 mb-3">
-                                <input className="input-header-account-modal" placeholder={constant.INPUT_PASS} />
+                                <input
+                                    type={'password'}
+                                    className="input-header-account-modal"
+                                    placeholder={constant.INPUT_VERIFY_PASS}
+                                    value={valueSignup.confPassword} onChange={(value) => {
+                                        valueSignup.confPassword = value.target.value;
+                                        setValueSignup({ ...valueSignup })
+                                    }} />
                             </div>
                             <div className="container-input-header-account-modal mt-3 mb-3">
-                                <input className="input-header-account-modal" placeholder={constant.INPUT_ADDRESS} />
+                                <input
+                                    className="input-header-account-modal"
+                                    placeholder={constant.INPUT_ADDRESS}
+                                    value={valueSignup.address}
+                                    onChange={(value) => {
+                                        valueSignup.address = value.target.value;
+                                        setValueSignup({ ...valueSignup })
+                                    }} />
                             </div>
-                            <div className="button-header-account-modal-secondary mt-3">{constant.BUTTON_SIGNUP}</div>
+                            {signupResult === null || <div className={signupResult.status ? 'text-success-header-account-modal' : 'text-error-header-account-modal'}>{signupResult.message}</div>}
+                            <button disabled={isLoading} className="button-header-account-modal-secondary mt-3" onClick={() => onSignup(valueSignup)}>{constant.BUTTON_SIGNUP}</button>
                         </div>
                         : null}
                 </div>}

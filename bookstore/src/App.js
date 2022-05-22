@@ -7,6 +7,7 @@ import Home from './components/home'
 import DetailBook from './components/details_book'
 import Cart from './components/cart';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { CartProvider, useCart } from 'react-use-cart'
 
 export default function App() {
