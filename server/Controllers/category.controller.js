@@ -254,6 +254,35 @@ async function disableSubCat(req, res) {
     db.releaseConnection(conn)
     return;
 }
+
+async function getHotCategory(req, res) {
+    try {
+        const query =
+            'SELECT c.catId, catName, c.thumbnails, count(fl.bookId) as favoriteNumber ' +
+            'FROM categories c  ' +
+            '	INNER JOIN subcategories s ON c.catId = s.catId ' +
+            '	INNER JOIN books b ON s.subCatId = b.subCatId ' +
+            '	LEFT JOIN favoritelist fl ON b.bookId = fl.bookId ' +
+            'WHERE b.isDisable = 0 ' +
+            'GROUP BY catId, catName, thumbnails ' +
+            'ORDER BY favoriteNumber desc; ';
+        const result = await db.exeQuery(query, []);
+        res.json({
+            statusCode: 200,
+            message: "Lấy dữ liệu thành công",
+            data: result
+        });
+        return;
+    } catch (error) {
+        res.json({
+            statusCode: 500,
+            message: "Có lỗi xảy ra, lấy dữ liệu thất bại",
+            data: []
+        });
+        return;
+    }
+}
+
 module.exports = {
     getAllCatAndSubCat,
     insertCategory,
@@ -261,5 +290,6 @@ module.exports = {
     insertSubCategory,
     updateSubCatName,
     disableSubCat,
-    disableCat
+    disableCat,
+    getHotCategory
 }
