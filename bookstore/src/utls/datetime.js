@@ -78,3 +78,13 @@ export const getDurationFromNow = (date) => {
     const calDate = moment(date)
     return moment.duration(calDate.diff(today)).seconds();
 }
+
+
+export const DD_MM_YYYYD = 'DD/MM/YYYY'
+/**
+ * 
+ * @param {*} date date (string)
+ */
+export const formatDateWithString = (date) => {
+    return moment(new Date(date)).format(DD_MM_YYYYD)
+}

@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import constants from './constants'
 import './style.css'
 import { formatNumberToMoney } from '../../utls/number'
-export default function index() {
+import { useCart } from 'react-use-cart'
+export default function CartPage() {
+    const { items, emptyCart } = useCart()
+    let arrayIdBook = [];
+    items.forEach((item) => {
+        arrayIdBook.push(item.id);
+    })
+    console.log(arrayIdBook)
     let book = {
         bookId: 1,
         bookName: "Bến Xe (Tái Bản 2020)",

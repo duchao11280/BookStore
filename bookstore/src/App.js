@@ -18,7 +18,7 @@ export default function App() {
         <Routes>
           <Route path='/test' element={<Test />}></Route>
           <Route path='/home' element={<Home />}></Route>
-          <Route path='/detailsbook' element={<DetailBook />}></Route>
+          <Route path='/detailsbook/:id' element={<DetailBook />}></Route>
           <Route path='/cart' element={<Cart />}></Route>
           <Route path='/' element={<Home />}></Route>
         </Routes>
@@ -31,7 +31,9 @@ export default function App() {
 function Test() {
 
   const { addItem } = useCart()
-
+  const onClickToLogin = () => {
+    document.getElementById("login-header").click();
+  }
   return (
     <div className="App">
       <header className="App-header">
@@ -41,7 +43,8 @@ function Test() {
         </p>
         <a
           className="App-link" onClick={() => {
-            addItem({ id: new Date(), price: 200 }, 1);
+            // addItem({ id: new Date(), price: 200 }, 1);
+            onClickToLogin();
             console.log('add item');
           }}>
           Learn React
