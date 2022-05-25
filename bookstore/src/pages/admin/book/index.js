@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import Sidebaradmin from '../../../components/sidebaradmin';
 
 function Book() {
-    return ( <>
+    return (
         <div className="container-admin-book">
             <Sidebaradmin />
             <div className="content-admin-book">
@@ -12,7 +12,7 @@ function Book() {
                     <div className="search-admin-book">
                         <input type="text" />
                         <i className="fa-solid fa-magnifying-glass"></i>
-                    </div>            
+                    </div>
                 </div>
                 <div className="body-content-admin-book">
                     <div className="body-header-admin-book">
@@ -56,7 +56,7 @@ function Book() {
                                 <button className="btn-delete-editbook">
                                     <i className="fa-solid fa-trash-can"></i>
                                 </button>
-                            </td> 
+                            </td>
                         </tr>
                         <tr>
                             <td><Link to="/admin/book/addbook">Dế mèn phiêu lưu kí</Link></td>
@@ -71,7 +71,7 @@ function Book() {
                                 <button className="btn-delete-editbook">
                                     <i className="fa-solid fa-trash-can"></i>
                                 </button>
-                            </td> 
+                            </td>
                         </tr>
                         <tr>
                             <td><Link to="/admin/book/addbook">Dế mèn phiêu lưu kí</Link></td>
@@ -86,7 +86,7 @@ function Book() {
                                 <button className="btn-delete-editbook">
                                     <i className="fa-solid fa-trash-can"></i>
                                 </button>
-                            </td> 
+                            </td>
                         </tr>
                         <tr>
                             <td><Link to="/admin/book/addbook">Dế mèn phiêu lưu kí</Link></td>
@@ -101,7 +101,7 @@ function Book() {
                                 <button className="btn-delete-editbook">
                                     <i className="fa-solid fa-trash-can"></i>
                                 </button>
-                            </td> 
+                            </td>
                         </tr>
                         <tr>
                             <td><Link to="/admin/book/addbook">Dế mèn phiêu lưu kí</Link></td>
@@ -116,7 +116,7 @@ function Book() {
                                 <button className="btn-delete-editbook">
                                     <i className="fa-solid fa-trash-can"></i>
                                 </button>
-                            </td> 
+                            </td>
                         </tr>
                         <tr>
                             <td><Link to="/admin/book/addbook">Dế mèn phiêu lưu kí</Link></td>
@@ -131,7 +131,7 @@ function Book() {
                                 <button className="btn-delete-editbook">
                                     <i className="fa-solid fa-trash-can"></i>
                                 </button>
-                            </td> 
+                            </td>
                         </tr>
                         <tr>
                             <td><Link to="/admin/book/addbook">Dế mèn phiêu lưu kí</Link></td>
@@ -146,7 +146,7 @@ function Book() {
                                 <button className="btn-delete-editbook">
                                     <i className="fa-solid fa-trash-can"></i>
                                 </button>
-                            </td> 
+                            </td>
                         </tr>
                         <tr>
                             <td><Link to="/admin/book/addbook">Dế mèn phiêu lưu kí</Link></td>
@@ -161,7 +161,7 @@ function Book() {
                                 <button className="btn-delete-editbook">
                                     <i className="fa-solid fa-trash-can"></i>
                                 </button>
-                            </td> 
+                            </td>
                         </tr>
                         <tr>
                             <td><Link to="/admin/book/addbook">Dế mèn phiêu lưu kí</Link></td>
@@ -176,7 +176,7 @@ function Book() {
                                 <button className="btn-delete-editbook">
                                     <i className="fa-solid fa-trash-can"></i>
                                 </button>
-                            </td> 
+                            </td>
                         </tr>
                         <tr>
                             <td><Link to="/admin/book/addbook">Dế mèn phiêu lưu kí</Link></td>
@@ -191,7 +191,7 @@ function Book() {
                                 <button className="btn-delete-editbook">
                                     <i className="fa-solid fa-trash-can"></i>
                                 </button>
-                            </td> 
+                            </td>
                         </tr>
                         <tr>
                             <td><Link to="/admin/book/addbook">Dế mèn phiêu lưu kí</Link></td>
@@ -206,7 +206,7 @@ function Book() {
                                 <button className="btn-delete-editbook">
                                     <i className="fa-solid fa-trash-can"></i>
                                 </button>
-                            </td> 
+                            </td>
                         </tr>
                         <tr>
                             <td><Link to="/admin/book/addbook">Dế mèn phiêu lưu kí</Link></td>
@@ -221,13 +221,13 @@ function Book() {
                                 <button className="btn-delete-editbook">
                                     <i className="fa-solid fa-trash-can"></i>
                                 </button>
-                            </td> 
-                        </tr>    
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </div>
         </div>
-    </> );
+    );
 }
 
 export default Book; 
