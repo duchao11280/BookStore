@@ -1,9 +1,10 @@
 import './editbook.css'
 import Sidebaradmin from '../../../components/sidebaradmin';
-import {Link} from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 function Addbook() {
-    return ( <>
+    const { id } = useParams();
+    return (<>
         <div className="container-admin-editbook">
             <Sidebaradmin />
             <div className="content-admin-editbook">
@@ -12,7 +13,7 @@ function Addbook() {
                     <div className="search-admin-editbook">
                         <input type="text" />
                         <i className="fa-solid fa-magnifying-glass"></i>
-                    </div>            
+                    </div>
                 </div>
                 <div className="body-content-admin-editbook">
                     <div className="body-header-admin-editbook">
@@ -24,7 +25,7 @@ function Addbook() {
                         <div className="main-content-left-admin-book">
                             <img src="/logo3.png" alt="ảnh sách" />
                             <button>Đăng ảnh</button>
-                        </div> 
+                        </div>
                         <div className="main-content-right-admin-book">
                             <ul className="list-info-book-admin-book">
                                 <li className="item-info-book-admin-book">
@@ -62,7 +63,7 @@ function Addbook() {
                 </div>
             </div>
         </div>
-    </> );
+    </>);
 }
 
 export default Addbook; 

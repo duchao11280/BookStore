@@ -1,5 +1,5 @@
 import axios from './axios';
-import { apiOrderBook } from './apiUrl'
+import { apiOrderBook, apiGetAllOrder } from './apiUrl'
 
 
 // insert rating 
@@ -20,5 +20,14 @@ export async function insertOrder(phone, fullName, address, listOrder) {
             status: false,
             message: result.data?.message
         }
+    }
+}
+
+export async function getAllOrder() {
+    const result = await axios.get(apiGetAllOrder)
+    if (result.status === 200) {
+        return result.data?.data
+    } else {
+        return []
     }
 }

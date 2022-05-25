@@ -26,7 +26,7 @@ export default function App() {
           <Route path='/admin' element={<Admin />}></Route>
           <Route path='/admin/book' element={<Book />}></Route>
           <Route path='/admin/book/addbook' element={<Addbook />}></Route>
-          <Route path='/admin/book/editbook' element={<Editbook />}></Route>
+          <Route path='/admin/book/editbook/:id' element={<Editbook />}></Route>
           <Route path='/admin/order' element={<Order />}></Route>
           <Route path='/admin/order/orderdetail' element={<Orderdetail />}></Route>
           <Route path='/test' element={<Test />}></Route>
