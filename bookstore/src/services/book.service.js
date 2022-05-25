@@ -1,12 +1,13 @@
 import axios from './axios';
-import { 
-    apiGetDetailBookById, 
+import {
+    apiGetDetailBookById,
     apiGetRelatedBooks,
     apiGetHotBook,
     apiGetNewBook,
     apiGetBestSellerBook,
     apiGetSaleBook,
-    apiGetListBookForOrder
+    apiGetListBookForOrder,
+    apiGetAllBook
 } from './apiUrl'
 
 export async function getDetailBookById(id) {
@@ -94,5 +95,14 @@ export async function getSaleBook() {
         return result.data?.data;
     } else {
         return [];
+    }
+}
+
+export async function getAllBook() {
+    const result = await axios.get(apiGetAllBook)
+    if (result.status === 200) {
+        return result.data?.data
+    } else {
+        return []
     }
 }

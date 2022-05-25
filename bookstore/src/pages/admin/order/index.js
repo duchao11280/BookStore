@@ -1,8 +1,18 @@
 import './order.css'
 import { Link } from 'react-router-dom'
 import Sidebaradmin from '../../../components/sidebaradmin';
-
+import { getAllOrder } from '../../../services/order.service'
+import React from 'react';
 function Order() {
+    const getOrder = () => {
+        getAllOrder().then(result => {
+            console.log(result);
+        })
+
+    }
+    React.useEffect(getOrder, [])
+
+
     return (<>
         <div className="container-admin-order">
             <Sidebaradmin />

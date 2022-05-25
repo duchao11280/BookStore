@@ -39,6 +39,8 @@ const apiInsertSubCategory = '/api/category/insertsubcat/'
 const apiUpdateSubCategory = '/api/category/updatesubcatname/'
 const apiDisableCategory = '/api/category/disable/cat/'
 const apiDisableSubCategory = '/api/category/disable/subcat/'
+const apiGetAllOrder = '/api/admin/order/getall'
+const apiGetAllBook = '/api/admin/book/allbook'
 export {
     apiSignup,
     apiLogin,
@@ -63,5 +65,7 @@ export {
     apiGetBestSellerBook,
     apiGetHotBook,
     apiGetNewBook,
-    apiGetSaleBook
+    apiGetSaleBook,
+    apiGetAllOrder,
+    apiGetAllBook,
 }
