@@ -1,7 +1,7 @@
 const constants = {
-    MODAL_DEFAULT_STATE : 0,
-    MODAL_LOGIN_STATE : 1,
-    MODAL_SIGNUP_STATE : 2,
+    MODAL_DEFAULT_STATE: 0,
+    MODAL_LOGIN_STATE: 1,
+    MODAL_SIGNUP_STATE: 2,
     TITLE_EVENT: "Sự kiện",
     TITLE_INFO_ACC: "Thông tin tài khoản",
     TITLE_LIST_FAVORITE: "Danh sách quan tâm",
@@ -21,7 +21,8 @@ const constants = {
     INPUT_PASS: "Nhập mật khẩu của bạn",
     INPUT_VERIFY_PASS: "Xác nhận lại mật khẩu của bạn",
     INPUT_ADDRESS: "Nhập địa chỉ hiện tại của bạn",
-    INPUT_SEARCH: "Tìm kiếm sản phẩm"
+    INPUT_SEARCH: "Tìm kiếm sản phẩm",
+    INPUT_NAME: "Nhập tên của bạn"
 };
 
 export default constants;
