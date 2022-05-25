@@ -1,0 +1,118 @@
+.container-admin-order {
+    display: flex;
+    min-height: 100vh;
+    background-color: rgba(239, 239, 239, 0.5);
+}
+
+.content-admin-order {
+    width: 75%;
+    padding: 10px 30px;
+    margin-top: 20px;
+}
+
+.title-content-admin-order {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title-content-admin-order > h3 {
+    color: #000;
+}
+
+.search-admin-order {
+    border-radius: 20px;
+    width: 300px;
+    font-size: 16px;
+    background-color: #e5e5e5;
+}
+
+.search-admin-order > input {
+    width: 250px;
+    margin: 5px 10px;
+    padding: 0px 15px;
+    background-color: #e5e5e5;
+    border: none;
+    outline: none;
+}
+
+.search-admin-order > i {
+    color: #000;
+}
+
+.body-content-admin-order {
+    border: 1px solid gray;
+    border-radius: 5px;
+    height: 80vh;
+    background-color: #fff;
+    margin-top: 20px;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
+.body-header-admin-order {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+}
+
+.body-header-admin-order > h5 {
+
+}
+
+.body-header-admin-order > i {
+    font-size: 30px;
+    color: blue;
+}
+
+.body-header-admin-order:hover > i {
+    opacity: 0.7;
+} 
+
+.table-content-admin-order {
+    width: 100%;
+    position: relative;
+}
+
+.table-content-admin-order tr {
+    text-align: center;
+    font-weight: 600;
+}
+
+.table-content-admin-order tr:hover {
+    background-color: #e5e5e5;
+}
+
+.table-content-admin-order th {
+    text-align: center;
+    min-width: 30px;
+    color: #6c757d;
+    border-bottom: 1px solid #000;
+    padding: 15px;
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+}
+
+.table-content-admin-order td {
+    text-align: center;
+    padding: 15px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.table-content-admin-order td > button {
+    background-color: lightgreen;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-weight: 500;
+}
+
+.btn-cancelled-admin-order {
+    background-color: lightgreen;
+    border: none;
+    border-radius: 20px;
+    padding: 15px;
+    font-weight: 500;
+}  

@@ -1,0 +1,134 @@
+.container-admin-orderdetail {
+    display: flex;
+    min-height: 100vh;
+    background-color: rgba(239, 239, 239, 0.5);
+}
+
+.content-admin-orderdetail {
+    width: 75%;
+    padding: 10px 30px;
+    margin-top: 20px;
+}
+
+.title-content-admin-orderdetail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title-content-admin-orderdetail > h3 {
+    color: #000;
+}
+
+.search-admin-orderdetail {
+    border-radius: 20px;
+    width: 300px;
+    font-size: 16px;
+    background-color: #e5e5e5;
+}
+
+.search-admin-orderdetail > input {
+    width: 250px;
+    margin: 5px 10px;
+    padding: 0px 15px;
+    background-color: #e5e5e5;
+    border: none;
+    outline: none;
+}
+
+.search-admin-orderdetail > i {
+    color: #000;
+}
+
+.body-content-admin-orderdetail {
+    border: 1px solid gray;
+    border-radius: 5px;
+    height: 80vh;
+    background-color: #fff;
+    margin-top: 20px;
+}
+
+.body-header-admin-orderdetail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+}
+
+.body-header-admin-orderdetail > h5 {
+
+}
+
+.body-header-admin-orderdetail a {
+    color: #000;
+    font-size: 30px;
+    padding: 15px;
+}
+
+
+.body-header-admin-orderdetail > i {
+    font-size: 30px;
+    color: blue;
+}
+
+.body-header-admin-orderdetail:hover > i {
+    opacity: 0.7;
+} 
+
+.main-content-admin-orderdetail {
+    display: flex;
+    justify-content: space-around;  
+    align-items: center;
+}
+
+.img-book-admin-orderdetail {
+    width: 200px;
+}
+
+.list-title-admin-orderdetail {
+
+}
+
+.item-title-admin-orderdetail {
+    list-style-type: none;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 5px 10px;
+}
+
+.list-category-admin-orderdetail {
+
+}
+
+.item-category-admin-orderdetail {
+    list-style-type: none;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 5px 10px;
+}
+
+.item-category-admin-orderdetail > button {
+    border: none;
+    background-color: lightgreen;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.btn-admin-orderdetail {
+    display: flex;
+    width: 60%;
+    float: right;
+}
+
+.submit-admin-orderdetail {
+    float: right;
+    margin: 50px;
+    width: 60%;
+    background-color: rgb(219, 79, 79);
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    font-weight: 500;
+    color: #fff;
+} 

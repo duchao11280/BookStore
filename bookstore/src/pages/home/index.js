@@ -8,6 +8,8 @@ import cover2 from '../../assets/imgs/cover2.png';
 import cover3 from '../../assets/imgs/cover3.jpg';
 import thieunhiThumb from '../../assets/imgs/thieunhi-thumb.jpg';
 import constants from './constants';
+import Header from '../../components/header'
+import Footer from '../../components/footer'
 
 let start = false;
 let indexNotState = 1;
@@ -33,6 +35,7 @@ export default function Home() {
     // Next/previous controls
     const plusSlides = (n) => {
         let index = slideIndex + n;
+        console.log("state = " + slideIndex)
         if (index > constants.MAX_SLIDE) {
             index = constants.MIN_SLIDE;
         } else if (index < constants.MIN_SLIDE) {
@@ -42,6 +45,8 @@ export default function Home() {
     }
 
     return (
+        <>
+        <Header />
         <div className='container-home'>
             <div className='container-xl d-flex flex-column'>
                 <div className='row mt-5'>
@@ -104,6 +109,8 @@ export default function Home() {
                 <div className='button-home-secondary me-auto ms-auto mb-5'>{constants.BUTTON_MORE}</div>
             </div>
         </div>
+        <Footer />
+        </>
     )
 }
 

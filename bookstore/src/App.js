@@ -3,12 +3,19 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from './components/header';
 import Footer from './components/footer';
-import Home from './components/home'
+// import Home from './components/home'
 import DetailBook from './components/details_book'
 import Cart from './components/cart';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'react-toastify/dist/ReactToastify.css';
 import { CartProvider, useCart } from 'react-use-cart'
+import Home from './pages/home'
+import Book from './pages/admin/book';
+import Order from './pages/admin/order';
+import Layout from './components/layout';
+import Admin from './pages/admin';
+import Orderdetail from './pages/admin/orderdetail';
+import Editbook from './pages/admin/editbook';
+import Addbook from './pages/admin/addbook';
 
 export default function App() {
   return (
@@ -16,6 +23,12 @@ export default function App() {
       <BrowserRouter>
         <Header />
         <Routes>
+          <Route path='/admin' element={<Admin />}></Route>
+          <Route path='/admin/book' element={<Book />}></Route>
+          <Route path='/admin/book/addbook' element={<Addbook />}></Route>
+          <Route path='/admin/book/editbook' element={<Editbook />}></Route>
+          <Route path='/admin/order' element={<Order />}></Route>
+          <Route path='/admin/order/orderdetail' element={<Orderdetail />}></Route>
           <Route path='/test' element={<Test />}></Route>
           <Route path='/home' element={<Home />}></Route>
           <Route path='/detailsbook/:id' element={<DetailBook />}></Route>

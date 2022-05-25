@@ -1,0 +1,143 @@
+.container-admin-editbook {
+    display: flex;
+    min-height: 100vh;
+    background-color: rgba(239, 239, 239, 0.5);
+}
+
+.content-admin-editbook {
+    width: 75%;
+    padding: 10px 30px;
+    margin-top: 20px;
+}
+
+.title-content-admin-editbook {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title-content-admin-editbook > h3 {
+    color: #000;
+}
+
+.search-admin-editbook {
+    border-radius: 20px;
+    width: 300px;
+    font-size: 16px;
+    background-color: #e5e5e5;
+}
+
+.search-admin-editbook > input {
+    width: 250px;
+    margin: 5px 10px;
+    padding: 0px 15px;
+    background-color: #e5e5e5;
+    border: none;
+    outline: none;
+}
+
+.search-admin-editbook > i {
+    color: #000;
+}
+
+.body-content-admin-editbook {
+    border: 1px solid gray;
+    border-radius: 5px;
+    height: 100vh;
+    background-color: #fff;
+    margin-top: 20px;
+}
+
+.body-header-admin-editbook {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+}
+
+.body-header-admin-editbook a {
+    color: #000;
+    font-size: 30px;
+    padding: 15px;
+}
+
+.body-header-admin-editbook > h5 {
+
+}
+
+.main-content-admin-editbook {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 15px;
+}
+
+.main-content-left-admin-book {
+    width: 40%;
+    margin: 0 auto;
+}
+
+.main-content-left-admin-book > img {
+    width: 50vh;
+    height: 50vh;
+}
+
+.main-content-left-admin-book > button {
+    border-radius: 10px;
+    margin: 15px;
+    width: 60%;
+    padding: 10px 15px;
+    font-size: 17px;
+    font-weight: 500;
+    color: #fff;
+    border: none;
+    background: lightgreen;
+}
+
+.main-content-right-admin-book {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.list-info-book-admin-book {
+    margin: 0;
+    padding: 0;
+}
+
+.item-info-book-admin-book {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    padding-top: 0;
+    /* margin-right: 30px; */
+}
+
+.item-info-book-admin-book > h5 {
+    width: 30%;
+    margin: 0;
+}
+
+
+.item-info-book-admin-book > input {
+    width: 65%;
+    padding: 5px;
+}
+
+.item-info-book-admin-book > textarea {
+    width: 65%;
+    height: 100px;
+    padding: 5px;
+}
+
+.main-content-right-admin-book > button {
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 17px;
+    font-weight: 500;
+    color: #fff;
+    background: #f17171;    
+    margin-top: 15px;
+} 

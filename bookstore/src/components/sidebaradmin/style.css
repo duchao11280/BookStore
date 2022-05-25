@@ -1,0 +1,36 @@
+.sidebar-admin {
+    width: 25%;
+    background-color: #212529;
+}
+
+.logo-admin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; 
+}
+
+.logo-admin > h2 {
+    color: #fff;
+}
+
+.navlist-admin {
+    list-style-type: none;
+    margin: 0; 
+    padding: 0;
+}
+
+.itemlist-admin {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 10px 30px;
+}
+
+.itemlist-admin > i {
+    margin-right: 10px;
+}
+
+.itemlist-admin:hover {
+    background-color: gray;
+} 
