@@ -7,4 +7,9 @@ router.get('/getbestseller', bookController.getBestSeller);
 router.get('/getnew', bookController.getNewestBook);
 router.get('/gethot', bookController.getHotestBook);
 
+// get book by id
+router.get('/:id', bookController.getDetailBookByID)
+//get related book by bookid and subcatID
+
+router.get('/related/:bookid/:subcatid', bookController.getRelatedBooks)
 module.exports = router;

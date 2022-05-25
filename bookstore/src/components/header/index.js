@@ -34,7 +34,7 @@ export default function Header() {
     const [isOpenModalAccount, setIsOpenModalAccount] = React.useState(false);
     const [isOpenCategory, setIsOpenCategory] = React.useState(false);
     const [valueLogin, setValueLogin] = React.useState({ phone: "", password: "" });
-    const [valueSignup, setValueSignup] = React.useState({ phone: "", password: "", confPassword: "", address: "" });
+    const [valueSignup, setValueSignup] = React.useState({ phone: "", password: "", confPassword: "", address: "", fullName: "" });
     const [signupResult, setSignupResult] = React.useState(null);
     const [loginResult, setLoginResult] = React.useState(null);
     const [isLoading, setIsLoading] = React.useState(false);
@@ -91,25 +91,19 @@ export default function Header() {
         const result = await postLogin(value.phone, value.password);
         setLoginResult(result);
         if (result.status) {
+
             window.sessionStorage.setItem(settings.loginKey.isLogin, 'true');
             window.sessionStorage.setItem(settings.loginKey.phone, result.data.phone);
             window.sessionStorage.setItem(settings.loginKey.role, result.data.role);
+            window.sessionStorage.setItem(settings.loginKey.userId, result.data.userId);
             setIsLogin(true);
             closeModalAccount();
-            toast.success('Đăng nhập thành công!', {
-                position: "top-right",
-                autoClose: 1500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            window.location.reload();
         }
     }
 
     const onSignup = async (value) => {
-        const result = await postSignup(value.phone, value.password, value.address);
+        const result = await postSignup(value.phone, value.fullName, value.password, value.address);
         setSignupResult(result);
     }
 
@@ -117,7 +111,9 @@ export default function Header() {
         window.sessionStorage.setItem(settings.loginKey.isLogin, '');
         window.sessionStorage.setItem(settings.loginKey.phone, '');
         window.sessionStorage.setItem(settings.loginKey.role, '');
+        window.sessionStorage.setItem(settings.loginKey.userId, '');
         setIsLogin(false);
+        window.location.reload();
         closeModalAccount();
     }
 
@@ -144,7 +140,7 @@ export default function Header() {
                     <div className="container-header-item" onClick={() => redirect('/test')}>
                         <img alt='' src={bell} className="icon-header" />
                     </div>
-                    <div className={!isOpenModalAccount ? "container-header-item" : "container-header-item-focus"} onClick={toggleModalAccount}>
+                    <div className={!isOpenModalAccount ? "container-header-item" : "container-header-item-focus"} id="login-header" onClick={toggleModalAccount}>
                         <img alt='' src={user} className="icon-header" />
                     </div>
                 </div>
@@ -296,6 +292,16 @@ export default function Header() {
                                     value={valueSignup.phone}
                                     onChange={(value) => {
                                         valueSignup.phone = value.target.value;
+                                        setValueSignup({ ...valueSignup })
+                                    }} />
+                            </div>
+                            <div className="container-input-header-account-modal mt-3 mb-3">
+                                <input
+                                    className="input-header-account-modal"
+                                    placeholder={constant.INPUT_NAME}
+                                    value={valueSignup.fullName}
+                                    onChange={(value) => {
+                                        valueSignup.fullName = value.target.value;
                                         setValueSignup({ ...valueSignup })
                                     }} />
                             </div>

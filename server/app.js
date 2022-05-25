@@ -11,15 +11,15 @@ app.use(cookieParser())
 app.use(express.urlencoded({
     extended: true
 }));
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:3000");// update to match the domain you will make the request from
     res.header('Access-Control-Allow-Credentials', true);
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-   next();
- });
+    next();
+});
 // IP của client
-app.use(cors({ credentials: true, origin: ["http://192.168.1.4:4000", "http://10.0.132.51:4000"] }));
+app.use(cors({ credentials: true, origin: ["http://192.168.1.9:4000", "http://10.0.132.51:4000"] }));
 
 app.get('/', function (req, res) {
     return res.send({ messenger: 'Book Store API' })
@@ -33,11 +33,14 @@ const bookRoutes = require('./Routes/book.route');
 const adminRoutes = require('./Routes/admin.route');
 const userRoutes = require('./Routes/user.route');
 const categoryRoutes = require('./Routes/category.route');
-
+const ratingRoutes = require('./Routes/rating.route');
+const favoriteListRoutes = require('./Routes/favoritelist.route')
 // use route
 app.use('/api/book', bookRoutes)
     .use('/api/admin', adminRoutes)
     .use('/api/user', userRoutes)
     .use('/api/category', categoryRoutes)
+    .use('/api/rating', ratingRoutes)
+    .use('/api/favoritelist', favoriteListRoutes)
 
 module.exports = app;

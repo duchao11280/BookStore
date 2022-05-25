@@ -1,9 +1,10 @@
 import axios from './axios';
 import { apiLogin, apiSignup } from './apiUrl'
 
-export async function postSignup(phone, password, address) {
+export async function postSignup(phone, fullName, password, address) {
     const result = await axios.post(apiSignup, {
         phone: phone,
+        fullName: fullName,
         password: password,
         address: address
     });

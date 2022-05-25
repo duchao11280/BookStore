@@ -5,16 +5,17 @@
  */
 
 const mysql = require('mysql');
+const { connect } = require('../app');
 const settings = require('../config/settings');
 
 const pool = mysql.createPool({
-    connectionLimit : settings.database.limit,
-    host            : settings.database.host,
-    port            : settings.database.port,
-    database        : settings.database.database,
-    user            : settings.database.user,
-    password        : settings.database.passwrod,
-    charset         : settings.database.charset
+    connectionLimit: settings.database.limit,
+    host: settings.database.host,
+    port: settings.database.port,
+    database: settings.database.database,
+    user: settings.database.user,
+    password: settings.database.passwrod,
+    charset: settings.database.charset
 });
 
 /**
@@ -24,7 +25,7 @@ const pool = mysql.createPool({
 function getConnection() {
     return new Promise((resolve, reject) => {
         pool.getConnection((err, conn) => {
-            if (err) { 
+            if (err) {
                 reject(err);
             } else {
                 resolve(conn);
@@ -88,7 +89,7 @@ function commitTransaction(conn) {
 
 function queryThenRelease(sql, params) {
     return new Promise((resolve, reject) => {
-        pool.query({sql, timeout: 5000}, params, (err, result) => {
+        pool.query({ sql, timeout: 5000 }, params, (err, result) => {
             if (err) {
                 reject(err);
             } else {
@@ -114,11 +115,28 @@ async function exeQuery(sql, params = []) {
     }
     return result;
 }
-
+/**
+ * 
+ * @param {mysql.Connection} conn 
+ */
+async function rollback(conn) {
+    return new Promise((resolve, reject) => {
+        conn.rollback(() => { resolve() })
+    })
+}
+/**
+ * 
+ * @param {} conn 
+ */
+function releaseConnection(conn) {
+    return conn.release();
+}
 module.exports = {
     getConnection,
     beginTransaction,
     queryTransaction,
     commitTransaction,
-    exeQuery
+    exeQuery,
+    rollback,
+    releaseConnection
 }
