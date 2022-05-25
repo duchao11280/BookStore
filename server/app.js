@@ -35,6 +35,7 @@ const userRoutes = require('./Routes/user.route');
 const categoryRoutes = require('./Routes/category.route');
 const ratingRoutes = require('./Routes/rating.route');
 const favoriteListRoutes = require('./Routes/favoritelist.route')
+const orderRoutes = require('./Routes/order.route')
 // use route
 app.use('/api/book', bookRoutes)
     .use('/api/admin', adminRoutes)
@@ -42,5 +43,6 @@ app.use('/api/book', bookRoutes)
     .use('/api/category', categoryRoutes)
     .use('/api/rating', ratingRoutes)
     .use('/api/favoritelist', favoriteListRoutes)
+    .use('/api/order', orderRoutes)
 
 module.exports = app;

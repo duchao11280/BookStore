@@ -8,7 +8,7 @@ export default function CardBook(props) {
     const navigate = useNavigate();
     return (
         <div className='col mx-3'>
-            <div className='card-book-details-book d-flex' onClick={() => { navigate('/detailsbook/' + book.bookId, { replace: true }) }}>
+            <div className='card-book-details-book d-flex' onClick={() => { window.location.assign('/detailsbook/' + book.bookId); }}>
                 <img alt='' src={book.thumbnailsUrl} className='image-book-details-book mb-1 ms-auto me-auto' />
                 <div className='card-book-title-details-book'>{book.bookName}</div>
                 <div className=" text-price-sale-details-book mx-3">
@@ -22,12 +22,12 @@ export default function CardBook(props) {
                     <RatingStar
                         count={constants.MAX_STAR}
                         size={35}
-                        value={4}
+                        value={book.avgRate || 5}
                         isHalf={true}
                         activeColor="#F9EF00"
                         edit={false}
                     />
-                    <div className='card-book-text-star-details-book'>({4})</div>
+                    <div className='card-book-text-star-details-book'>({book.numberOfRate || 0})</div>
                 </div>
             </div>
         </div>

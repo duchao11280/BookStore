@@ -23,6 +23,11 @@ const apiInsertFavoriteBook = '/api/favoritelist/add/'
  * /api/favoritelist/delete/:bookid/:userid
  */
 const apiDeleteFavoriteBook = '/api/favoritelist/delete/'
+/**
+ * 
+ */
+const apiGetListBookForOrder = '/api/book/bookforcart/'
+const apiOrderBook = '/api/order/insertorder'
 export {
     apiSignup,
     apiLogin,
@@ -34,5 +39,7 @@ export {
     apiCheckFavoriteBook,
     apiInsertFavoriteBook,
     apiDeleteFavoriteBook,
-    apiGetRelatedBooks
+    apiGetRelatedBooks,
+    apiGetListBookForOrder,
+    apiOrderBook
 }

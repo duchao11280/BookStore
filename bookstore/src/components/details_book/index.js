@@ -62,6 +62,8 @@ export default function DetailsBook() {
                     numberOfRating: allRatingByBookId.data.length,
                     avgRating: allRatingByBookId.avgRating
                 })
+            } else {
+                setListRating([])
             }
             const bookRelated = await getRelatedBooks(id, bookById.data?.subCatId)
             if (bookRelated.status) {
@@ -75,6 +77,7 @@ export default function DetailsBook() {
             setIsLoading(false)
         })();
     }, [refresh])
+
     useEffect(() => {
         (async () => {
             if (isLogin === true) {
