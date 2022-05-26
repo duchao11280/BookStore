@@ -41,6 +41,10 @@ const apiDisableCategory = '/api/category/disable/cat/'
 const apiDisableSubCategory = '/api/category/disable/subcat/'
 const apiGetAllOrder = '/api/admin/order/getall'
 const apiGetAllBook = '/api/admin/book/allbook'
+
+const apiGetAllCategory = '/api/category/getallcat';
+const apiGetAllSubCatByCat = '/api/category/getallsubcat'
+
 export {
     apiSignup,
     apiLogin,
@@ -68,4 +72,6 @@ export {
     apiGetSaleBook,
     apiGetAllOrder,
     apiGetAllBook,
+    apiGetAllCategory,
+    apiGetAllSubCatByCat
 }

@@ -283,6 +283,53 @@ async function getHotCategory(req, res) {
     }
 }
 
+async function getAllCategory(req, res) {
+    try {
+        const query =
+            'SELECT * ' +
+            'FROM categories c ' +
+            'WHERE isDisable = 0'
+        const result = await db.exeQuery(query, []);
+        res.json({
+            statusCode: 200,
+            message: "Lấy dữ liệu thành công",
+            data: result
+        });
+        return;
+    } catch (ex) {
+        res.json({
+            statusCode: 500,
+            message: "Có lỗi xảy ra, lấy dữ liệu thất bại",
+            data: []
+        });
+        return;
+    }
+}
+
+async function getAllSubCatByCat(req, res) {
+    try {
+        const id = req.params.id;
+        const query =
+            'SELECT * ' +
+            'FROM subcategories c ' +
+            'WHERE isDisable = 0 and catId = ? '
+        const result = await db.exeQuery(query, [id]);
+        res.json({
+            statusCode: 200,
+            message: "Lấy dữ liệu thành công",
+            data: result
+        });
+        return;
+    } catch (ex) {
+        res.json({
+            statusCode: 500,
+            message: "Có lỗi xảy ra, lấy dữ liệu thất bại",
+            data: []
+        });
+        return;
+    }
+}
+
 module.exports = {
     getAllCatAndSubCat,
     insertCategory,
@@ -291,5 +338,7 @@ module.exports = {
     updateSubCatName,
     disableSubCat,
     disableCat,
-    getHotCategory
+    getHotCategory,
+    getAllCategory,
+    getAllSubCatByCat
 }

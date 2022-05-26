@@ -1,5 +1,5 @@
 import axios from './axios';
-import { apiGetAllCatAndSubCat, apiInsertCategory, apiUpdateCategory, apiInsertSubCategory, apiUpdateSubCategory, apiDisableCategory, apiDisableSubCategory, apiGetHotCategory } from './apiUrl'
+import { apiGetAllCatAndSubCat, apiInsertCategory, apiUpdateCategory, apiInsertSubCategory, apiUpdateSubCategory, apiDisableCategory, apiDisableSubCategory, apiGetHotCategory, apiGetAllSubCatByCat, apiGetAllCategory } from './apiUrl'
 
 export async function getAllCatAndSubCat() {
     const result = await axios.get(apiGetAllCatAndSubCat)
@@ -116,5 +116,23 @@ export async function disableSubCat(id) {
             status: false,
             message: result.data?.message
         }
+    }
+}
+
+export async function getAllCategory() {
+    const result = await axios.get(apiGetAllCategory);
+    if (result.data?.statusCode === 200) {
+        return result.data?.data
+    } else {
+        return []
+    }
+}
+
+export async function getAllSubCatByCat(id) {
+    const result = await axios.get(apiGetAllSubCatByCat + `/${id}`);
+    if (result.data?.statusCode === 200) {
+        return result.data?.data
+    } else {
+        return []
     }
 }

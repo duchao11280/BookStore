@@ -1,33 +1,33 @@
-.container-admin-addbook {
+.container-admin-editbook {
     display: flex;
     min-height: 100vh;
     background-color: rgba(239, 239, 239, 0.5);
 }
 
-.content-admin-addbook {
+.content-admin-editbook {
     width: 75%;
     padding: 10px 30px;
     margin-top: 20px;
 }
 
-.title-content-admin-addbook {
+.title-content-admin-editbook {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.title-content-admin-addbook > h3 {
+.title-content-admin-editbook > h3 {
     color: #000;
 }
 
-.search-admin-addbook {
+.search-admin-editbook {
     border-radius: 20px;
     width: 300px;
     font-size: 16px;
     background-color: #e5e5e5;
 }
 
-.search-admin-addbook > input {
+.search-admin-editbook > input {
     width: 250px;
     margin: 5px 10px;
     padding: 0px 15px;
@@ -36,11 +36,11 @@
     outline: none;
 }
 
-.search-admin-addbook > i {
+.search-admin-editbook > i {
     color: #000;
 }
 
-.body-content-admin-addbook {
+.body-content-admin-editbook {
     border: 1px solid gray;
     border-radius: 5px;
     /* height: 100vh; */
@@ -48,78 +48,91 @@
     margin-top: 20px;
 }
 
-.body-header-admin-addbook {
+.body-header-admin-editbook {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 30px;
 }
 
-.body-header-admin-addbook > h5 {
+.body-header-admin-editbook > h5 {
 
 }
 
-.body-header-admin-addbook a {
+.body-header-admin-editbook a {
     color: #000;
     font-size: 30px;
     padding: 15px;
 }
 
 
-.main-content-admin-addbook {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 15px;
+.main-content-admin-editbook {
+    padding: 20px;
+    padding-right: 40px;
+    padding-left: 40px;
 }
 
-.main-content-left-admin-addbook {
-    width: 40%;
-    margin: 0 auto;
+.img-admin-edit-book-thumbnails {
+    width: 150px;
+    height: 220px;
+    object-fit: contain;
 }
 
-.main-content-left-admin-addbook > img {
-    width: 50vh;
-    /* height: 50vh; */
+.img-admin-edit-book-cover {
+    width: 500px;
+    height: 220px;
+    object-fit: contain;
 }
 
-.main-content-left-admin-addbook > button {
+.button-admin-edit-book-add-image {
     border-radius: 10px;
-    width: 250px;
-    padding: 10px 15px;
-    font-size: 17px;
+    width: 150px;
+    padding: 5px;
+    font-size: 15px;
     font-weight: 500;
     color: #fff;
     border: none;
     background: lightgreen;
     display: block;
-    margin: 15px auto;
 }
 
-.img-top-left-admin-addbook {
+.button-admin-edit-book-add-image-submit {
+    border-radius: 10px;
+    width: 150px;
+    padding: 5px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    border: none;
+    background: rgb(230, 141, 81);
+    display: block;
+}
+
+.img-top-left-admin-editbook {
     max-height: 200px;
     width: 50vh;
     display: block;
     margin: 0 auto;
 }
 
-.img-bottom-left-admin-addbook {
+.img-bottom-left-admin-editbook {
     max-height: 500px;
     width: 50vh;
     display: block;
     margin: 0 auto;
 }
 
-.main-content-right-admin-addbook {
+.main-content-right-admin-editbook {
     width: 40%;
     margin: auto;
 }
 
-.list-info-book-admin-addbook {
+.list-info-book-admin-editbook {
     margin: 0;
     padding: 0;
 }
 
-.item-info-book-admin-addbook {
+.item-info-book-admin-editbook {
     list-style-type: none;
     display: flex;
     justify-content: space-between;
@@ -129,30 +142,30 @@
     /* margin-right: 30px; */
 }
 
-.item-info-book-admin-addbook > h5 {
+.item-info-book-admin-editbook > h5 {
     width: 30%;
     margin: 0;
 }
 
 
-.item-info-book-admin-addbook > input {
+.item-info-book-admin-editbook > input {
     width: 65%;
     padding: 5px;
 }
 
-.combobox-book-admin-addbook {
-    width: 65%;
-    padding: 5px;
+.combobox-book-admin-editbook {
+    width: 100%;
+    padding: 10px;
 }
 
-.item-info-book-admin-addbook > textarea {
+.item-info-book-admin-editbook > textarea {
     width: 65%;
     height: 100px;
     padding: 5px;
     resize: none ;
 }
 
-.main-content-right-admin-addbook > button {
+.main-content-right-admin-editbook>button {
     width: 100%;
     border: none;
     border-radius: 10px;
@@ -160,6 +173,43 @@
     font-size: 17px;
     font-weight: 500;
     color: #fff;
-    background: #f17171;    
+    background: #f17171;
     margin-top: 15px;
-} 
+}
+
+.padding-admin-5 {
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.custom-file-input::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+.custom-file-input::before {
+    content: 'Chọn ảnh';
+    display: inline-block;
+    background: linear-gradient(top, #f9f9f9, #e3e3e3);
+    border: 1px solid #999;
+    border-radius: 3px;
+    padding: 5px 8px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    text-shadow: 1px 1px #fff;
+    font-weight: 700;
+    font-size: 10pt;
+}
+
+.custom-file-input:hover::before {
+    border-color: black;
+}
+
+.custom-file-input:active::before {
+    background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+
+.custom-file-input-none {
+    display: none;
+}
