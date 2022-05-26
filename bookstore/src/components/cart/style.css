@@ -65,6 +65,9 @@
     justify-content:center;
     background-color: #C4C4C4
 }
+.ins-desc-quantity-cart:hover{
+    cursor: pointer;
+}
 .text-quantity-cart{
     height: 4vh;
     width: 12vh;

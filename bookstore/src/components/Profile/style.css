@@ -1,16 +1,11 @@
 .view-item {
 	cursor: pointer;
+	margin-left: 60px;
+	margin-top: 20px;
+}
+.view-item:hover {
 	border: 1px solid #ccc;
 	border-radius: 5px;
-}
-.account {
-	background-color: aquamarine;
-}
-.buy {
-	background-color: #f2aaaa;
-}
-.wishlist {
-	background-color: #a1ff92;
 }
 .view-main {
 	background-color: #f3d7d7;

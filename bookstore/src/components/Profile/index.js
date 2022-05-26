@@ -1,5 +1,5 @@
 import React from "react";
-import avatar from "../../assets/imgs/icons8-customer-100.png";
+import avatar from "../../assets/icons/user.png";
 import "./style.css";
 export default function Profile() {
 	const [view, setView] = React.useState(1);
@@ -33,6 +33,7 @@ export default function Profile() {
 			id: 3,
 			title: "WishList",
 			class: "wishlist",
+			icon: "fa-solid fa-heart",
 		},
 	];
 
@@ -129,7 +130,7 @@ export default function Profile() {
 						<div className="row">
 							<img src={avatar}></img>
 						</div>
-						<div className="row">
+						<div className="row ">
 							{VIEWS.map((item) => {
 								return (
 									<div
@@ -144,7 +145,6 @@ export default function Profile() {
 									</div>
 								);
 							})}
-							{view}
 						</div>
 					</div>
 					<div className="col-9">
