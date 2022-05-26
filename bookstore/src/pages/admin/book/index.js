@@ -42,17 +42,16 @@ const columns = [
 function Book() {
     const [page, setPage] = React.useState(0);
     const [bookList, setbookList] = useState([]);
+    const [bookDetail, setbookDetail] = useState();
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
 
-    const navigate = useNavigate();
+    const navigate = useNavigate(bookDetail);
     const getBook = () => {
         getAllBook().then(result => {
             setbookList(result)
-            console.log(result);
-
         })
 
     }
@@ -103,7 +102,11 @@ function Book() {
                                                         if (column.id == "button") {
                                                             return (
                                                                 <TableCell>
-                                                                    <img alt="" className="icon-admin-book " src={editIcon} onClick={() => { navigate("/admin/book/editbook/" + row["bookId"]) }} />
+                                                                    <img alt="" className="icon-admin-book " src={editIcon} onClick={() => {
+                                                                        setbookDetail(row);
+                                                                        navigate("/admin/book/editbook/" + row["bookId"])
+                                                                    }}
+                                                                    />
                                                                     <img alt="" className="icon-admin-book" src={deleteIcon} />
                                                                 </TableCell>
 

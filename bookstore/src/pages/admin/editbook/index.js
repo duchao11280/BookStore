@@ -13,7 +13,7 @@ function Editbook() {
                     <div className="search-admin-editbook">
                         <input type="text" />
                         <i className="fa-solid fa-magnifying-glass"></i>
-                    </div>            
+                    </div>
                 </div>
                 <div className="body-content-admin-editbook">
                     <div className="body-header-admin-editbook">
@@ -23,15 +23,15 @@ function Editbook() {
                     </div>
                     <div className="main-content-admin-editbook">
                         <div className="main-content-left-admin-editbook">
-                            <img className="img-top-left-admin-editbook" 
-                                src="/cover2.png" alt="ảnh sách" 
+                            <img className="img-top-left-admin-editbook"
+                                src="/cover2.png" alt="ảnh sách"
                             />
                             <button>Đăng ảnh</button>
-                            <img className="img-bottom-left-admin-editbook" 
-                                src="/thieunhi-thumb.jpg" alt="ảnh sách" 
+                            <img className="img-bottom-left-admin-editbook"
+                                src="/thieunhi-thumb.jpg" alt="ảnh sách"
                             />
                             <button>Đăng ảnh</button>
-                        </div> 
+                        </div>
                         <div className="main-content-right-admin-editbook">
                             <ul className="list-info-book-admin-editbook">
                                 <li className="item-info-book-admin-editbook">
@@ -88,7 +88,7 @@ function Editbook() {
                             <button className="btn-editbook-admin-editbook">Sửa sách</button>
                         </div>
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
     </>);
