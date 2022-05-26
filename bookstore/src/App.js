@@ -16,7 +16,7 @@ import Admin from './pages/admin';
 import Orderdetail from './pages/admin/orderdetail';
 import Editbook from './pages/admin/editbook';
 import Addbook from './pages/admin/addbook';
-
+import CategoriesManagement from './pages/admin/categories'
 export default function App() {
   return (
     <CartProvider>
@@ -29,6 +29,7 @@ export default function App() {
           <Route path='/admin/book/editbook' element={<Editbook />}></Route>
           <Route path='/admin/order' element={<Order />}></Route>
           <Route path='/admin/order/orderdetail' element={<Orderdetail />}></Route>
+          <Route path='/admin/categories' element={<CategoriesManagement />}></Route>
           <Route path='/test' element={<Test />}></Route>
           <Route path='/home' element={<Home />}></Route>
           <Route path='/detailsbook/:id' element={<DetailBook />}></Route>

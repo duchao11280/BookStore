@@ -1,0 +1,36 @@
+.container-categories{
+    min-height: 100vh;
+    padding-top: 65px;
+}
+.container-manage-categories{
+    margin-left: 5%;
+    width:65%;
+}
+.container-item-subcat-category{
+    border: 1px solid black;
+    margin : 15px;
+}
+.btn-add-cat{
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background-color: #25ac32;
+    color: white;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+.btn-add-cat:hover{
+    cursor: pointer;
+}
+.text-title-CatManagement{
+    font-weight: bold;
+}
+.label-modal-cat{
+    font-size: medium;
+    font-weight: bold;
+}
+.fade{
+    animation: none;
+    
+}

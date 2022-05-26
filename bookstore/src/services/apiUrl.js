@@ -28,6 +28,8 @@ const apiDeleteFavoriteBook = '/api/favoritelist/delete/'
  */
 const apiGetListBookForOrder = '/api/book/bookforcart/'
 const apiOrderBook = '/api/order/insertorder'
+const apiInsertCategory = '/api/category/insertcat'
+const apiUpdateCategory = '/api/category/updatecatname/'
 export {
     apiSignup,
     apiLogin,
@@ -41,5 +43,7 @@ export {
     apiDeleteFavoriteBook,
     apiGetRelatedBooks,
     apiGetListBookForOrder,
-    apiOrderBook
+    apiOrderBook,
+    apiInsertCategory,
+    apiUpdateCategory
 }
