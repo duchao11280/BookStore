@@ -5,6 +5,11 @@ const apiGetDetailBookById = '/api/book/'
 const apiGetRatingByBookId = '/api/rating/bybook/'
 const apiUpdateRating = '/api/rating/update/book/'
 const apiInsertRating = '/api/rating/rate/book/'
+const apiGetHotCategory = '/api/category/gethot';
+const apiGetBestSellerBook = '/api/book/getbestseller';
+const apiGetNewBook = '/api/book/getnew';
+const apiGetHotBook = '/api/book/gethot';
+const apiGetSaleBook = '/api/book/getsale';
 /**
  * /related/:bookid/:subcatid
  */
@@ -34,5 +39,10 @@ export {
     apiCheckFavoriteBook,
     apiInsertFavoriteBook,
     apiDeleteFavoriteBook,
-    apiGetRelatedBooks
+    apiGetRelatedBooks,
+    apiGetHotCategory,
+    apiGetBestSellerBook,
+    apiGetHotBook,
+    apiGetNewBook,
+    apiGetSaleBook
 }
