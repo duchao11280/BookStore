@@ -43,7 +43,7 @@
 .body-content-admin-editbook {
     border: 1px solid gray;
     border-radius: 5px;
-    height: 100vh;
+    /* height: 100vh; */
     background-color: #fff;
     margin-top: 20px;
 }
@@ -52,7 +52,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px;
+    padding: 0 30px;
+}
+
+.body-header-admin-editbook > h5 {
+
 }
 
 .body-header-admin-editbook a {
@@ -61,9 +65,6 @@
     padding: 15px;
 }
 
-.body-header-admin-editbook > h5 {
-
-}
 
 .main-content-admin-editbook {
     display: flex;
@@ -71,39 +72,54 @@
     padding-bottom: 15px;
 }
 
-.main-content-left-admin-book {
+.main-content-left-admin-editbook {
     width: 40%;
     margin: 0 auto;
 }
 
-.main-content-left-admin-book > img {
+.main-content-left-admin-editbook > img {
     width: 50vh;
-    height: 50vh;
+    /* height: 50vh; */
 }
 
-.main-content-left-admin-book > button {
+.main-content-left-admin-editbook > button {
     border-radius: 10px;
-    margin: 15px;
-    width: 60%;
+    width: 250px;
     padding: 10px 15px;
     font-size: 17px;
     font-weight: 500;
     color: #fff;
     border: none;
     background: lightgreen;
+    display: block;
+    margin: 15px auto;
 }
 
-.main-content-right-admin-book {
-    width: 50%;
+.img-top-left-admin-editbook {
+    max-height: 200px;
+    width: 50vh;
+    display: block;
     margin: 0 auto;
 }
 
-.list-info-book-admin-book {
+.img-bottom-left-admin-editbook {
+    max-height: 500px;
+    width: 50vh;
+    display: block;
+    margin: 0 auto;
+}
+
+.main-content-right-admin-editbook {
+    width: 40%;
+    margin: auto;
+}
+
+.list-info-book-admin-editbook {
     margin: 0;
     padding: 0;
 }
 
-.item-info-book-admin-book {
+.item-info-book-admin-editbook {
     list-style-type: none;
     display: flex;
     justify-content: space-between;
@@ -113,24 +129,30 @@
     /* margin-right: 30px; */
 }
 
-.item-info-book-admin-book > h5 {
+.item-info-book-admin-editbook > h5 {
     width: 30%;
     margin: 0;
 }
 
 
-.item-info-book-admin-book > input {
+.item-info-book-admin-editbook > input {
     width: 65%;
     padding: 5px;
 }
 
-.item-info-book-admin-book > textarea {
+.combobox-book-admin-editbook {
+    width: 65%;
+    padding: 5px;
+}
+
+.item-info-book-admin-editbook > textarea {
     width: 65%;
     height: 100px;
     padding: 5px;
+    resize: none ;
 }
 
-.main-content-right-admin-book > button {
+.main-content-right-admin-editbook > button {
     width: 100%;
     border: none;
     border-radius: 10px;
