@@ -17,6 +17,7 @@ import Orderdetail from './pages/admin/orderdetail';
 import Editbook from './pages/admin/editbook';
 import Addbook from './pages/admin/addbook';
 import CategoriesManagement from './pages/admin/categories'
+import 'react-toastify/dist/ReactToastify.css';
 export default function App() {
   return (
     <CartProvider>

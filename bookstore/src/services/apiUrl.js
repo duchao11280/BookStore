@@ -30,6 +30,10 @@ const apiGetListBookForOrder = '/api/book/bookforcart/'
 const apiOrderBook = '/api/order/insertorder'
 const apiInsertCategory = '/api/category/insertcat'
 const apiUpdateCategory = '/api/category/updatecatname/'
+const apiInsertSubCategory = '/api/category/insertsubcat/'
+const apiUpdateSubCategory = '/api/category/updatesubcatname/'
+const apiDisableCategory = '/api/category/disable/cat/'
+const apiDisableSubCategory = '/api/category/disable/subcat/'
 export {
     apiSignup,
     apiLogin,
@@ -45,5 +49,9 @@ export {
     apiGetListBookForOrder,
     apiOrderBook,
     apiInsertCategory,
-    apiUpdateCategory
+    apiUpdateCategory,
+    apiInsertSubCategory,
+    apiUpdateSubCategory,
+    apiDisableCategory,
+    apiDisableSubCategory
 }

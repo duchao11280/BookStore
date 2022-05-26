@@ -33,13 +33,13 @@ async function insertCategory(req, res) {
         if (result) {
             res.status(200).json({
                 statusCode: 200,
-                message: "Thêm danh mục thành công"
+                message: "Thêm thể loại thành công"
             });
 
         } else {
             res.status(500).json({
                 statusCode: 500,
-                message: "Thêm danh mục thất bại"
+                message: "Thêm thể loại thất bại"
             });
 
         }
@@ -47,7 +47,7 @@ async function insertCategory(req, res) {
         await db.rollback(conn)
         res.status(500).json({
             statusCode: 500,
-            message: "Có lỗi xảy ra, Thêm danh mục thất bại"
+            message: "Có lỗi xảy ra, Thêm thể loại thất bại"
         });
 
     }
@@ -67,12 +67,12 @@ async function updateCatName(req, res) {
         if (result) {
             res.json({
                 statusCode: 200,
-                message: "Chỉnh sửa tên danh mục thành công"
+                message: "Chỉnh sửa tên thể loại thành công"
             });
         } else {
             res.status(500).json({
                 statusCode: 500,
-                message: "Chỉnh sửa tên danh mục thất bại"
+                message: "Chỉnh sửa tên thể loại thất bại"
             });
         }
 
@@ -80,7 +80,175 @@ async function updateCatName(req, res) {
         db.rollback(conn)
         res.json({
             statusCode: 500,
-            message: "Có lỗi xảy ra, chỉnh sửa tên danh mục thất bại"
+            message: "Có lỗi xảy ra, chỉnh sửa tên thể loại thất bại"
+        });
+    }
+    db.releaseConnection(conn)
+    return;
+}
+async function disableCat(req, res) {
+    let conn = await db.getConnection();
+    try {
+        let catId = req.params.id
+        let query = `UPDATE categories set isDisable = 1 Where catId = ?
+            `
+        conn = await db.beginTransaction(conn);
+        const result = await db.queryTransaction(conn, query, [catId]);
+        if (result) {
+            let queryDisableSubCatByCatId = `UPDATE subcategories set isDisable = 1 Where catId = ?`
+            const resultDisableSubCat = await db.queryTransaction(conn, queryDisableSubCatByCatId, [catId]);
+            if (resultDisableSubCat) {
+                let querySelectBookIdByCatId = `SELECT s.subCatId
+                FROM categories c LEFT JOIN subcategories s on c.catId = s.catId 
+                WHERE  c.catId = ?`
+                const resultSelectSubCat = await db.queryTransaction(conn, querySelectBookIdByCatId, [catId]);
+                resultSelectSubCat.forEach(async (item) => {
+                    let queryDisableBookBySubCat = `UPDATE books set isDisable = 1 Where subCatId = ?`
+                    const resultDisableBook = await db.queryTransaction(conn, queryDisableBookBySubCat, [item.subCatId]);
+                    if (!resultDisableBook) {
+                        db.rollback(conn)
+                        res.status(500).json({
+                            statusCode: 500,
+                            message: "Xóa thể loại thất bại"
+                        });
+                    }
+                })
+            } else {
+                db.rollback(conn)
+                res.status(500).json({
+                    statusCode: 500,
+                    message: "Xóa thể loại thất bại"
+                });
+            }
+            res.json({
+                statusCode: 200,
+                message: "Xóa thể loại thành công"
+            });
+        } else {
+            db.rollback(conn)
+            res.status(500).json({
+                statusCode: 500,
+                message: "Xóa thể loại thất bại"
+            });
+        }
+        await db.commitTransaction(conn);
+    } catch (error) {
+        db.rollback(conn)
+        res.json({
+            statusCode: 500,
+            message: "Có lỗi xảy ra, Xóa thể loại thất bại"
+        });
+    }
+    db.releaseConnection(conn)
+    return;
+}
+
+//===========================SubCategory======================
+async function insertSubCategory(req, res) {
+    let conn = await db.getConnection();
+    try {
+        let catId = req.params.id;
+        let subCatName = req.body.subCatName;
+        let query = `INSERT INTO subcategories(subCatName, catId) VALUES (?,?)`
+        conn = await db.beginTransaction(conn);
+        const result = await db.queryTransaction(conn, query, [subCatName, catId]);
+        await db.commitTransaction(conn);
+        if (result) {
+            res.status(200).json({
+                statusCode: 200,
+                message: "Thêm thể loại con thành công"
+            });
+
+        } else {
+            res.status(500).json({
+                statusCode: 500,
+                message: "Thêm thể loại con thất bại"
+            });
+
+        }
+    } catch (error) {
+        await db.rollback(conn)
+        res.status(500).json({
+            statusCode: 500,
+            message: "Có lỗi xảy ra, Thêm thể loại con thất bại"
+        });
+
+    }
+    db.releaseConnection(conn)
+    return;
+}
+async function updateSubCatName(req, res) {
+    let conn = await db.getConnection();
+    try {
+        let subCatId = req.params.id
+        let subCatName = req.body.subCatName;
+
+        let query = `UPDATE subcategories set subCatName =? Where subCatId = ?`
+        conn = await db.beginTransaction(conn);
+        const result = await db.queryTransaction(conn, query, [subCatName, subCatId]);
+        await db.commitTransaction(conn);
+
+        if (result) {
+            res.json({
+                statusCode: 200,
+                message: "Chỉnh sửa tên thể loại con thành công"
+            });
+        } else {
+            res.status(500).json({
+                statusCode: 500,
+                message: "Chỉnh sửa tên thể loại con thất bại"
+            });
+        }
+
+    } catch (error) {
+        db.rollback(conn)
+        res.json({
+            statusCode: 500,
+            message: "Có lỗi xảy ra, chỉnh sửa tên thể loại con thất bại"
+        });
+    }
+    db.releaseConnection(conn)
+    return;
+}
+
+
+
+async function disableSubCat(req, res) {
+    let conn = await db.getConnection();
+    try {
+        let subCatId = req.params.id
+        let query = `UPDATE subcategories set isDisable = 1 Where subCatId = ?`
+        conn = await db.beginTransaction(conn);
+        const result = await db.queryTransaction(conn, query, [subCatId]);
+        if (result) {
+            let queryDisableBookBySubCat = `UPDATE books set isDisable = 1 Where subCatId = ?`
+            const resultDisableBook = await db.queryTransaction(conn, queryDisableBookBySubCat, [subCatId]);
+            if (resultDisableBook) {
+                res.json({
+                    statusCode: 200,
+                    message: "Xóa thể loại con thành công"
+                });
+            } else {
+                db.rollback(conn)
+                res.status(500).json({
+                    statusCode: 500,
+                    message: "Xóa thể loại con thất bại"
+                });
+            }
+        }
+        else {
+            db.rollback(conn)
+            res.status(500).json({
+                statusCode: 500,
+                message: "Xóa thể loại con thất bại"
+            });
+        }
+        await db.commitTransaction(conn);
+    } catch (error) {
+        db.rollback(conn)
+        res.json({
+            statusCode: 500,
+            message: "Có lỗi xảy ra, Xóa thể loại con thất bại"
         });
     }
     db.releaseConnection(conn)
@@ -89,6 +257,9 @@ async function updateCatName(req, res) {
 module.exports = {
     getAllCatAndSubCat,
     insertCategory,
-    updateCatName
-
+    updateCatName,
+    insertSubCategory,
+    updateSubCatName,
+    disableSubCat,
+    disableCat
 }
