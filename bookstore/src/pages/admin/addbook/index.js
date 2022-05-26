@@ -23,7 +23,13 @@ function Addbook() {
                     </div>
                     <div className="main-content-admin-addbook">
                         <div className="main-content-left-admin-addbook">
-                            <img src="/logo3.png" alt="ảnh sách" />
+                            <img className="img-top-left-admin-addbook" 
+                                src="/cover2.png" alt="ảnh sách" 
+                            />
+                            <button>Đăng ảnh</button>
+                            <img className="img-bottom-left-admin-addbook" 
+                                src="/thieunhi-thumb.jpg" alt="ảnh sách" 
+                            />
                             <button>Đăng ảnh</button>
                         </div> 
                         <div className="main-content-right-admin-addbook">
@@ -33,11 +39,29 @@ function Addbook() {
                                     <input type="text" placeholder="Tên sách" />
                                 </li>
                                 <li className="item-info-book-admin-addbook">
-                                    <h5>Thể loại</h5>
-                                    <input type="text" placeholder="Thể loại" />
+                                    <h5>Thể loại lớn</h5>
+                                    {/* <input type="text" placeholder="Thể loại" /> */}
+                                    <select className="combobox-book-admin-addbook">
+                                        <option value="">Trinh thám</option>
+                                        <option value="">Lãng mạn</option>
+                                        <option value="">Hài hước</option>
+                                    </select>
+                                </li>
+                                <li className="item-info-book-admin-addbook">
+                                    <h5>Thể loại nhỏ</h5>
+                                    {/* <input type="text" placeholder="Thể loại" /> */}
+                                    <select className="combobox-book-admin-addbook">
+                                        <option value="">Trinh thám</option>
+                                        <option value="">Lãng mạn</option>
+                                        <option value="">Hài hước</option>
+                                    </select>
                                 </li>
                                 <li className="item-info-book-admin-addbook">
                                     <h5>Tác giả</h5>
+                                    <input type="text" placeholder="Tác gỉa" />
+                                </li>
+                                <li className="item-info-book-admin-addbook">
+                                    <h5>Ngôn ngữ</h5>
                                     <input type="text" placeholder="Tác gỉa" />
                                 </li>
                                 <li className="item-info-book-admin-addbook">
@@ -54,7 +78,11 @@ function Addbook() {
                                 </li>
                                 <li className="item-info-book-admin-addbook">
                                     <h5>Số lượng</h5>
-                                    <input type="text" placeholder="Số lượng" />
+                                    <input type="number" placeholder="Số lượng" />
+                                </li>
+                                <li className="item-info-book-admin-addbook">
+                                    <h5>Khuyến mãi</h5>
+                                    <input type="text" placeholder="Khuyến mãi" />
                                 </li>
                             </ul>
                             <button className="btn-addbook-admin-addbook">Thêm sách</button>

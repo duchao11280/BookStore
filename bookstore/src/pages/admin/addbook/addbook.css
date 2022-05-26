@@ -43,7 +43,7 @@
 .body-content-admin-addbook {
     border: 1px solid gray;
     border-radius: 5px;
-    height: 100vh;
+    /* height: 100vh; */
     background-color: #fff;
     margin-top: 20px;
 }
@@ -52,7 +52,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px;
+    padding: 0 30px;
 }
 
 .body-header-admin-addbook > h5 {
@@ -79,24 +79,39 @@
 
 .main-content-left-admin-addbook > img {
     width: 50vh;
-    height: 50vh;
+    /* height: 50vh; */
 }
 
 .main-content-left-admin-addbook > button {
     border-radius: 10px;
-    margin: 15px;
-    width: 60%;
+    width: 250px;
     padding: 10px 15px;
     font-size: 17px;
     font-weight: 500;
     color: #fff;
     border: none;
     background: lightgreen;
+    display: block;
+    margin: 15px auto;
+}
+
+.img-top-left-admin-addbook {
+    max-height: 200px;
+    width: 50vh;
+    display: block;
+    margin: 0 auto;
+}
+
+.img-bottom-left-admin-addbook {
+    max-height: 500px;
+    width: 50vh;
+    display: block;
+    margin: 0 auto;
 }
 
 .main-content-right-admin-addbook {
-    width: 50%;
-    margin: 0 auto;
+    width: 40%;
+    margin: auto;
 }
 
 .list-info-book-admin-addbook {
@@ -125,10 +140,16 @@
     padding: 5px;
 }
 
+.combobox-book-admin-addbook {
+    width: 65%;
+    padding: 5px;
+}
+
 .item-info-book-admin-addbook > textarea {
     width: 65%;
     height: 100px;
     padding: 5px;
+    resize: none ;
 }
 
 .main-content-right-admin-addbook > button {
