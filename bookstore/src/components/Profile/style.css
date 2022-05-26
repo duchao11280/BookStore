@@ -1,0 +1,18 @@
+.view-item {
+	cursor: pointer;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+.account {
+	background-color: aquamarine;
+}
+.buy {
+	background-color: #f2aaaa;
+}
+.wishlist {
+	background-color: #a1ff92;
+}
+.view-main {
+	background-color: #f3d7d7;
+	margin-top: 100px;
+}
