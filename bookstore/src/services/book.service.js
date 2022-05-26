@@ -1,5 +1,13 @@
 import axios from './axios';
-import { apiGetDetailBookById, apiGetRelatedBooks, apiGetListBookForOrder } from './apiUrl'
+import { 
+    apiGetDetailBookById, 
+    apiGetRelatedBooks,
+    apiGetHotBook,
+    apiGetNewBook,
+    apiGetBestSellerBook,
+    apiGetSaleBook,
+    apiGetListBookForOrder
+} from './apiUrl'
 
 export async function getDetailBookById(id) {
     const result = await axios.get(apiGetDetailBookById + id)
@@ -52,4 +60,38 @@ export async function getListBookForOrder(arrId) {
         }
     }
 
+export async function getHotBook() {
+    const result = await axios.get(apiGetHotBook)
+    if (result.data?.statusCode === 200) {
+        return result.data?.data;
+    } else {
+        return [];
+    }
+}
+
+export async function getBestSellerBook() {
+    const result = await axios.get(apiGetBestSellerBook)
+    if (result.data?.statusCode === 200) {
+        return result.data?.data;
+    } else {
+        return [];
+    }
+}
+
+export async function getNewBook() {
+    const result = await axios.get(apiGetNewBook)
+    if (result.data?.statusCode === 200) {
+        return result.data?.data;
+    } else {
+        return [];
+    }
+}
+
+export async function getSaleBook() {
+    const result = await axios.get(apiGetSaleBook)
+    if (result.data?.statusCode === 200) {
+        return result.data?.data;
+    } else {
+        return [];
+    }
 }

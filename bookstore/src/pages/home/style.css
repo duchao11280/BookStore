@@ -27,6 +27,7 @@
 .image-category-home {
     width: 80px;
     height: 130px;
+    object-fit: cover;
 }
 
 .button-home-secondary {
