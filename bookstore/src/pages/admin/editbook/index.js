@@ -1,68 +1,272 @@
 import './editbook.css'
 import Sidebaradmin from '../../../components/sidebaradmin';
-import {Link} from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom';
+import { getDetailBookById } from '../../../services/book.service'
+import React from 'react';
+import TextField from '@mui/material/TextField';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
+import settings from '../../../config/settings';
+import { getAllCategory, getAllSubCatByCat } from '../../../services/category.services'
 
-function Addbook() {
-    return ( <>
+
+function Editbook() {
+    const { id } = useParams();
+    const [bookDetails, setBookDetails] = React.useState({});
+    const [category, setCategory] = React.useState("");
+    const [listCategory, setListCategory] = React.useState([]);
+    const [listSubCat, setListSubCat] = React.useState([]);
+    React.useEffect(() => {
+        getDetailBookById(id).then(result => setBookDetails(result.data));
+        getAllCategory().then(result => setListCategory(result));
+    }, [])
+
+    React.useEffect(() => {
+        getAllSubCatByCat(category).then(result => setListSubCat(result));
+    }, [category])
+
+    const onChangeTextBook = (event, key) => {
+        const { target: { name, value } } = event;
+        const newBookDetails = { ...bookDetails };
+        newBookDetails[key] = value;
+        setBookDetails(newBookDetails);
+    }
+
+    const converImageUrl = (image) => {
+        if (typeof image === 'string' || image == null) {
+            return settings.urlImageKey + image
+        } else {
+            return URL.createObjectURL(image);
+        }
+    }
+
+    const onImageChange = (event, key) => {
+        if (event.target.files && event.target.files[0]) {
+            const newBookDetails = { ...bookDetails };
+            let img = event.target.files[0];
+            newBookDetails[key] = img;
+            setBookDetails(newBookDetails);
+            // URL.createObjectURL(img)
+        }
+    }
+
+    const onChangeCat = (e) => {
+        const { name, value } = e.target;
+        setCategory(value);
+    };
+
+    const onChangeSubCat = (e) => {
+        const { name, value } = e.target;
+        const newBookDetails = { ...bookDetails };
+        newBookDetails['catId'] = value;
+        setBookDetails(newBookDetails);
+    };
+
+    const onSubmit = () => {
+        console.log(bookDetails);
+    }
+
+    return (<>
         <div className="container-admin-editbook">
             <Sidebaradmin />
             <div className="content-admin-editbook">
-                <div className="title-content-admin-editbook">
-                    <h3>Book</h3>
-                    <div className="search-admin-editbook">
-                        <input type="text" />
-                        <i className="fa-solid fa-magnifying-glass"></i>
-                    </div>            
-                </div>
-                <div className="body-content-admin-editbook">
+                <div className="body-content-admin-editbook mt-5">
                     <div className="body-header-admin-editbook">
                         <Link to="/admin/book">
-                            <a><i class="fa-solid fa-angle-left"></i></a>
+                            <i className="fa-solid fa-angle-left"></i>
                         </Link>
                     </div>
                     <div className="main-content-admin-editbook">
-                        <div className="main-content-left-admin-book">
-                            <img src="/logo3.png" alt="ảnh sách" />
-                            <button>Đăng ảnh</button>
-                        </div> 
-                        <div className="main-content-right-admin-book">
-                            <ul className="list-info-book-admin-book">
-                                <li className="item-info-book-admin-book">
-                                    <h5>Tên sách</h5>
-                                    <input type="text" placeholder="Tên sách" />
-                                </li>
-                                <li className="item-info-book-admin-book">
-                                    <h5>Thể loại</h5>
-                                    <input type="text" placeholder="Thể loại" />
-                                </li>
-                                <li className="item-info-book-admin-book">
-                                    <h5>Tác giả</h5>
-                                    <input type="text" placeholder="Tác gỉa" />
-                                </li>
-                                <li className="item-info-book-admin-book">
-                                    <h5>Nhà xuất bản</h5>
-                                    <input type="text" placeholder="Nhà xuất bản" />
-                                </li>
-                                <li className="item-info-book-admin-book">
-                                    <h5>Năm xuất bản</h5>
-                                    <input type="text" placeholder="Năm xuất bản" />
-                                </li>
-                                <li className="item-info-book-admin-book">
-                                    <h5>Mô tả</h5>
-                                    <textarea placeholder="Mô tả" />
-                                </li>
-                                <li className="item-info-book-admin-book">
-                                    <h5>Số lượng</h5>
-                                    <input type="text" placeholder="Số lượng" />
-                                </li>
-                            </ul>
-                            <button className="btn-addbook-admin-editbook">Sửa sách</button>
+                        <div className='row'>
+                            <div className='col-4'>
+                                <h6>Ảnh đại diện</h6>
+                                <div className="d-flex flex-column">
+                                    <img className="img-admin-edit-book-thumbnails"
+                                        src={converImageUrl(bookDetails.thumbnails)} alt="ảnh sách"
+                                    />
+                                    <input className='custom-file-input-none' type="file" name="images" id='id-image-thumbnails' multiple accept="image/*" onChange={(event) => onImageChange(event, 'thumbnails')} />
+                                    <label className='custom-file-input' htmlFor='id-image-thumbnails'>
+                                    </label>
+                                </div>
+                            </div>
+                            <div className='col-8'>
+                                <div className="d-flex flex-column">
+                                    <h6>Ảnh bìa</h6>
+                                    <div className="d-flex flex-column">
+                                        <img className="img-admin-edit-book-cover"
+                                            src={converImageUrl(bookDetails.cover)} alt="ảnh sách"
+                                        />
+                                        <input className='custom-file-input-none' type="file" name="images" id='id-image-cover' multiple accept="image/*" onChange={(event) => onImageChange(event, 'cover')} />
+                                        <label className='custom-file-input' htmlFor='id-image-cover'>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='row mt-5'>
+                            <div className='col-sm-5'>
+                                <div className="form-group row">
+                                    <label className="col-sm-4 col-form-label h6">Tên sách</label>
+                                    <div className="col-sm-8">
+                                        <TextField label="Tên sách" variant="outlined" style={{ width: '100%' }} defaultValue="Tên sách" value={bookDetails.bookName}
+                                            onChange={(event) => {
+                                                onChangeTextBook(event, "bookName")
+                                            }} />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='col-sm-1' />
+                            <div className='col-sm-5'>
+                                <div className="form-group row">
+                                    <label className="col-sm-4 col-form-label h6">Ngôn ngữ</label>
+                                    <div className="col-sm-8">
+                                        <TextField label="Ngôn ngữ" variant="outlined" style={{ width: '100%' }} value={bookDetails.language} defaultValue="Ngôn ngữ"
+                                            onChange={(event) => {
+                                                onChangeTextBook(event, "language")
+                                            }} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='row mt-4'>
+
+                        </div>
+                        <div className='row mt-2'>
+                            <div className='col-sm-5'>
+                                <div className="form-group row">
+                                    <label className="col-sm-4 col-form-label h6">Thể loại chung</label>
+                                    <div className="col-sm-8">
+                                        <select className="combobox-book-admin-editbook" value={category}
+                                            onChange = {onChangeCat}>
+                                            {
+                                                listCategory.map((category, key) => {
+                                                    return (
+                                                        <option value={category.catId} key={category.catId}>{category.catName}</option>
+                                                    )
+                                                })
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='col-sm-1' />
+                            <div className='col-sm-5'>
+                                <div className="form-group row">
+                                    <label className="col-sm-4 col-form-label h6">Thể loại chi tiết</label>
+                                    <div className="col-sm-8">
+                                        <select className="combobox-book-admin-editbook" value={bookDetails.catId} 
+                                        onChange = {onChangeSubCat}>
+                                            {listSubCat.map((value, key) => {
+                                                return (
+                                                    <option value={value.subCatId} key={value.subCatId}>{value.subCatName}</option>
+                                                )
+                                            })}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='row mt-4'>
+                            <div className='col-sm-5'>
+                                <div className="form-group row">
+                                    <label className="col-sm-4 col-form-label h6">Tác giả</label>
+                                    <div className="col-sm-8">
+                                        <TextField label="Tác giả" variant="outlined" style={{ width: '100%' }} defaultValue="Tác giả" value={bookDetails.auth}
+                                            onChange={(event) => {
+                                                onChangeTextBook(event, "auth")
+                                            }} />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='col-sm-1' />
+                            <div className='col-sm-5'>
+                                <div className="form-group row">
+                                    <label className="col-sm-4 col-form-label h6">Nhà xuất bản</label>
+                                    <div className="col-sm-8">
+                                        <TextField label="Nhà xuất bản" variant="outlined" style={{ width: '100%' }} defaultValue="Nhà xuất bản" value={bookDetails.nxb}
+                                            onChange={(event) => {
+                                                onChangeTextBook(event, "nxb")
+                                            }} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='row mt-4'>
+                            <div className='col-sm-5'>
+                                <div className="form-group row">
+                                    <label className="col-sm-4 col-form-label h6">Năm xuất bản</label>
+                                    <div className="col-sm-8">
+                                        <TextField label="Năm xuất bản" variant="outlined" style={{ width: '100%' }} defaultValue="Năm xuất bản" value={bookDetails.year}
+                                            onChange={(event) => {
+                                                onChangeTextBook(event, "year")
+                                            }} />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='col-sm-1' />
+                            <div className='col-sm-5'>
+                                <div className="form-group row">
+                                    <label className="col-sm-4 col-form-label h6">Số lượng</label>
+                                    <div className="col-sm-8">
+                                        <TextField label="Số lượng" variant="outlined" style={{ width: '100%' }} defaultValue="Số lượng" value={bookDetails.quantity}
+                                            onChange={(event) => {
+                                                onChangeTextBook(event, "quantity")
+                                            }} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='row mt-4'>
+                            <div className='col-sm-5'>
+                                <div className="form-group row">
+                                    <label className="col-sm-4 col-form-label h6">Đơn giá</label>
+                                    <div className="col-sm-8">
+                                        <TextField label="Đơn giá" variant="outlined" style={{ width: '100%' }} defaultValue="Đơn giá" value={bookDetails.price}
+                                            onChange={(event) => {
+                                                onChangeTextBook(event, "price")
+                                            }} />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='col-sm-1' />
+                            <div className='col-sm-5'>
+                                <div className="form-group row">
+                                    <label className="col-sm-4 col-form-label h6">Tỷ lệ bán</label>
+                                    <div className="col-sm-8">
+                                        <TextField label="Tỷ lệ bán" variant="outlined" style={{ width: '100%' }} defaultValue="Giảm giá" value={bookDetails.sale}
+                                            onChange={(event) => {
+                                                onChangeTextBook(event, "sale")
+                                            }} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='row mt-4'>
+                            <div className="form-group row">
+                                <label className="col-sm-2 col-form-label h6">Mô tả</label>
+                                <div className="col-sm-8">
+                                    <TextareaAutosize
+                                        aria-label="minimum height"
+                                        minRows={5}
+                                        placeholder="Minimum 3 rows"
+                                        style={{ width: '100%' }}
+                                        value={bookDetails.description}
+                                        defaultValue={bookDetails.description}
+                                        onChange={(event) => {
+                                            onChangeTextBook(event, "description")
+                                        }}
+                                    />
+                                </div>
+                                <div className='col' />
+                            </div>
+                        </div>
+                        <div className='row d-flex justify-content-center mt-5'>
+                            <button className='button-admin-edit-book-add-image-submit' onClick={onSubmit}>Chỉnh sửa</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </> );
+    </>);
 }
 
-export default Addbook; 
+export default Editbook; 

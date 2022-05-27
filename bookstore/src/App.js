@@ -27,10 +27,11 @@ export default function App() {
           <Route path='/admin' element={<Admin />}></Route>
           <Route path='/admin/book' element={<Book />}></Route>
           <Route path='/admin/book/addbook' element={<Addbook />}></Route>
-          <Route path='/admin/book/editbook' element={<Editbook />}></Route>
+          <Route path='/admin/book/editbook/:id' element={<Editbook />}></Route>
           <Route path='/admin/order' element={<Order />}></Route>
           <Route path='/admin/order/orderdetail' element={<Orderdetail />}></Route>
           <Route path='/admin/categories' element={<CategoriesManagement />}></Route>
+          <Route path='/admin/order/orderdetail/:id' element={<Orderdetail />}></Route>
           <Route path='/test' element={<Test />}></Route>
           <Route path='/home' element={<Home />}></Route>
           <Route path='/detailsbook/:id' element={<DetailBook />}></Route>

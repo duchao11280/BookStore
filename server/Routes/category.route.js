@@ -4,7 +4,8 @@ const {
     insertCategory,
     updateCatName,
     insertSubCategory, updateSubCatName,
-    disableSubCat, disableCat, getHotCategory } = require('../Controllers/category.controller');
+    disableSubCat, disableCat, getHotCategory,
+    getAllCategory, getAllSubCatByCat } = require('../Controllers/category.controller');
 const router = express.Router();
 
 router.get('/getall', getAllCatAndSubCat);
@@ -21,4 +22,8 @@ router.put('/updatesubcatname/:id', updateSubCatName)
 router.put('/disable/subcat/:id', disableSubCat)
 
 router.put('/disable/cat/:id', disableCat)
+router.get('/getallcat', getAllCategory);
+
+router.get('/getallsubcat/:id', getAllSubCatByCat);
+
 module.exports = router;

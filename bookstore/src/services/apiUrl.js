@@ -39,6 +39,22 @@ const apiInsertSubCategory = '/api/category/insertsubcat/'
 const apiUpdateSubCategory = '/api/category/updatesubcatname/'
 const apiDisableCategory = '/api/category/disable/cat/'
 const apiDisableSubCategory = '/api/category/disable/subcat/'
+const apiGetAllOrder = '/api/admin/order/getall'
+const apiGetAllBook = '/api/admin/book/allbook'
+
+const apiGetAllCategory = '/api/category/getallcat';
+const apiGetAllSubCatByCat = '/api/category/getallsubcat'
+
+const apiDeleteBook = '/api/admin/book/delete/'
+
+const apiGetDetailOrderById = '/api/admin/order/'
+
+const apigetDetailSumOfPriceById = '/api/admin/detailorder/'
+
+const apiAcceptOrder = '/api/admin//order/updatestatus'
+
+
+
 export {
     apiSignup,
     apiLogin,
@@ -63,5 +79,14 @@ export {
     apiGetBestSellerBook,
     apiGetHotBook,
     apiGetNewBook,
-    apiGetSaleBook
+    apiGetSaleBook,
+    apiGetAllOrder,
+    apiGetAllBook,
+    apiGetAllCategory,
+    apiGetAllSubCatByCat,
+    apiDeleteBook,
+    apiGetDetailOrderById,
+    apigetDetailSumOfPriceById,
+    apiAcceptOrder,
+
 }

@@ -1,12 +1,14 @@
 import axios from './axios';
-import { 
-    apiGetDetailBookById, 
+import {
+    apiGetDetailBookById,
     apiGetRelatedBooks,
     apiGetHotBook,
     apiGetNewBook,
     apiGetBestSellerBook,
     apiGetSaleBook,
-    apiGetListBookForOrder
+    apiGetListBookForOrder,
+    apiGetAllBook,
+    apiDeleteBook
 } from './apiUrl'
 
 export async function getDetailBookById(id) {
@@ -94,5 +96,29 @@ export async function getSaleBook() {
         return result.data?.data;
     } else {
         return [];
+    }
+}
+
+export async function getAllBook() {
+    const result = await axios.get(apiGetAllBook)
+    if (result.status === 200) {
+        return result.data?.data
+    } else {
+        return []
+    }
+}
+
+export async function deleteBook(id) {
+    const result = await axios.post(apiDeleteBook + id, {
+        id: id
+    });
+    if (result.data?.statusCode === 200) {
+        return {
+            status: true,
+        }
+    } else {
+        return {
+            status: false,
+        }
     }
 }
