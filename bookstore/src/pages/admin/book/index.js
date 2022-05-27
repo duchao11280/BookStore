@@ -1,7 +1,7 @@
 import './adminbook.css'
 import { Link } from 'react-router-dom'
 import Sidebaradmin from '../../../components/sidebaradmin';
-import { getAllBook } from '../../../services/book.service'
+import { getAllBook, deleteBook } from '../../../services/book.service'
 import editIcon from '../../../assets/icons/editing.png'
 import deleteIcon from '../../../assets/icons/delete.png'
 import { useNavigate } from 'react-router-dom';
@@ -57,6 +57,11 @@ function Book() {
     }
     React.useEffect(getBook, [])
 
+    const handleDeleteBook = (id) => {
+        deleteBook(id).then(() => { window.location.reload(); })
+
+    }
+
 
 
     return (
@@ -103,11 +108,12 @@ function Book() {
                                                             return (
                                                                 <TableCell>
                                                                     <img alt="" className="icon-admin-book " src={editIcon} onClick={() => {
-                                                                        setbookDetail(row);
                                                                         navigate("/admin/book/editbook/" + row["bookId"])
                                                                     }}
                                                                     />
-                                                                    <img alt="" className="icon-admin-book" src={deleteIcon} />
+                                                                    <img alt="" className="icon-admin-book" src={deleteIcon} onClick={() => {
+                                                                        handleDeleteBook(row["bookId"]);
+                                                                    }} />
                                                                 </TableCell>
 
                                                             )

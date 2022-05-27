@@ -45,6 +45,12 @@ const apiGetAllBook = '/api/admin/book/allbook'
 const apiGetAllCategory = '/api/category/getallcat';
 const apiGetAllSubCatByCat = '/api/category/getallsubcat'
 
+const apiDeleteBook = '/api/admin/book/delete/'
+
+const apiGetDetailOrderById = '/api/admin/order/'
+
+const apigetDetailSumOfPriceById = '/api/admin/detailorder/'
+
 export {
     apiSignup,
     apiLogin,
@@ -73,5 +79,8 @@ export {
     apiGetAllOrder,
     apiGetAllBook,
     apiGetAllCategory,
-    apiGetAllSubCatByCat
+    apiGetAllSubCatByCat,
+    apiDeleteBook,
+    apiGetDetailOrderById,
+    apigetDetailSumOfPriceById
 }

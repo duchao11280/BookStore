@@ -107,13 +107,34 @@
     padding: 5px 10px;
 }
 
-.item-category-admin-orderdetail > button {
+.item-category-admin-orderdetail-waiting > button {
+    border: none;
+    background-color: rgb(227, 249, 65);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+
+.item-category-admin-orderdetail-shipper > button {
     border: none;
     background-color: lightgreen;
     padding: 5px 10px;
     border-radius: 20px;
     font-weight: 500;
 }
+
+.item-category-admin-orderdetail-cancelled > button {
+    border: none;
+    background-color: rgb(137, 138, 135);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+
+
+
 
 .btn-admin-orderdetail {
     display: flex;

@@ -52,6 +52,10 @@ function Order() {
         })
 
     }
+
+    const handleSatus = (id) => {
+
+    }
     const navigate = useNavigate();
     React.useEffect(getOrder, [])
 
@@ -116,14 +120,41 @@ function Order() {
                                                     {columns.map((column) => {
                                                         const value = row[column.id];
                                                         if (column.id == "status") {
-                                                            return (
-                                                                <TableCell>
-                                                                    <td className="link-orderdetail-adminbook">
-                                                                        <button className="btn-cancelled-admin-order" onClick={() => { navigate("/admin/order/orderdetail/" + row["orderId"]) }}>Đã hủy</button>
-                                                                    </td>
-                                                                </TableCell>
+                                                            if (row.status == 0) {
+                                                                return (
+                                                                    <TableCell>
+                                                                        <td className="link-orderdetail-adminbook">
+                                                                            <button className="btn-waiting-admin-order" onClick={() => { navigate("/admin/order/orderdetail/" + row["orderId"]) }}>Đang đợi</button>
+                                                                        </td>
+                                                                    </TableCell>
 
-                                                            )
+                                                                )
+                                                            }
+                                                            else if (row.status == 1) {
+                                                                return (
+                                                                    <TableCell>
+                                                                        <td className="link-orderdetail-adminbook">
+                                                                            <button className="btn-shipper-admin-order" onClick={() => { navigate("/admin/order/orderdetail/" + row["orderId"]) }} >Đang giao</button>
+                                                                        </td>
+                                                                    </TableCell>
+
+                                                                )
+                                                            }
+                                                            else {
+                                                                return (
+                                                                    <TableCell>
+                                                                        <td className="link-orderdetail-adminbook">
+                                                                            <button className="btn-cancelled-admin-order" onClick={() => { navigate("/admin/order/orderdetail/" + row["orderId"]) }}   >Đã hủy</button>
+                                                                        </td>
+                                                                    </TableCell>
+
+                                                                )
+                                                            }
+
+
+
+
+
                                                         }
 
                                                         return (
@@ -148,7 +179,6 @@ function Order() {
                             rowsPerPage={10}
                             page={page}
                             onPageChange={handleChangePage}
-
                         />
                     </Paper>
                 </div>

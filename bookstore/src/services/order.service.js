@@ -1,5 +1,5 @@
 import axios from './axios';
-import { apiOrderBook, apiGetAllOrder } from './apiUrl'
+import { apiOrderBook, apiGetAllOrder, apiGetDetailOrderById, apigetDetailSumOfPriceById } from './apiUrl'
 
 
 // insert rating 
@@ -30,4 +30,40 @@ export async function getAllOrder() {
     } else {
         return []
     }
+}
+
+export async function getDetailOrderById(id) {
+    const result = await axios.get(apiGetDetailOrderById + id)
+    if (result.status === 200) {
+        return {
+            data: result.data?.data[0],
+            status: true,
+            message: result.data?.message
+        }
+    } else {
+        return {
+            status: false,
+            message: result.data?.message,
+            data: {}
+        }
+    }
+
+}
+
+export async function getDetailSumOfPriceById(id) {
+    const result = await axios.get(apigetDetailSumOfPriceById + id)
+    if (result.status === 200) {
+        return {
+            data: result.data?.data[0],
+            status: true,
+            message: result.data?.message
+        }
+    } else {
+        return {
+            status: false,
+            message: result.data?.message,
+            data: {}
+        }
+    }
+
 }

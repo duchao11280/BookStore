@@ -7,7 +7,8 @@ import {
     apiGetBestSellerBook,
     apiGetSaleBook,
     apiGetListBookForOrder,
-    apiGetAllBook
+    apiGetAllBook,
+    apiDeleteBook
 } from './apiUrl'
 
 export async function getDetailBookById(id) {
@@ -104,5 +105,20 @@ export async function getAllBook() {
         return result.data?.data
     } else {
         return []
+    }
+}
+
+export async function deleteBook(id) {
+    const result = await axios.post(apiDeleteBook + id, {
+        id: id
+    });
+    if (result.data?.statusCode === 200) {
+        return {
+            status: true,
+        }
+    } else {
+        return {
+            status: false,
+        }
     }
 }
