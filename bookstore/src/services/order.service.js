@@ -1,5 +1,5 @@
 import axios from './axios';
-import { apiOrderBook, apiGetAllOrder, apiGetDetailOrderById, apigetDetailSumOfPriceById, apiAcceptOrder, apiCancelOrder } from './apiUrl'
+import { apiOrderBook, apiGetAllOrder, apiGetDetailOrderById, apigetDetailSumOfPriceById, apiAcceptOrder, } from './apiUrl'
 
 
 // insert rating 
@@ -67,8 +67,11 @@ export async function getDetailSumOfPriceById(id) {
     }
 }
 
-export async function acceptOrderbyId(id) {
-    const result = await axios.post(apiAcceptOrder + id)
+export async function updateOrderStatusbyId(status, orderId) {
+    const result = await axios.post(apiAcceptOrder, {
+        status: status,
+        orderId: orderId
+    })
     if (result.status === 200) {
         return {
             status: true,
@@ -82,17 +85,3 @@ export async function acceptOrderbyId(id) {
 
 }
 
-export async function cancelOrderbyId(id) {
-    const result = await axios.post(apiCancelOrder + id)
-    if (result.status === 200) {
-        return {
-            status: true,
-        }
-    }
-    else {
-        return {
-            status: false,
-        }
-    }
-
-}

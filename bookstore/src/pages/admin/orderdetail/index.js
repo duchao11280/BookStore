@@ -1,7 +1,7 @@
 import './orderdetail.css'
 import Sidebaradmin from '../../../components/sidebaradmin';
 import { Link, useParams } from 'react-router-dom'
-import { getDetailOrderById, getDetailSumOfPriceById, acceptOrderbyId, cancelOrderbyId } from '../../../services/order.service'
+import { getDetailOrderById, getDetailSumOfPriceById, updateOrderStatusbyId } from '../../../services/order.service'
 import React from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -18,9 +18,10 @@ function Orderdetail() {
         getDetailSumOfPriceById(id).then(result => setOrderSumPrice(result.data));
     }, [refresh])
 
-    const onAcceptOrder = (id) => {
-        acceptOrderbyId(id).then(() => {
-            toast.success(" Duyệt thành công", {
+    const onUpdateOrder = (status, id) => {
+
+        updateOrderStatusbyId(status, id).then(() => {
+            toast.success("Cập nhật đơn hàng thành công", {
                 position: "top-right",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -34,20 +35,7 @@ function Orderdetail() {
         })
     }
 
-    const onCancelOrder = (id) => {
-        cancelOrderbyId(id).then(() => {
-            toast.success(" Xóa thành công", {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-            setRefresh(!refresh)
-        })
-    }
+
     return (<>
         <div className="container-admin-orderdetail">
             <ToastContainer />
@@ -79,31 +67,43 @@ function Orderdetail() {
                             <li className="item-title-admin-orderdetail">Tổng tiền:</li>
                             <li className="item-title-admin-orderdetail">Trạng thái</li>
                         </ul>
-                        <ul className="list-category-admin-orderdetail">
-                            <li className="item-category-admin-orderdetail">{orderDetails.orderId}</li>
-                            <li className="item-category-admin-orderdetail">{orderDetails.fullName}</li>
-                            <li className="item-category-admin-orderdetail">{orderDetails.phone}</li>
-                            <li className="item-category-admin-orderdetail">{orderDetails.address}</li>
-                            <li className="item-category-admin-orderdetail">{orderSumPrice.sumPrice}</li>
+                        <ul className="list-title-admin-orderdetail">
+                            <li className="item-title-admin-orderdetail">{orderDetails.orderId}</li>
+                            <li className="item-title-admin-orderdetail">{orderDetails.fullName}</li>
+                            <li className="item-title-admin-orderdetail">{orderDetails.phone}</li>
+                            <li className="item-title-admin-orderdetail">{orderDetails.address}</li>
+                            <li className="item-title-admin-orderdetail">{orderSumPrice.sumPrice}</li>
                             {/* <li className="item-category-admin-orderdetail">{orderDetails.status}</li> */}
                             {/* <li className="item-category-admin-orderdetail">
                                 <button>Chờ duyệt</button>
                             </li> */}
                             {
                                 orderDetails.status === 0 ? <div className="item-category-admin-orderdetail-waiting">
-                                    <button>Chờ duyệt</button>
+                                    <div>Chờ duyệt</div>
                                 </div> :
                                     <div></div>
                             }
                             {
                                 orderDetails.status === 1 ? <div className="item-category-admin-orderdetail-shipper">
-                                    <button>Đang Giao</button>
+                                    <div>Đang Giao</div>
                                 </div> :
                                     <div></div>
                             }
                             {
                                 orderDetails.status === 2 ? <div className="item-category-admin-orderdetail-cancelled">
-                                    <button>Đã Hủy</button>
+                                    <div>Đã Hủy</div>
+                                </div> :
+                                    <div></div>
+                            }
+                            {
+                                orderDetails.status === 3 ? <div className="item-category-admin-orderdetail-cancelled">
+                                    <div> Giao thất bại</div>
+                                </div> :
+                                    <div></div>
+                            }
+                            {
+                                orderDetails.status === 4 ? <div className="item-category-admin-orderdetail-complete">
+                                    <div>Giao Thành công</div>
                                 </div> :
                                     <div></div>
                             }
@@ -113,16 +113,31 @@ function Orderdetail() {
                     {
                         orderDetails.status === 0 ?
                             <div className="btn-admin-orderdetail">
-                                <button className="submit-admin-orderdetail" style={{ backgroundColor: '#13e813' }} onClick={() => { onAcceptOrder(id) }}>
+                                <button className="submit-admin-orderdetail" style={{ backgroundColor: '#13e813' }} onClick={() => { onUpdateOrder(1, id) }}>
                                     Duyệt
                                 </button>
-                                <button className="submit-admin-orderdetail" style={{ backgroundColor: '#ff4242' }} onClick={() => { onCancelOrder(id) }}>
+                                <button className="submit-admin-orderdetail" style={{ backgroundColor: '#ff4242' }} onClick={() => { onUpdateOrder(2, id) }}>
                                     Từ chối
                                 </button>
                             </div>
                             :
                             <div></div>
                     }
+
+                    {
+                        orderDetails.status === 1 ?
+                            <div className="btn-admin-orderdetail">
+                                <button className="submit-admin-orderdetail" style={{ backgroundColor: '#13e813' }} onClick={() => { onUpdateOrder(4, id) }}>
+                                    Giao thành công
+                                </button>
+                                <button className="submit-admin-orderdetail" style={{ backgroundColor: '#ff4242' }} onClick={() => { onUpdateOrder(3, id) }}>
+                                    Giao thất bại
+                                </button>
+                            </div>
+                            :
+                            <div></div>
+                    }
+
 
                 </div>
             </div>

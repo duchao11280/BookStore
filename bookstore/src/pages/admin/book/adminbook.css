@@ -129,9 +129,10 @@
     width: 25px;
     height: 25px;
     margin:3px;
+
 }
 .icon-admin-book :hover{
-    cursor: pointer;
+    cursor: pointer !important;
 }
 
 .bookName-admin-long {
@@ -141,4 +142,9 @@
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
+}
+
+ 
+.body-content-admin-book div div table tbody tr td :hover{
+    cursor: pointer;
 }

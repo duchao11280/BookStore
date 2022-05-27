@@ -51,9 +51,9 @@ const apiGetDetailOrderById = '/api/admin/order/'
 
 const apigetDetailSumOfPriceById = '/api/admin/detailorder/'
 
-const apiAcceptOrder = '/api/admin/accept/'
+const apiAcceptOrder = '/api/admin//order/updatestatus'
 
-const apiCancelOrder = '/api/admin/cancel/'
+
 
 export {
     apiSignup,
@@ -88,5 +88,5 @@ export {
     apiGetDetailOrderById,
     apigetDetailSumOfPriceById,
     apiAcceptOrder,
-    apiCancelOrder
+
 }

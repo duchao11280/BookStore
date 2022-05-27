@@ -32,6 +32,8 @@ const columns = [
     {
         id: 'status',
         label: 'Trạng Thái',
+        paddingleft: "43px",
+
 
 
     },
@@ -48,9 +50,7 @@ function Order() {
         getAllOrder().then(result => {
             setorderList(result);
             console.log(result);
-
         })
-
     }
 
 
@@ -102,7 +102,7 @@ function Order() {
                                             <TableCell
                                                 key={column.id}
                                                 align={column.align}
-                                                style={{ minWidth: column.minWidth }}
+                                                style={{ minWidth: column.minWidth, paddingLeft: column.paddingleft }}
                                             >
                                                 {column.label}
                                             </TableCell>
@@ -138,25 +138,38 @@ function Order() {
 
                                                                 )
                                                             }
-                                                            else {
+                                                            else if (row.status === 3) {
+                                                                return (
+                                                                    <TableCell>
+                                                                        <td className="link-orderdetail-adminbook">
+                                                                            <button className="btn-cancelled-admin-order" onClick={() => { navigate("/admin/order/orderdetail/" + row["orderId"]) }} >Giao thất bại</button>
+                                                                        </td>
+                                                                    </TableCell>
+
+                                                                )
+                                                            }
+                                                            else if (row.status === 4) {
+                                                                return (
+                                                                    <TableCell>
+                                                                        <td className="link-orderdetail-adminbook">
+                                                                            <button className="btn-complete-admin-order " onClick={() => { navigate("/admin/order/orderdetail/" + row["orderId"]) }} >giao thành công</button>
+                                                                        </td>
+                                                                    </TableCell>
+
+                                                                )
+                                                            }
+                                                            else if (row.status === 2) {
                                                                 return (
                                                                     <TableCell>
                                                                         <td className="link-orderdetail-adminbook">
                                                                             <button className="btn-cancelled-admin-order" onClick={() => { navigate("/admin/order/orderdetail/" + row["orderId"]) }}    >Đã hủy</button>
                                                                         </td>
                                                                     </TableCell>
-
                                                                 )
                                                             }
-
-
-
-
-
                                                         }
 
                                                         return (
-
                                                             <TableCell key={column.id} align={column.align}>
                                                                 {column.format && typeof value === 'number'
                                                                     ? column.format(value)

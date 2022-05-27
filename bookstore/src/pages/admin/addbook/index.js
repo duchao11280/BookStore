@@ -1,7 +1,6 @@
 import './addbook.css'
 import Sidebaradmin from '../../../components/sidebaradmin';
 import { Link, useParams } from 'react-router-dom';
-import { getDetailBookById } from '../../../services/book.service'
 import React from 'react';
 import TextField from '@mui/material/TextField';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
@@ -31,11 +30,11 @@ function Addbook() {
     const [listCategory, setListCategory] = React.useState([]);
     const [listSubCat, setListSubCat] = React.useState([]);
     React.useEffect(() => {
-        getAllCategory().then(result => setListCategory(result));
+        getAllCategory().then(result => { setListCategory(result); });
     }, [])
 
     React.useEffect(() => {
-        getAllSubCatByCat(category).then(result => setListSubCat(result));
+        getAllSubCatByCat(category).then(result => { setListSubCat(result); console.log(result); });
     }, [category])
 
     const onChangeTextBook = (event, key) => {
