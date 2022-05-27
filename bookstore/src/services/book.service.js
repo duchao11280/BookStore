@@ -59,6 +59,7 @@ export async function getListBookForOrder(arrId) {
             data: []
         }
     }
+}
 
 export async function getHotBook() {
     const result = await axios.get(apiGetHotBook)
