@@ -4,10 +4,11 @@ const {
     insertCategory,
     updateCatName,
     insertSubCategory, updateSubCatName,
-    disableSubCat, disableCat } = require('../Controllers/category.controller');
+    disableSubCat, disableCat, getHotCategory } = require('../Controllers/category.controller');
 const router = express.Router();
 
 router.get('/getall', getAllCatAndSubCat);
+router.get('/gethot', getHotCategory);
 
 router.post('/insertcat/', insertCategory)
 

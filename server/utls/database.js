@@ -5,7 +5,6 @@
  */
 
 const mysql = require('mysql');
-const { connect } = require('../app');
 const settings = require('../config/settings');
 
 const pool = mysql.createPool({
