@@ -1,5 +1,9 @@
 import axios from './axios';
-import { apiGetRatingByBookId, apiUpdateRating, apiInsertRating } from './apiUrl'
+import { 
+    apiGetRatingByBookId, 
+    apiUpdateRating, 
+    apiInsertRating 
+} from './apiUrl'
 
 export async function getRatingByBookId(id) {
     const result = await axios.get(apiGetRatingByBookId + id).catch((err) => { return err })

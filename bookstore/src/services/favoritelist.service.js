@@ -1,5 +1,9 @@
 import axios from './axios';
-import { apiDeleteFavoriteBook, apiCheckFavoriteBook, apiInsertFavoriteBook } from './apiUrl'
+import { 
+    apiDeleteFavoriteBook, 
+    apiCheckFavoriteBook, 
+    apiInsertFavoriteBook 
+} from './apiUrl'
 
 export async function checkFavorited(bookId, userId) {
     const result = await axios.get(apiCheckFavoriteBook + bookId + '/' + userId).catch((err) => { return err })

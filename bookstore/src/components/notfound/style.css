@@ -1,0 +1,8 @@
+.not-found {
+    background-image: url("../../assets/imgs/notfound.png")'
+}
+
+.not-found-img {
+    object-fit: contain;
+    width: 100%;
+}

@@ -7,8 +7,10 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import settings from '../../../config/settings';
 import { getAllCategory, getAllSubCatByCat } from '../../../services/category.services'
 
-
 function Addbook() {
+    if (window.sessionStorage.getItem(settings.loginKey.role) != '0') {
+        window.location.replace('/notfound')
+    }
     const [bookDetails, setBookDetails] = React.useState({
         auth: null,
         bookId: null,

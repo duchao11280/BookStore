@@ -1,5 +1,16 @@
 import axios from './axios';
-import { apiGetAllCatAndSubCat, apiInsertCategory, apiUpdateCategory, apiInsertSubCategory, apiUpdateSubCategory, apiDisableCategory, apiDisableSubCategory, apiGetHotCategory, apiGetAllSubCatByCat, apiGetAllCategory } from './apiUrl'
+import {
+    apiGetAllCatAndSubCat,
+    apiInsertCategory,
+    apiUpdateCategory,
+    apiInsertSubCategory,
+    apiUpdateSubCategory,
+    apiDisableCategory,
+    apiDisableSubCategory,
+    apiGetHotCategory,
+    apiGetAllSubCatByCat,
+    apiGetAllCategory
+} from './apiUrl'
 
 export async function getAllCatAndSubCat() {
     const result = await axios.get(apiGetAllCatAndSubCat)

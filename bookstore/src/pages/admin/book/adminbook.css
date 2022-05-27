@@ -1,6 +1,7 @@
 .container-admin-book {
     display: flex;
     min-height: 100vh;
+    padding-top: 65px;
     background-color: rgba(239, 239, 239, 0.5);
 }
 
@@ -147,4 +148,8 @@
  
 .body-content-admin-book div div table tbody tr td :hover{
     cursor: pointer;
+}
+
+.body-content-admin-book div *{
+    z-index: 0;
 }

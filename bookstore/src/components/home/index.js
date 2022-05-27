@@ -8,8 +8,6 @@ import cover from '../../assets/imgs/cover1.jpg';
 import cover2 from '../../assets/imgs/cover2.png';
 import cover3 from '../../assets/imgs/cover3.jpg';
 import constants from './constants';
-import Header from '../../components/header'
-import Footer from '../../components/footer'
 import { getHotCategory } from '../../services/category.services';
 import {
     getHotBook,
@@ -68,8 +66,6 @@ export default function Home() {
     }
 
     return (
-        <>
-        <Header />
         <div className='container-home'>
             <div className='container-xl d-flex flex-column'>
                 <div className='row mt-5'>
@@ -144,8 +140,6 @@ export default function Home() {
                 <div className='button-home-secondary me-auto ms-auto mb-5'>{constants.BUTTON_MORE}</div>
             </div>
         </div>
-        <Footer />
-        </>
     )
 }
 

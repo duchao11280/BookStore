@@ -4,9 +4,12 @@ import { Link, useParams } from 'react-router-dom'
 import { getDetailOrderById, getDetailSumOfPriceById, updateOrderStatusbyId } from '../../../services/order.service'
 import React from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-
+import settings from '../../../config/settings';
 
 function Orderdetail() {
+    if (window.sessionStorage.getItem(settings.loginKey.role) != '0') {
+        window.location.replace('/notfound')
+    }
     const { id } = useParams();
     const [orderDetails, setOrderDetails] = React.useState({});
     const [orderSumPrice, setOrderSumPrice] = React.useState({});

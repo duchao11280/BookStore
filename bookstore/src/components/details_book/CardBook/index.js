@@ -22,7 +22,7 @@ export default function CardBook(props) {
                     <RatingStar
                         count={constants.MAX_STAR}
                         size={35}
-                        value={book.avgRate || 5}
+                        value={book.avgRate || 0}
                         isHalf={true}
                         activeColor="#F9EF00"
                         edit={false}

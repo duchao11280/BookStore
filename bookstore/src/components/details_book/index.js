@@ -10,7 +10,6 @@ import constants from './constants'
 import CardBook from './CardBook/index'
 import Slider from "react-slick";
 import cardplusIcon from '../../assets/icons/cart-plus.png'
-import testData from './testData'
 import { getDetailBookById, getRelatedBooks } from '../../services/book.service'
 import { getRatingByBookId, insertRating, updateRating } from '../../services/rating.service'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -35,7 +34,7 @@ export default function DetailsBook() {
         thumbnails: "",
         thumbnailsUrl: "",
         numberOfRating: 0,
-        avgRating: 5
+        avgRating: 0
     })
     const [isLogin, setIsLogin] = useState(false);
     const [isLoading, setIsLoading] = useState(true);

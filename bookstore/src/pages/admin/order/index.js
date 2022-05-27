@@ -12,8 +12,7 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { useNavigate } from 'react-router-dom';
-
-
+import settings from '../../../config/settings';
 
 const columns = [
     { id: 'orderId', label: '#', },
@@ -21,24 +20,22 @@ const columns = [
     {
         id: 'fullName',
         label: 'Số điện thoại',
-
     },
     {
         id: 'sumPrice',
         label: 'Giá',
-
-
     },
     {
         id: 'status',
         label: 'Trạng Thái',
         paddingleft: "43px",
 
-
-
     },
 ];
 function Order() {
+    if (window.sessionStorage.getItem(settings.loginKey.role) != '0') {
+        window.location.replace('/notfound')
+    }
     const [page, setPage] = React.useState(0);
     const [orderList, setorderList] = useState([]);
 
