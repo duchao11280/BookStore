@@ -13,4 +13,8 @@ router.post('/book/update/:id', adminController.updateBookByBookId);
 router.get('/order/getall', adminController.getAllOrder);
 router.get('/order/:id', adminController.getOrderByID);
 router.get('/detailorder/:id', adminController.getTotalPriceOfOrderById);
+
+router.post('/accept/:id', adminController.acceptOrderbyId)
+
+router.post('/cancel/:id', adminController.cancelOrderbyId)
 module.exports = router;

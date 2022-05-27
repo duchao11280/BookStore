@@ -58,6 +58,39 @@ exports.updateBookByBookId = async (req, res) => {
     db.releaseConnection(conn);
 }
 
+exports.acceptOrderbyId = async (req, res) => {
+    let conn = await db.getConnection();
+    try {
+        const id = req.params.id;
+        conn = await db.beginTransaction(conn);
+        const query = 'UPDATE orders SET status =1 where orderId = ?'
+        const result = await db.queryTransaction(conn, query, [id]);
+        conn = await db.commitTransaction(conn);
+        res.status(200).json({ message: "Duyệt đơn hàng thành công" });
+    } catch (error) {
+        await db.rollback(conn);
+        res.status(500).json({ message: "Thất bại", data: error });
+    }
+    db.releaseConnection(conn);
+}
+
+exports.cancelOrderbyId = async (req, res) => {
+    let conn = await db.getConnection();
+    try {
+        const id = req.params.id;
+        conn = await db.beginTransaction(conn);
+        const query = 'UPDATE orders SET status =2 where orderId = ?'
+        const result = await db.queryTransaction(conn, query, [id]);
+        conn = await db.commitTransaction(conn);
+        res.status(200).json({ message: "Hủy đơn hàng thành công" });
+    } catch (error) {
+        await db.rollback(conn);
+        res.status(500).json({ message: "Thất bại", data: error });
+    }
+    db.releaseConnection(conn);
+}
+
+
 exports.addBookByBookId = async (req, res) => {
     let conn = await db.getConnection();
     try {

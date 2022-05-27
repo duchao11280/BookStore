@@ -53,9 +53,7 @@ function Order() {
 
     }
 
-    const handleSatus = (id) => {
 
-    }
     const navigate = useNavigate();
     React.useEffect(getOrder, [])
 
@@ -119,8 +117,8 @@ function Order() {
                                                 <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                                                     {columns.map((column) => {
                                                         const value = row[column.id];
-                                                        if (column.id == "status") {
-                                                            if (row.status == 0) {
+                                                        if (column.id === "status") {
+                                                            if (row.status === 0) {
                                                                 return (
                                                                     <TableCell>
                                                                         <td className="link-orderdetail-adminbook">
@@ -130,7 +128,7 @@ function Order() {
 
                                                                 )
                                                             }
-                                                            else if (row.status == 1) {
+                                                            else if (row.status === 1) {
                                                                 return (
                                                                     <TableCell>
                                                                         <td className="link-orderdetail-adminbook">
@@ -144,7 +142,7 @@ function Order() {
                                                                 return (
                                                                     <TableCell>
                                                                         <td className="link-orderdetail-adminbook">
-                                                                            <button className="btn-cancelled-admin-order" onClick={() => { navigate("/admin/order/orderdetail/" + row["orderId"]) }}   >Đã hủy</button>
+                                                                            <button className="btn-cancelled-admin-order" onClick={() => { navigate("/admin/order/orderdetail/" + row["orderId"]) }}    >Đã hủy</button>
                                                                         </td>
                                                                     </TableCell>
 

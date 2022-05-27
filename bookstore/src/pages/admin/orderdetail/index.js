@@ -1,19 +1,56 @@
 import './orderdetail.css'
 import Sidebaradmin from '../../../components/sidebaradmin';
 import { Link, useParams } from 'react-router-dom'
-import { getDetailOrderById, getDetailSumOfPriceById } from '../../../services/order.service'
+import { getDetailOrderById, getDetailSumOfPriceById, acceptOrderbyId, cancelOrderbyId } from '../../../services/order.service'
 import React from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+
+
 function Orderdetail() {
     const { id } = useParams();
     const [orderDetails, setOrderDetails] = React.useState({});
     const [orderSumPrice, setOrderSumPrice] = React.useState({});
+    const [refresh, setRefresh] = React.useState(false);
+
 
     React.useEffect(() => {
         getDetailOrderById(id).then(result => setOrderDetails(result.data));
         getDetailSumOfPriceById(id).then(result => setOrderSumPrice(result.data));
-    }, [])
+    }, [refresh])
+
+    const onAcceptOrder = (id) => {
+        acceptOrderbyId(id).then(() => {
+            toast.success(" Duyệt thành công", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            setRefresh(!refresh)
+
+        })
+    }
+
+    const onCancelOrder = (id) => {
+        cancelOrderbyId(id).then(() => {
+            toast.success(" Xóa thành công", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            setRefresh(!refresh)
+        })
+    }
     return (<>
         <div className="container-admin-orderdetail">
+            <ToastContainer />
             <Sidebaradmin />
             <div className="content-admin-orderdetail">
                 <div className="title-content-admin-orderdetail">
@@ -76,10 +113,10 @@ function Orderdetail() {
                     {
                         orderDetails.status === 0 ?
                             <div className="btn-admin-orderdetail">
-                                <button className="submit-admin-orderdetail" style={{ backgroundColor: '#13e813' }}>
+                                <button className="submit-admin-orderdetail" style={{ backgroundColor: '#13e813' }} onClick={() => { onAcceptOrder(id) }}>
                                     Duyệt
                                 </button>
-                                <button className="submit-admin-orderdetail" style={{ backgroundColor: '#ff4242' }}>
+                                <button className="submit-admin-orderdetail" style={{ backgroundColor: '#ff4242' }} onClick={() => { onCancelOrder(id) }}>
                                     Từ chối
                                 </button>
                             </div>

@@ -14,7 +14,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-
+import { ToastContainer, toast } from 'react-toastify';
 
 const columns = [
     { id: 'bookId', label: '#', },
@@ -43,6 +43,7 @@ function Book() {
     const [page, setPage] = React.useState(0);
     const [bookList, setbookList] = useState([]);
     const [bookDetail, setbookDetail] = useState();
+    const [refresh, setRefresh] = React.useState(false);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -55,10 +56,23 @@ function Book() {
         })
 
     }
-    React.useEffect(getBook, [])
+    React.useEffect(getBook, [refresh])
 
     const handleDeleteBook = (id) => {
-        deleteBook(id).then(() => { window.location.reload(); })
+        deleteBook(id).then(() => {
+            toast.success(" xóa thành công", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
+
+            setRefresh(!refresh)
+        })
 
     }
 
