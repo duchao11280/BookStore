@@ -1,6 +1,7 @@
 .container-admin-order {
     display: flex;
     min-height: 100vh;
+    padding-top: 65px;
     background-color: rgba(239, 239, 239, 0.5);
 }
 
@@ -48,6 +49,10 @@
     margin-top: 20px;
     overflow-y: scroll;
     scroll-behavior: smooth;
+}
+
+.body-content-admin-order div *{
+    z-index: 0;
 }
 
 .body-header-admin-order {

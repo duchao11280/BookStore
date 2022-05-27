@@ -11,7 +11,12 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { ToastContainer, toast } from 'react-toastify';
+import settings from '../../../config/settings';
+
 const CategoriesManagement = () => {
+    if (window.sessionStorage.getItem(settings.loginKey.role) != '0') {
+        window.location.replace('/notfound')
+    }
     const [listCategories, setListCategories] = useState([])
     const [refresh, setRefresh] = useState(true)
     const [currCat, setCurrCat] = useState({ catId: null, catName: '' })

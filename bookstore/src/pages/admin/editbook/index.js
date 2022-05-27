@@ -10,6 +10,9 @@ import { getAllCategory, getAllSubCatByCat } from '../../../services/category.se
 
 
 function Editbook() {
+    if (window.sessionStorage.getItem(settings.loginKey.role) != '0') {
+        window.location.replace('/notfound')
+    }
     const { id } = useParams();
     const [bookDetails, setBookDetails] = React.useState({});
     const [category, setCategory] = React.useState("");

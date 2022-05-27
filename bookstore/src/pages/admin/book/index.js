@@ -15,6 +15,7 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { ToastContainer, toast } from 'react-toastify';
+import settings from '../../../config/settings';
 
 const columns = [
     { id: 'bookId', label: '#', },
@@ -38,8 +39,10 @@ const columns = [
     },
 ];
 
-
 function Book() {
+    if (window.sessionStorage.getItem(settings.loginKey.role) != '0') {
+        window.location.replace('/notfound')
+    }
     const [page, setPage] = React.useState(0);
     const [bookList, setbookList] = useState([]);
     const [bookDetail, setbookDetail] = useState();

@@ -4,9 +4,6 @@ import { Link } from 'react-router-dom'
 function Sidebaradmin() {
   return (<>
     <div className="sidebar-admin">
-      <div className="logo-admin">
-        <h2>LOGO</h2>
-      </div>
       <ul className="navlist-admin">
         <Link to="/admin/book">
           <li className="itemlist-admin">

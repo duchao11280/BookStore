@@ -1,5 +1,11 @@
 import axios from './axios';
-import { apiOrderBook, apiGetAllOrder, apiGetDetailOrderById, apigetDetailSumOfPriceById, apiAcceptOrder, } from './apiUrl'
+import {
+    apiOrderBook,
+    apiGetAllOrder,
+    apiGetDetailOrderById,
+    apigetDetailSumOfPriceById,
+    apiAcceptOrder,
+} from './apiUrl'
 
 
 // insert rating 
