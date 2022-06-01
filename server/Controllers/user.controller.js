@@ -7,10 +7,10 @@ async function signUp(req, res) {
         const password = req.body?.password || null;
         const address = req.body?.address || null;
         const fullName = req.body?.fullName || null;
-        if (phone == null || password == null) {
+        if (!phone || !password || !fullName || !address) {
             res.json({
                 statusCode: 402,
-                message: "Yêu cầu thông tin đăng ký"
+                message: "Bạn hãy nhập đầy đủ thông tin"
             });
             return;
         }
