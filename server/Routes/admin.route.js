@@ -9,7 +9,7 @@ router.get('/book/allbook', adminController.getAllBook);
 
 router.post('/book/add', uploadimage.any(), adminController.addBookByBookId);
 
-router.post('/book/update/:id', adminController.updateBookByBookId);
+router.post('/book/update', uploadimage.any(), adminController.updateBookByBookId);
 
 router.get('/order/getall', adminController.getAllOrder);
 router.get('/order/:id', adminController.getOrderByID);
