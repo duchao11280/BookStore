@@ -2,7 +2,16 @@ const { exeQuery } = require('../utls/database');
 const db = require('../utls/database');
 exports.getAllBooks = async (req, res) => {
     try {
-        const result = await exeQuery(`Select * from books`);
+        const query =
+        'SELECT b.*, c.catId, r.rate, c.catName ' +
+        'FROM books b ' +
+        '    INNER JOIN subcategories s ON b.subCatId = s.subCatId ' +
+        '    INNER JOIN categories c ON c.catId = s.catId ' +
+        '    LEFT JOIN (SELECT bookId, AVG(rate) as rate ' +
+        '                            FROM rating ' +
+        '                            GROUP BY bookId) as r ON b.bookId = r.bookId ' +
+        'WHERE b.isDisable = 0 ';
+        const result = await exeQuery(query, []);
         res.status(200).json({ message: "Lấy dữ liệu thành công", data: result });
     } catch (error) {
         res.status(500).json({ message: "Thất bại", data: error });

@@ -53,6 +53,8 @@ const apigetDetailSumOfPriceById = '/api/admin/detailorder/'
 
 const apiAcceptOrder = '/api/admin//order/updatestatus'
 
+const apiGetAllBookSearch = '/api/book/getall'
+
 
 
 export {
@@ -88,5 +90,5 @@ export {
     apiGetDetailOrderById,
     apigetDetailSumOfPriceById,
     apiAcceptOrder,
-
+    apiGetAllBookSearch
 }

@@ -1,186 +1,279 @@
 import React from "react";
 import "./style.css";
-import { createSearchParams, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import RatingStar from "react-rating-stars-component";
+import useCollapse from 'react-collapsed'
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import { getAllBookSearch } from '../../services/book.service';
+import settings from '../../config/settings';
+import {
+	formatVND,
+	roundMoney
+} from '../../utls/number';
+
+const priceArray = {
+	1: {
+		startPrice: 0,
+		endPrice: 50000
+	},
+	2: {
+		startPrice: 50000,
+		endPrice: 100000
+	},
+	3: {
+		startPrice: 100000,
+		endPrice: 200000
+	},
+	4: {
+		startPrice: 200000,
+		endPrice: 100000000000000000
+	}
+}
+
+function useQuery() {
+	const { search } = useLocation();
+	return React.useMemo(() => new URLSearchParams(search), [search]);
+}
+
+function checkExist(array = [], element) {
+	if (array.length == 0) {
+		return true;
+	}
+	if (array.includes(element)) {
+		return true;
+	}
+	if (array.includes(element.toString())) {
+		return true;
+	}
+	return false;
+}
+
+function checkKeyword(string = "", key = "") {
+	if (key==null || key == "") {
+		return true;
+	}
+	if (!string) {
+		return false;
+	}
+	string = string.toString().toLowerCase();
+	key = (key + "").toString().toLowerCase();
+	if (string.includes(key)) {
+		return true;
+	}
+	return false;
+}
+
+function checkExistPrice(array = [], price) {
+	if (!array.length) {
+		return true;
+	}
+	for (let i of array) {
+		const periodPrice = priceArray[i];
+		if (price >= periodPrice.startPrice && price <=periodPrice.endPrice) {
+			return true;
+		}
+	}
+	return false;
+}
+
 function CardBook(props) {
-	const { book } = props;
+	const navigate = useNavigate();
+	const book = props.item;
+	const {
+		bookId,
+		bookName,
+		sale,
+		price,
+		thumbnails,
+		rate
+	} = book;
+	const isSale = book.sale < 1 ? true : false;
 	return (
-		<div className="col-3 mb-3">
-			<div className="card-book-home d-flex">
-				<img alt="" src={book.imageURL} className="image-book-home mb-1 ms-auto me-auto" />
-				<div className="card-book-title-home">{book.bookName}</div>
-				<div className="card-book-price-home">{book.price} đ</div>
-				<div className="card-book-old-price-home">{book.oldPrice} </div>
-				<div className="card-book-star-home">
-					<RatingStar count={book.rate} size={35} value={4.5} isHalf={true} activeColor="#F9EF00" edit={false} />
-					<div className="card-book-text-star-home">{book.rate}</div>
+		<div className='col-4 mb-3' onClick={() => navigate('/detailsbook/' + bookId)}>
+			<div className='card-book-home d-flex'>
+				<img alt='' src={settings.urlImageKey + thumbnails} className='image-book-home mb-1 ms-auto me-auto' />
+				<div className='card-book-title-home'>{bookName}</div>
+				<div className='card-book-price-home'>{formatVND(roundMoney(price * sale))}</div>
+				<div className='card-book-old-price-home'>{isSale ? formatVND(roundMoney(price)) : ""}</div>
+				<div className='card-book-star-home'>
+					<RatingStar
+						count={5}
+						size={35}
+						value={rate}
+						isHalf={true}
+						activeColor="#F9EF00"
+						edit={false}
+					/>
+					<div className='card-book-text-star-home'>({rate || 0})</div>
 				</div>
 			</div>
 		</div>
-	);
+	)
 }
+
+function encodeQueryData(array, key) {
+	const ret = [];
+	for (let element of array) {
+		ret.push(encodeURIComponent(key) + '=' + encodeURIComponent(element))
+	}
+	return ret.join('&');
+}
+
 export default function SearchProduct() {
+	const [isExpandedCategory, setIsExpandCategory] = React.useState(false);
+	const { getCollapseProps: getCollapseCategory, getToggleProps: getToggleCategory } = useCollapse({ isExpanded: isExpandedCategory });
+
+	const [isExpandedPrice, setIsExpandPrice] = React.useState(false);
+	const { getCollapseProps: getCollapsePrice, getToggleProps: getTogglePrice } = useCollapse({ isExpanded: isExpandedPrice });
+
+	const navigate = useNavigate();
+	let query = useQuery();
+	let category = query.getAll('category');
+	let subcategory = query.getAll('subcategory');
+	let keyword = query.get('keyword');
+	let price = query.getAll('price');
+
 	const [searchResult, setSearchResult] = React.useState([]);
-	const [searchValue, setSearchValue] = React.useState("");
-	const [option, setOption] = React.useState("bookName");
-	const [order, setOrder] = React.useState("");
-	const TITLE = "Tìm kiếm sản phẩm";
-	const SEARCH_TITLE = "Sắp xếp theo";
-	const DummyData = [
-		{
-			bookId: 1,
-			bookName: "Bến Xe (Tái Bản 2020)",
-			nxb: "NXB Văn học",
-			auth: "Thương Thái Vy",
-			year: 2020,
-			price: 10000,
-			quantity: 80,
-			sale: 0.8,
-			description: "Đây là quyển sạch tuyệt vời với những nội dung tuyệt vời",
-			imageURL: "https://cdn0.fahasa.com/media/catalog/product/8/9/8935212349208.jpg",
-			rate: 1.5,
-		},
-		{
-			bookId: 2,
-			bookName: "Bến Xe 2 (Tái Bản 2020)",
-			nxb: "NXB Văn học",
-			auth: "Thương Thái Vy",
-			year: 2020,
-			price: 20000,
-			quantity: 80,
-			sale: 0.8,
-			description: "Đây là quyển sạch tuyệt vời với những nội dung tuyệt vời",
-			imageURL: "https://cdn0.fahasa.com/media/catalog/product/8/9/8935212349208.jpg",
-			rate: 2.5,
-		},
-		{
-			bookId: 3,
-			bookName: "Bến Xe 3 (Tái Bản 2020)",
-			nxb: "NXB Văn học",
-			auth: "Thương Thái Vy",
-			year: 2020,
-			price: 30000,
-			quantity: 80,
-			sale: 0.8,
-			description: "Đây là quyển sạch tuyệt vời với những nội dung tuyệt vời",
-			imageURL: "https://cdn0.fahasa.com/media/catalog/product/8/9/8935212349208.jpg",
-			rate: 3.5,
-		},
-		{
-			bookId: 4,
-			bookName: "Bến Xe 4 (Tái Bản 2020)",
-			nxb: "NXB Văn học",
-			auth: "Thương Thái Vy",
-			year: 2020,
-			price: 40000,
-			quantity: 80,
-			sale: 0.8,
-			description: "Đây là quyển sạch tuyệt vời với những nội dung tuyệt vời",
-			imageURL: "https://cdn0.fahasa.com/media/catalog/product/8/9/8935212349208.jpg",
-			rate: 4,
-		},
-		{
-			bookId: 5,
-			bookName: "Bến Xe 5 (Tái Bản 2020)",
-			nxb: "NXB Văn học",
-			auth: "Thương Thái Vy",
-			year: 2020,
-			price: 50000,
-			quantity: 80,
-			sale: 0.8,
-			description: "Đây là quyển sạch tuyệt vời với những nội dung tuyệt vời",
-			imageURL: "https://cdn0.fahasa.com/media/catalog/product/8/9/8935212349208.jpg",
-			rate: 5,
-		},
-	];
-	const filterOptions = { bookName: "Tên sách", auth: "Tác giả", nxb: "Nhà xuất bản", price: "Giá", rate: "Đánh giá" };
-	const filterOrder = {
-		alphabet: { a2z: "Từ A-Z", z2a: "Từ Z-A" },
-		price: { inc: "Giá tăng dần", dec: "Giá giảm dần" },
-	};
-	const filterByPrice = ["price", "rate"];
-	const filterByAlphabet = ["bookName", "auth", "nxb"];
-	const sortResult = function (data) {
-		return data.sort((a, b) => {
-			if (order === "a2z") {
-				return a[option] > b[option] ? 1 : -1;
-			} else if (order === "z2a") {
-				return a[option] < b[option] ? 1 : -1;
-			} else if (order === "inc") {
-				return a[option] - b[option];
-			} else if (order === "dec") {
-				return b[option] - a[option];
-			}
-		});
-	};
-	const Search = function () {
-		var resultAfterSort = sortResult(DummyData);
-		setSearchResult(resultAfterSort);
-	};
-	const onChangeOptions = function (e) {
-		console.log(e.target.value);
-		setOption(e.target.value);
-	};
-	const onChangeOrder = function (e) {
-		console.log(e.target.value);
-		setOrder(e.target.value);
-	};
+	const [listAllBooks, setListAllBooks] = React.useState([]);
+	const [pageNumber, setPageNumber] = React.useState(1);
+	const [objCheckedCategory, setObjCheckedCategory] = React.useState({});
+	const [objlistCategory, setObjlistCategory] = React.useState([]);
+	const [objCheckedPrice, setObjCHeckedPrice] = React.useState({
+		1: false, // Dưới 50k
+		2: false, // 50k - 100k
+		3: false, // 100k - 200k
+		4: false  // Trên 200k
+	})
+
 	React.useEffect(() => {
-		Search(searchValue);
-	}, [option, order]);
+		const objCat = {};
+		getAllBookSearch().then(result => {
+			for (let book of result) {
+				if (objCat[book.catId] == null) {
+					objCat[book.catId] = book.catName;
+				}
+			}
+			setObjlistCategory(objCat);
+			setListAllBooks(result);
+		})
+	}, [])
+
+	React.useEffect(() => {
+		const listBooks = [];
+		if (!category.length && !subcategory.length && (keyword == null || keyword == "") && !price.length) {
+			setSearchResult(listAllBooks);
+			return;
+		}
+		const listResult = listAllBooks.filter(book => {
+			return checkExist(category, book.catId)
+			&& checkKeyword(book.bookName, keyword)
+			&& checkExistPrice(price, (book.price * book.sale))
+		})
+
+
+		// for (let book of listAllBooks) {
+		// 	if (checkExist(category, book.catId)) {
+		// 		listBooks.push(book);
+		// 		continue;
+		// 	}
+		// 	if (checkExist(subcategory, book.subCatId)) {
+		// 		listBooks.push(book);
+		// 		continue;
+		// 	}
+		// 	if (checkKeyword(book.bookName, keyword)) {
+		// 		listBooks.push(book);
+		// 		continue;
+		// 	}
+		// 	if (checkExistPrice(price, (book.price * book.sale))) {
+		// 		listBooks.push(book);
+		// 		continue;
+		// 	}
+
+		// }
+		setSearchResult(listResult);
+	}, [useLocation().search, listAllBooks])
+
+	const onSearch = () => {
+		navigate('/search?category=1&category=5');
+	}
+
+	const onCheckCategory = (checked, key) => {
+		objCheckedCategory[key] = checked;
+		setObjCheckedCategory(objCheckedCategory);
+	}
+
+	const onCheckPrice = (checked, key) => {
+		objCheckedPrice[key] = checked;
+		setObjCHeckedPrice(objCheckedPrice);
+	}
+
+	const onFillter = () => {
+		const listQueryCategory = [];
+		Object.keys(objCheckedCategory).forEach(value => {
+			if (objCheckedCategory[value]) {
+				listQueryCategory.push(value);
+			}
+		})
+
+		const listQueryPrice = [];
+		Object.keys(objCheckedPrice).forEach(key => {
+			if (objCheckedPrice[key]) {
+				listQueryPrice.push(key);
+			}
+		})
+
+		const query = `${encodeQueryData(listQueryCategory, 'category')}&${encodeQueryData(listQueryPrice, 'price')}`
+		navigate(`/search?${query}`);
+
+	}
 
 	return (
-		<div className="container-home">
-			<div className="container-xl d-flex flex-column">
-				<div className="row mt-3">
-					<h1>{TITLE} </h1>
-				</div>
-				<div className="row mt-3 ">
-					<div className="col-7 pl-2">
+		<div className="container-search">
+			<div className="container">
+				<div className="row">
+					<div className="col-3 pt-5">
+						<button onClick={onFillter}>Tim`</button>
 						<div>
-							<div className="col-4">{SEARCH_TITLE}</div>
-							<div className="col-4">
-								<select onChange={onChangeOptions}>
-									{Object.keys(filterOptions).map((item, index) => {
-										return (
-											<option key={index} value={item}>
-												{filterOptions[item]}
-											</option>
-										);
-									})}
-								</select>
-								{filterByAlphabet.indexOf(option) !== -1 ? (
-									<select onChange={onChangeOrder}>
-										{Object.keys(filterOrder.alphabet).map((item, index) => {
+							<button {...getToggleCategory()} onClick={() => setIsExpandCategory(!isExpandedCategory)}>
+								{isExpandedCategory ? 'Thể loại - đóng' : 'Thể loại - mở'}
+							</button>
+							<section {...getCollapseCategory()}>
+								<FormGroup>
+									{
+										Object.keys(objlistCategory).map((value, key) => {
 											return (
-												<option key={index} value={item}>
-													{filterOrder.alphabet[item]}
-												</option>
-											);
-										})}
-									</select>
-								) : (
-									<select onChange={onChangeOrder}>
-										{Object.keys(filterOrder.price).map((item, index) => {
-											return (
-												<option key={index} value={item}>
-													{filterOrder.price[item]}
-												</option>
-											);
-										})}
-									</select>
-								)}
-							</div>
-							<div className="col-4"></div>
+												<FormControlLabel key={key} control={<Checkbox onChange={(event) => onCheckCategory(event.target.checked, value)} />} label={objlistCategory[value]} />
+											)
+										})
+									}
+								</FormGroup>
+							</section>
+						</div>
+						<div>
+							<button {...getTogglePrice()} onClick={() => setIsExpandPrice(!isExpandedPrice)}>
+								{isExpandedPrice ? 'Mức giá - đóng' : 'Mức giá - mở'}
+							</button>
+							<section {...getCollapsePrice()}>
+								<FormGroup>
+									<FormControlLabel control={<Checkbox onChange={(event) => onCheckPrice(event.target.checked, 1)} />} label={"Dưới 50.000 đ"} />
+									<FormControlLabel control={<Checkbox onChange={(event) => onCheckPrice(event.target.checked, 2)} />} label={"50.000 đ - 100.000 đ"} />
+									<FormControlLabel control={<Checkbox onChange={(event) => onCheckPrice(event.target.checked, 3)} />} label={"100.000 đ - 200.000 đ"} />
+									<FormControlLabel control={<Checkbox onChange={(event) => onCheckPrice(event.target.checked, 4)} />} label={"Trên 200.000 đ"} />
+								</FormGroup>
+							</section>
 						</div>
 					</div>
-					<div className="col-5"></div>
-				</div>
-				<div className="row mt-3">
-					<h2>Kết quả</h2>
-					{searchResult.map(function (item) {
-						return <CardBook book={item} />;
-					})}
+					<div className="col">
+						<div className="container d-flex flex-column">
+							<div className="row mt-3">
+								{searchResult.map(function (book, key) {
+									return <CardBook item={book} key={key} />;
+								})}
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

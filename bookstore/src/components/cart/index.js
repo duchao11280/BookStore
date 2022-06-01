@@ -18,22 +18,24 @@ export default function CartPage() {
     })
     useEffect(() => {
         (async () => {
-            setIsLoading(false);
-            const stringArrId = await arrayIdBook.join("-");
-            let result = await getListBookForOrder(stringArrId)
-            if (result.status) {
-                await result.data.forEach((book) => {
-                    items.forEach((bookLocal) => {
-                        if (bookLocal.id === book.bookId) {
-                            book.quantityOrder = bookLocal.quantity
-                        }
-                    })
-                })
-                setListBookOrder(result.data)
-            } else {
-                setListBookOrder([])
-            }
             setIsLoading(true);
+            const stringArrId = await arrayIdBook.join("-");
+            if (stringArrId.length) {
+                let result = await getListBookForOrder(stringArrId)
+                if (result.status) {
+                    await result.data.forEach((book) => {
+                        items.forEach((bookLocal) => {
+                            if (bookLocal.id === book.bookId) {
+                                book.quantityOrder = bookLocal.quantity
+                            }
+                        })
+                    })
+                    setListBookOrder(result.data)
+                } else {
+                    setListBookOrder([])
+                }
+            }
+            setIsLoading(false);
         })();
 
     }, [])
@@ -112,7 +114,7 @@ export default function CartPage() {
     return (
         <div className="col container-cart d-flex justify-content-center">
             <ToastContainer />
-            {isLoading ?
+            {!isLoading ?
                 <div className="mt-4 d-flex flex-column">
                     {listBookOrder.length > 0 ? <div>
                         <div className="container contain-text-ontop-order-cart">
@@ -196,12 +198,14 @@ export default function CartPage() {
                             </div>
                         </div>
                     </div>
-                        : <div>
-
+                        : <div className="d-flex flex-column justify-content-center align-items-lg-center notify-empty-cart">
+                            <i class="fa fa-cart-plus cart-plus-cart" aria-hidden="true"></i>
+                            <div className="mt-5 text-empty-cart">Không có sách nào trong giỏ hàng</div>
+                            <div className="mt-2 px-5 py-2 go-home-from-cart" onClick={() => window.location.assign("/home")}>Về lại trang chủ</div>
                         </div>
                     }
                 </div>
-                : <div></div>
+                : <div>Loading...</div>
             }
         </div>
     )
@@ -236,10 +240,10 @@ function CardItemBookOrder(props) {
                 <div className="mx-4">
                     <div className=" text-price-sale-cart">
                         {formatNumberToMoney(book.price * book.sale)} đ
-                </div>
+                    </div>
                     <div className=" text-price-original-cart">
                         {formatNumberToMoney(book.price)} đ
-                </div>
+                    </div>
                 </div>
 
                 <div className="mx-4 d-flex flex-row contain-ins-desc-quantity-cart">

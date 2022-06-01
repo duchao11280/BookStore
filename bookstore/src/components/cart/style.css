@@ -102,3 +102,19 @@
     align-items: center;
     justify-content:center;
 }
+
+.text-empty-cart{
+    font-size: 30px;
+}
+.cart-plus-cart{
+    font-size: 1000%;
+    color: #FD9696;
+}
+.go-home-from-cart{
+
+    color: #288ad6;
+    border: 1px solid #288ad6;
+}
+.go-home-from-cart:hover{
+    cursor: pointer;
+}
