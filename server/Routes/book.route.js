@@ -2,7 +2,11 @@ const express = require('express');
 const router = express.Router();
 const bookController = require('../Controllers/book.controller')
 
-router.get('/', bookController.getAllBooks);
+router.get('/getall', bookController.getAllBooks);
+router.get('/getbestseller', bookController.getBestSeller);
+router.get('/getnew', bookController.getNewestBook);
+router.get('/gethot', bookController.getHotestBook);
+router.get('/getsale', bookController.getSaleBook);
 
 // get book by id
 router.get('/:id', bookController.getDetailBookByID)

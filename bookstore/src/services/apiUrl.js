@@ -5,6 +5,11 @@ const apiGetDetailBookById = '/api/book/'
 const apiGetRatingByBookId = '/api/rating/bybook/'
 const apiUpdateRating = '/api/rating/update/book/'
 const apiInsertRating = '/api/rating/rate/book/'
+const apiGetHotCategory = '/api/category/gethot';
+const apiGetBestSellerBook = '/api/book/getbestseller';
+const apiGetNewBook = '/api/book/getnew';
+const apiGetHotBook = '/api/book/gethot';
+const apiGetSaleBook = '/api/book/getsale';
 /**
  * /related/:bookid/:subcatid
  */
@@ -28,6 +33,28 @@ const apiDeleteFavoriteBook = '/api/favoritelist/delete/'
  */
 const apiGetListBookForOrder = '/api/book/bookforcart/'
 const apiOrderBook = '/api/order/insertorder'
+const apiInsertCategory = '/api/category/insertcat'
+const apiUpdateCategory = '/api/category/updatecatname/'
+const apiInsertSubCategory = '/api/category/insertsubcat/'
+const apiUpdateSubCategory = '/api/category/updatesubcatname/'
+const apiDisableCategory = '/api/category/disable/cat/'
+const apiDisableSubCategory = '/api/category/disable/subcat/'
+const apiGetAllOrder = '/api/admin/order/getall'
+const apiGetAllBook = '/api/admin/book/allbook'
+
+const apiGetAllCategory = '/api/category/getallcat';
+const apiGetAllSubCatByCat = '/api/category/getallsubcat'
+
+const apiDeleteBook = '/api/admin/book/delete/'
+
+const apiGetDetailOrderById = '/api/admin/order/'
+
+const apigetDetailSumOfPriceById = '/api/admin/detailorder/'
+
+const apiAcceptOrder = '/api/admin//order/updatestatus'
+
+
+
 export {
     apiSignup,
     apiLogin,
@@ -41,5 +68,25 @@ export {
     apiDeleteFavoriteBook,
     apiGetRelatedBooks,
     apiGetListBookForOrder,
-    apiOrderBook
+    apiOrderBook,
+    apiInsertCategory,
+    apiUpdateCategory,
+    apiInsertSubCategory,
+    apiUpdateSubCategory,
+    apiDisableCategory,
+    apiDisableSubCategory,
+    apiGetHotCategory,
+    apiGetBestSellerBook,
+    apiGetHotBook,
+    apiGetNewBook,
+    apiGetSaleBook,
+    apiGetAllOrder,
+    apiGetAllBook,
+    apiGetAllCategory,
+    apiGetAllSubCatByCat,
+    apiDeleteBook,
+    apiGetDetailOrderById,
+    apigetDetailSumOfPriceById,
+    apiAcceptOrder,
+
 }

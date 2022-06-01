@@ -7,7 +7,10 @@ const loginKey = {
     userId: 'ibook-userid-key'
 };
 
+const urlImage = '/public/images/';
+
 export default {
     host: localHost,
-    loginKey: loginKey
+    loginKey: loginKey,
+    urlImageKey: localHost + urlImage
 }

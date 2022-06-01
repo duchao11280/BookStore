@@ -1,44 +1,45 @@
 import logo from "./logo.svg";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "./components/header";
-import Footer from "./components/footer";
-// import Home from './components/home'
-import DetailBook from "./components/details_book";
-import Cart from "./components/cart";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { CartProvider, useCart } from "react-use-cart";
-import Home from "./pages/home";
-import Book from "./pages/admin/book";
-import Order from "./pages/admin/order";
-import Layout from "./components/layout";
-import Admin from "./pages/admin";
-import Orderdetail from "./pages/admin/orderdetail";
-import Editbook from "./pages/admin/editbook";
-import Addbook from "./pages/admin/addbook";
-import SearchOrder from "./components/SearchOrder";
-import SearchProduct from "./components/SearchProduct";
-import Profile from "./components/Profile";
+import Header from './components/header';
+import Footer from './components/footer';
+import Home from './components/home';
+import DetailBook from './components/details_book'
+import Cart from './components/cart';
+import { CartProvider, useCart } from 'react-use-cart'
+import BookAdmin from './pages/admin/book';
+import OrderAdmin from './pages/admin/order';
+import Orderdetail from './pages/admin/orderdetail';
+import Editbook from './pages/admin/editbook';
+import Addbook from './pages/admin/addbook';
+import CategoriesManagement from './pages/admin/categories';
+import Search from './components/SearchProduct';
+import SearchOrder from './components/SearchOrder';
+import 'react-toastify/dist/ReactToastify.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import NotFound from './components/notfound';
 export default function App() {
 	return (
 		<CartProvider>
 			<BrowserRouter>
 				<Header />
 				<Routes>
-					<Route path="/admin" element={<Admin />}></Route>
-					<Route path="/admin/book" element={<Book />}></Route>
-					<Route path="/admin/book/addbook" element={<Addbook />}></Route>
-					<Route path="/admin/book/editbook" element={<Editbook />}></Route>
-					<Route path="/admin/order" element={<Order />}></Route>
-					<Route path="/admin/order/orderdetail" element={<Orderdetail />}></Route>
-					<Route path="/test" element={<Test />}></Route>
-					<Route path="/home" element={<Home />}></Route>
-					<Route path="/detailsbook/:id" element={<DetailBook />}></Route>
-					<Route path="/cart" element={<Cart />}></Route>
+					<Route path='/admin' element={<BookAdmin />}></Route>
+					<Route path='/admin/book' element={<BookAdmin />}></Route>
+					<Route path='/admin/book/addbook' element={<Addbook />}></Route>
+					<Route path='/admin/book/editbook/:id' element={<Editbook />}></Route>
+					<Route path='/admin/order' element={<OrderAdmin />}></Route>
+					<Route path='/admin/order/orderdetail' element={<Orderdetail />}></Route>
+					<Route path='/admin/categories' element={<CategoriesManagement />}></Route>
+					<Route path='/admin/order/orderdetail/:id' element={<Orderdetail />}></Route>
+					<Route path='/test' element={<Test />}></Route>
+					<Route path='/home' element={<Home />}></Route>
+					<Route path='/detailsbook/:id' element={<DetailBook />}></Route>
+					<Route path='/cart' element={<Cart />}></Route>
 					<Route path="/searchorder" element={<SearchOrder />}></Route>
-					<Route path="/search" element={<SearchProduct />}></Route>
-					<Route path="/profile" element={<Profile />}></Route>
-					<Route path="/" element={<Home />}></Route>
+					<Route path="/search" element={<Search />}></Route>
+					<Route path='/' element={<Home />}></Route>
+					<Route path='/*' element={<NotFound />}></Route>
 				</Routes>
 				<Footer />
 			</BrowserRouter>
