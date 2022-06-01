@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import settings from '../../../config/settings';
 
 function Orderdetail() {
-    if (window.sessionStorage.getItem(settings.loginKey.role) != '0') {
+    if (window.sessionStorage.getItem(settings.loginKey.role) !== '0') {
         window.location.replace('/notfound')
     }
     const { id } = useParams();

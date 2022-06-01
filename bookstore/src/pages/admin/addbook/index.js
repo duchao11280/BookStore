@@ -6,9 +6,10 @@ import TextField from '@mui/material/TextField';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import settings from '../../../config/settings';
 import { getAllCategory, getAllSubCatByCat } from '../../../services/category.services'
-
+import { insertBook } from '../../../services/book.service'
+import { ToastContainer, toast } from 'react-toastify';
 function Addbook() {
-    if (window.sessionStorage.getItem(settings.loginKey.role) != '0') {
+    if (window.sessionStorage.getItem(settings.loginKey.role) !== '0') {
         window.location.replace('/notfound')
     }
     const [bookDetails, setBookDetails] = React.useState({
@@ -28,12 +29,13 @@ function Addbook() {
         tinyDescription: null,
         year: null
     });
+    const [refresh, setRefresh] = React.useState(false);
     const [category, setCategory] = React.useState("");
     const [listCategory, setListCategory] = React.useState([]);
     const [listSubCat, setListSubCat] = React.useState([]);
     React.useEffect(() => {
         getAllCategory().then(result => { setListCategory(result); });
-    }, [])
+    }, [refresh]);
 
     React.useEffect(() => {
         getAllSubCatByCat(category).then(result => { setListSubCat(result); console.log(result); });
@@ -77,7 +79,25 @@ function Addbook() {
     };
 
     const onSubmit = () => {
-        console.log(bookDetails);
+
+        // console.log(bookDetails);
+        insertBook(bookDetails.bookName, bookDetails.auth,
+            bookDetails.description, bookDetails.language, bookDetails.year,
+            bookDetails.nxb, bookDetails.price, bookDetails.quantity, bookDetails.subCatId,
+            bookDetails.sale, bookDetails.cover, bookDetails.thumbnails).then(() => {
+                toast.success(" thêm thành công", {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+
+                });
+
+                setRefresh(!refresh)
+            });
     }
 
     return (<>
@@ -275,7 +295,7 @@ function Addbook() {
                             </div>
                         </div>
                         <div className='row d-flex justify-content-center mt-5'>
-                            <button className='button-admin-edit-book-add-image-submit' onClick={onSubmit}>Thêm sách</button>
+                            <button className='button-admin-edit-book-add-image-submit' style={{ width: "45%" }} onClick={onSubmit}>Thêm sách</button>
                         </div>
                     </div>
                 </div>

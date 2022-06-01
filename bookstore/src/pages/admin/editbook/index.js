@@ -10,7 +10,7 @@ import { getAllCategory, getAllSubCatByCat } from '../../../services/category.se
 
 
 function Editbook() {
-    if (window.sessionStorage.getItem(settings.loginKey.role) != '0') {
+    if (window.sessionStorage.getItem(settings.loginKey.role) !== '0') {
         window.location.replace('/notfound')
     }
     const { id } = useParams();
@@ -19,7 +19,7 @@ function Editbook() {
     const [listCategory, setListCategory] = React.useState([]);
     const [listSubCat, setListSubCat] = React.useState([]);
     React.useEffect(() => {
-        getDetailBookById(id).then(result => setBookDetails(result.data));
+        getDetailBookById(id).then(result => { setBookDetails(result.data); console.log(result.data) });
         getAllCategory().then(result => setListCategory(result));
     }, [])
 
@@ -38,6 +38,7 @@ function Editbook() {
         if (typeof image === 'string' || image == null) {
             return settings.urlImageKey + image
         } else {
+            console.log("day la" + URL.createObjectURL(image))
             return URL.createObjectURL(image);
         }
     }
@@ -84,7 +85,7 @@ function Editbook() {
                                 <h6>Ảnh đại diện</h6>
                                 <div className="d-flex flex-column">
                                     <img className="img-admin-edit-book-thumbnails"
-                                        src={converImageUrl(bookDetails.thumbnails)} alt="ảnh sách"
+                                        src={bookDetails.thumbnailsUrl} alt="ảnh sách"
                                     />
                                     <input className='custom-file-input-none' type="file" name="images" id='id-image-thumbnails' multiple accept="image/*" onChange={(event) => onImageChange(event, 'thumbnails')} />
                                     <label className='custom-file-input' htmlFor='id-image-thumbnails'>
@@ -96,7 +97,7 @@ function Editbook() {
                                     <h6>Ảnh bìa</h6>
                                     <div className="d-flex flex-column">
                                         <img className="img-admin-edit-book-cover"
-                                            src={converImageUrl(bookDetails.cover)} alt="ảnh sách"
+                                            src={bookDetails.coverUrl} alt="ảnh sách"
                                         />
                                         <input className='custom-file-input-none' type="file" name="images" id='id-image-cover' multiple accept="image/*" onChange={(event) => onImageChange(event, 'cover')} />
                                         <label className='custom-file-input' htmlFor='id-image-cover'>
@@ -139,7 +140,7 @@ function Editbook() {
                                     <label className="col-sm-4 col-form-label h6">Thể loại chung</label>
                                     <div className="col-sm-8">
                                         <select className="combobox-book-admin-editbook" value={category}
-                                            onChange = {onChangeCat}>
+                                            onChange={onChangeCat}>
                                             {
                                                 listCategory.map((category, key) => {
                                                     return (
@@ -156,8 +157,8 @@ function Editbook() {
                                 <div className="form-group row">
                                     <label className="col-sm-4 col-form-label h6">Thể loại chi tiết</label>
                                     <div className="col-sm-8">
-                                        <select className="combobox-book-admin-editbook" value={bookDetails.catId} 
-                                        onChange = {onChangeSubCat}>
+                                        <select className="combobox-book-admin-editbook" value={bookDetails.catId}
+                                            onChange={onChangeSubCat}>
                                             {listSubCat.map((value, key) => {
                                                 return (
                                                     <option value={value.subCatId} key={value.subCatId}>{value.subCatName}</option>

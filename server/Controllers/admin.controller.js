@@ -1,5 +1,6 @@
 const db = require('../utls/database')
 
+
 // exports.disableBookByBookId = async (req, res) => {
 //     try {
 //         const id = req.params.id;
@@ -150,9 +151,11 @@ exports.addBookByBookId = async (req, res) => {
     let conn = await db.getConnection();
     try {
         const { bookName, auth, description, language, year, nxb, price, quantity, subCatId, sale, coverImg, thumbnails } = req.body;
+        let hinhcover = req.files[0]?.filename
+        let hinhthumbnails = req.files[1]?.filename
         conn = await db.beginTransaction(conn);
         const query = 'insert into books (bookName, auth, description, language, year, nxb, price, quantity, subCatId, sale, coverImg, thumbnails   ) values(?,?,?,?,?,?,?,?,?,?,?,?) '
-        const result = await db.queryTransaction(conn, query, [bookName, auth, description, language, year, nxb, price, quantity, subCatId, sale, coverImg, thumbnails]);
+        const result = await db.queryTransaction(conn, query, [bookName, auth, description, language, year, nxb, price, quantity, subCatId, sale, hinhcover, hinhthumbnails]);
         conn = await db.commitTransaction(conn);
         res.status(200).json({ message: "Thêm dữ liệu thành công", });
     } catch (error) {
@@ -160,7 +163,27 @@ exports.addBookByBookId = async (req, res) => {
         res.status(500).json({ message: "Thất bại", data: error });
     }
     db.releaseConnection(conn);
+
 }
+
+// exports.UpdateBookByBookId = async (req, res) => {
+//     let conn = await db.getConnection();
+//     try {
+//         const { bookName, auth, description, language, year, nxb, price, quantity, subCatId, sale, coverImg, thumbnails } = req.body;
+//         let hinhcover = req.files[0]?.filename
+//         let hinhthumbnails = req.files[1]?.filename
+//         conn = await db.beginTransaction(conn);
+//         const query = 'insert into books (bookName, auth, description, language, year, nxb, price, quantity, subCatId, sale, coverImg, thumbnails   ) values(?,?,?,?,?,?,?,?,?,?,?,?) '
+//         const result = await db.queryTransaction(conn, query, [bookName, auth, description, language, year, nxb, price, quantity, subCatId, sale, hinhcover, hinhthumbnails]);
+//         conn = await db.commitTransaction(conn);
+//         res.status(200).json({ message: "Thêm dữ liệu thành công", });
+//     } catch (error) {
+//         await db.rollback(conn);
+//         res.status(500).json({ message: "Thất bại", data: error });
+//     }
+//     db.releaseConnection(conn);
+
+// }
 
 
 exports.getAllOrder = async (req, res) => {

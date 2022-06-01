@@ -8,7 +8,8 @@ import {
     apiGetSaleBook,
     apiGetListBookForOrder,
     apiGetAllBook,
-    apiDeleteBook
+    apiDeleteBook,
+    apiInsertBook,
 } from './apiUrl'
 
 export async function getDetailBookById(id) {
@@ -122,3 +123,44 @@ export async function deleteBook(id) {
         }
     }
 }
+
+export async function insertBook(bookName, auth, description, language,
+    year, nxb, price, quantity, subCatId, sale, coverImg, thumbnails) {
+    var data = new FormData();
+    data.append("bookName", bookName);
+    data.append("auth", auth);
+    data.append("description", description);
+    data.append("language", language);
+    data.append("year", year);
+    data.append("nxb", nxb);
+    data.append("price", price);
+    data.append("quantity", quantity);
+    data.append("subCatId", subCatId);
+    data.append("sale", sale);
+    data.append("cover", coverImg);
+    data.append("thumbnails", thumbnails);
+
+    // const result = await axios.postForm(apiInsertBook, {
+    //     data: data
+    // });
+    // if (result.data?.statusCode === 200) {
+    //     return {
+    //         status: true,
+    //     }
+    // } else {
+    //     return {
+    //         status: false,
+    //     }
+    // }
+    const response = await fetch(
+        ' http://localhost:1188' + `/api/admin/book/add`,
+        {
+            method: 'POST',
+            credentials: 'include',
+            body: data
+        }
+    );
+    const json = await response.json();
+    return json;
+}
+
