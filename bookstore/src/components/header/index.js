@@ -103,6 +103,19 @@ export default function Header() {
     }
 
     const onSignup = async (value) => {
+        if (value.password != value.confPassword) {
+            setSignupResult({
+                status: false,
+                message: "Mật khẩu không trùng khớp"
+            });
+            return;
+        } else if (value.password.length < 6) {
+            setSignupResult({
+                status: false,
+                message: "Mật khẩu phải có ít nhất 6 ký tự"
+            });
+            return;
+        }
         const result = await postSignup(value.phone, value.fullName, value.password, value.address);
         setSignupResult(result);
     }
