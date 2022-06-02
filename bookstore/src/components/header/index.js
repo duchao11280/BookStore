@@ -39,6 +39,7 @@ export default function Header() {
     const [loginResult, setLoginResult] = React.useState(null);
     const [isLoading, setIsLoading] = React.useState(false);
     const [listAllCategory, setListAllCategory] = React.useState({});
+    const [searchInput, setSearchInput] = React.useState("");
     const { totalUniqueItems } = useCart();
     const navigate = useNavigate();
 
@@ -142,10 +143,22 @@ export default function Header() {
                     <div className="item-header-text">{constant.TITLE_EVENT}</div>
                     <div className="container-header-search">
                         <img alt='' src={search} className="icon-header" />
-                        <input className="input-header-search" placeholder={constant.INPUT_SEARCH} />
+                        <input
+                            className="input-header-search"
+                            placeholder={constant.INPUT_SEARCH}
+                            value = {searchInput}
+                            onChange={(value) => {
+                                setSearchInput(value.target.value)
+                            }}
+                            onKeyDown = {(event) => {
+                                if (event.key === 'Enter') {
+                                    navigate(`/search?keyword=${(searchInput)}`);
+                                }
+                            }}
+                        />
                     </div>
                     <div className="container-header-item">
-                        <div className='container-header-cart-item'>
+                        <div className='container-header-cart-item' onClick={() => redirect('/cart')} >
                             <img alt='' src={cart} className="icon-header" />
                             {totalUniqueItems === 0 || <span className='badge'>{totalUniqueItems}</span>}
                         </div>
