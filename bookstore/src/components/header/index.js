@@ -282,10 +282,10 @@ export default function Header() {
                                 <img alt='' src={rightArrow} className="button-icon-header item-rotate-180" onClick={() => { changeModal(modalState.previousState) }} />
                                 <img alt='' src={close} className="button-icon-header" onClick={closeModalAccount} />
                             </div>
-                            <div className='text-header-account-modal-login mt-5 mb-3'>
+                            <div className='text-header-account-modal-login mt-3 mb-3'>
                                 {constant.TITLE_SIGNUP_INFO}
                             </div>
-                            <div className="container-input-header-account-modal mt-3 mb-3">
+                            <div className="container-input-header-account-modal mb-3">
                                 <input
                                     className="input-header-account-modal"
                                     placeholder={constant.INPUT_PHONE}
@@ -295,7 +295,7 @@ export default function Header() {
                                         setValueSignup({ ...valueSignup })
                                     }} />
                             </div>
-                            <div className="container-input-header-account-modal mt-3 mb-3">
+                            <div className="container-input-header-account-modal mb-3">
                                 <input
                                     className="input-header-account-modal"
                                     placeholder={constant.INPUT_NAME}
@@ -305,7 +305,7 @@ export default function Header() {
                                         setValueSignup({ ...valueSignup })
                                     }} />
                             </div>
-                            <div className="container-input-header-account-modal mt-3 mb-3">
+                            <div className="container-input-header-account-modal mb-3">
                                 <input
                                     type={'password'}
                                     className="input-header-account-modal"
@@ -316,7 +316,7 @@ export default function Header() {
                                         setValueSignup({ ...valueSignup })
                                     }} />
                             </div>
-                            <div className="container-input-header-account-modal mt-3 mb-3">
+                            <div className="container-input-header-account-modal mb-3">
                                 <input
                                     type={'password'}
                                     className="input-header-account-modal"
@@ -326,7 +326,7 @@ export default function Header() {
                                         setValueSignup({ ...valueSignup })
                                     }} />
                             </div>
-                            <div className="container-input-header-account-modal mt-3 mb-3">
+                            <div className="container-input-header-account-modal mb-3">
                                 <input
                                     className="input-header-account-modal"
                                     placeholder={constant.INPUT_ADDRESS}

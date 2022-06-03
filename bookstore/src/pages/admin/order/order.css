@@ -1,6 +1,7 @@
 .container-admin-order {
     display: flex;
     min-height: 100vh;
+    padding-top: 65px;
     background-color: rgba(239, 239, 239, 0.5);
 }
 
@@ -48,6 +49,10 @@
     margin-top: 20px;
     overflow-y: scroll;
     scroll-behavior: smooth;
+}
+
+.body-content-admin-order div *{
+    z-index: 0;
 }
 
 .body-header-admin-order {
@@ -109,10 +114,38 @@
     font-weight: 500;
 }
 
-.btn-cancelled-admin-order {
+.btn-shipper-admin-order {
+    background-color: rgb(255, 208, 80);
+    border: none;
+    border-radius: 20px;
+    padding: 15px;
+    font-weight: 500;
+    width: 130px;
+}  
+
+
+.btn-complete-admin-order {
     background-color: lightgreen;
     border: none;
     border-radius: 20px;
     padding: 15px;
     font-weight: 500;
+    width: 130px;
 }  
+
+.btn-waiting-admin-order {
+    background-color: rgb(227, 249, 65);
+    border: none;
+    border-radius: 20px;
+    padding: 15px;
+    font-weight: 500;
+    width: 130px;
+} 
+.btn-cancelled-admin-order {
+    background-color: rgb(137, 138, 135);
+    border: none;
+    border-radius: 20px;
+    padding: 15px;
+    font-weight: 500;
+    width: 130px;
+} 

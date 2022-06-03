@@ -96,7 +96,7 @@ export default function SearchProduct() {
 	const filterOptions = { bookName: "Tên sách", auth: "Tác giả", nxb: "Nhà xuất bản", price: "Giá", rate: "Đánh giá" };
 	const filterOrder = {
 		alphabet: { a2z: "Từ A-Z", z2a: "Từ Z-A" },
-		price: { inc: "Giá tăng dần", dec: "Giá giảm dần" },
+		price: { inc: "Tăng dần", dec: "Giảm dần" },
 	};
 	const filterByPrice = ["price", "rate"];
 	const filterByAlphabet = ["bookName", "auth", "nxb"];
@@ -139,8 +139,8 @@ export default function SearchProduct() {
 					<div className="col-7 pl-2">
 						<div>
 							<div className="col-4">{SEARCH_TITLE}</div>
-							<div className="col-4">
-								<select onChange={onChangeOptions}>
+							<div className="col-6">
+								<select className="filter-main " onChange={onChangeOptions}>
 									{Object.keys(filterOptions).map((item, index) => {
 										return (
 											<option key={index} value={item}>
@@ -150,7 +150,7 @@ export default function SearchProduct() {
 									})}
 								</select>
 								{filterByAlphabet.indexOf(option) !== -1 ? (
-									<select onChange={onChangeOrder}>
+									<select className="filter-options " onChange={onChangeOrder}>
 										{Object.keys(filterOrder.alphabet).map((item, index) => {
 											return (
 												<option key={index} value={item}>
@@ -160,7 +160,7 @@ export default function SearchProduct() {
 										})}
 									</select>
 								) : (
-									<select onChange={onChangeOrder}>
+									<select className="filter-options " onChange={onChangeOrder}>
 										{Object.keys(filterOrder.price).map((item, index) => {
 											return (
 												<option key={index} value={item}>

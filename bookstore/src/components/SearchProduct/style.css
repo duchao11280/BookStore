@@ -56,3 +56,10 @@
 	margin-right: 15px;
 	min-height: 26px;
 }
+.filter-main{
+	border: none;
+}
+.filter-options{
+	border: none;
+	margin-left: 20px;
+}

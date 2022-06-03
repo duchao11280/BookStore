@@ -1,6 +1,7 @@
 .container-admin-book {
     display: flex;
     min-height: 100vh;
+    padding-top: 65px;
     background-color: rgba(239, 239, 239, 0.5);
 }
 
@@ -43,11 +44,11 @@
 .body-content-admin-book {
     border: 1px solid gray;
     border-radius: 5px;
-    height: 80vh;
+    /* height: 80vh; */
     background-color: #fff;
     margin-top: 20px;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
+    /* overflow-y: scroll; */
+    /* scroll-behavior: smooth; */
 }
 
 .body-header-admin-book {
@@ -80,7 +81,12 @@
     font-weight: 600;
 }
 
-.table-content-admin-book tr:hover {
+.table-content-admin-book tr:hover .btn-icon-admin-book {
+    background-color: none
+    
+}
+
+.table-content-admin-book tr:hover  {
     background-color: #e5e5e5;
 }
 
@@ -115,10 +121,35 @@
     color: #000;
 }  
 
-.btn-edit-editbook {
-    background-color: rgb(245, 245, 107);
+
+.btn-icon-admin-book{
+    border: none;
+    background-color: #fff;
+}
+.icon-admin-book{
+    width: 25px;
+    height: 25px;
+    margin:3px;
+
+}
+.icon-admin-book :hover{
+    cursor: pointer !important;
 }
 
-.btn-delete-editbook {  
-    background-color: rgb(245, 81, 81);
+.bookName-admin-long {
+    display: inline-block;
+    width: 280px;
+    max-width: 280px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+
+ 
+.body-content-admin-book div div table tbody tr td :hover{
+    cursor: pointer;
+}
+
+.body-content-admin-book div *{
+    z-index: 0;
 }

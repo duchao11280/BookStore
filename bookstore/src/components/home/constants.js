@@ -6,6 +6,7 @@ const constants = {
     TITLE_HOT_CATEGORY: "Thể loại nổi bật",
     TITLE_NEW: "Sách mới nhất",
     TITLE_BEST_SALER: "Sách bán chạy nhất",
+    TITLE_SALE_BOOK: "Sách đang giảm giá",
     BUTTON_MORE: "Xem thêm"
 };
 
