@@ -74,7 +74,9 @@ export default function Home() {
                             {
                                 listHotBooks.map((book, key) => {
                                     return (
-                                        <div key={key} className={slideIndex === key + 1 ? "item-slider-home-show" : "item-slider-home-hide fade"}>
+                                        <div key={key}
+                                            onClick={() => { window.location.assign(`/detailsbook/${book.bookId}`) }}
+                                            className={slideIndex === key + 1 ? "item-slider-home-show" : "item-slider-home-hide fade"}>
                                             <img alt="" src={settings.urlImageKey + book.coverImg} className='image-carousel-home' />
                                         </div>
                                     )
@@ -86,10 +88,14 @@ export default function Home() {
                     </div>
                     <div className='col-lg'>
                         <div className='row'>
-                            <div className='col-12 container-image-button-home pb-3'>
+                            <div className='col-12 container-image-button-home pb-3'
+                                onClick={() => { window.location.assign(`/search`) }}
+                            >
                                 <img alt="" className='image-button-home' src={cover2} />
                             </div>
-                            <div className='col-12 container-image-button-home pt-3'>
+                            <div className='col-12 container-image-button-home pt-3'
+                                onClick={() => { window.location.assign(`/search`) }}
+                            >
                                 <img alt="" className='image-button-home' src={cover3} />
                             </div>
                         </div>
@@ -146,7 +152,9 @@ export default function Home() {
 function CardCategory(props) {
     const category = props.item || {};
     return (
-        <div className='col-2 d-flex flex-column align-items-center card-category-home'>
+        <div className='col-2 d-flex flex-column align-items-center card-category-home'
+            onClick={() => { window.location.assign(`/search?category=${category.catId}`) }}
+        >
             <img alt={category.catName} src={settings.urlImageKey + category.thumbnails} className='image-category-home mb-2' />
             <p>{category.catName}</p>
         </div>

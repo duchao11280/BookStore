@@ -11,7 +11,7 @@ import {
     apiGetAllSubCatByCat,
     apiGetAllCategory
 } from './apiUrl'
-
+import settings from '../config/settings'
 export async function getAllCatAndSubCat() {
     const result = await axios.get(apiGetAllCatAndSubCat)
     if (result.data?.statusCode === 200) {
@@ -30,11 +30,18 @@ export async function getHotCategory() {
     }
 }
 
-export async function insertCategory(catName) {
-    const result = await axios.post(apiInsertCategory, {
-        catName: catName
-    });
-    console.log(catName, result);
+export async function insertCategory(catName, thumbnails) {
+    let data = new FormData()
+    data.append("catName", catName);
+    data.append("thumbnails", thumbnails)
+    const result = await fetch(
+        settings.host + apiInsertCategory,
+        {
+            method: 'POST',
+            credentials: 'include',
+            body: data
+        }
+    );
     if (result.data?.statusCode === 200) {
         return {
             status: true,
@@ -47,11 +54,18 @@ export async function insertCategory(catName) {
         }
     }
 }
-export async function updateCategory(id, catName) {
-    const result = await axios.put(apiUpdateCategory + id, {
-        catName: catName
-    });
-    console.log(catName, result);
+export async function updateCategory(id, catName, thumbnails) {
+    let data = new FormData()
+    data.append("catName", catName);
+    data.append("thumbnails", thumbnails)
+    const result = await fetch(
+        settings.host + apiUpdateCategory + id,
+        {
+            method: 'PUT',
+            credentials: 'include',
+            body: data
+        }
+    );
     if (result.data?.statusCode === 200) {
         return {
             status: true,

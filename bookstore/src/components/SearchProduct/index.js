@@ -323,10 +323,10 @@ export default function SearchProduct() {
 				<div className="row">
 					<div className="col-3 pt-5 sidebar">
 						<div className="row mb-3 d-flex align-items-center">
-							<div className="col-4">
+							<div className="col-sm-3">
 								<button className="filter-button" onClick={onFillter}>Lọc</button>
 							</div>
-							<div className="col">
+							<div className="col-sm-9">
 								<FormControl fullWidth>
 									<InputLabel id="demo-simple-select-label">Sắp xếp theo</InputLabel>
 									<Select
