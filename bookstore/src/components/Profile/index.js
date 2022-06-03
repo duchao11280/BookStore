@@ -346,7 +346,7 @@ export default function Profile() {
 										onClick={() => {
 											_button.callback();
 										}}
-										className={"btn btn-sm btn-outline-secondary  " + _button.className}
+										className={_button.className + "btn btn-sm btn-outline-secondary  "}
 									>
 										{_button.name}
 									</button>
@@ -390,7 +390,7 @@ export default function Profile() {
 											onViewChange(item.id);
 										}}
 									>
-										<i class={item.icon}></i>
+										<i className={item.icon}></i>
 										{item.title}
 									</div>
 								);
