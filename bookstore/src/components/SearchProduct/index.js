@@ -5,6 +5,13 @@ import RatingStar from "react-rating-stars-component";
 import useCollapse from 'react-collapsed'
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import StarRatings from 'react-star-ratings';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
 import Checkbox from '@mui/material/Checkbox';
 import { getAllBookSearch } from '../../services/book.service';
 import settings from '../../config/settings';
@@ -30,6 +37,22 @@ const priceArray = {
 		startPrice: 200000,
 		endPrice: 100000000000000000
 	}
+}
+
+const rateOption = {
+	0: null,
+	1: 1,
+	2: 2,
+	3: 3,
+	4: 4,
+	5: 5
+}
+
+const searchOption = {
+	1: 'Đánh giá cao nhất',
+	2: 'Mới nhất',
+	3: 'Giá tăng dần',
+	4: 'Giá giảm dần'
 }
 
 function useQuery() {
@@ -78,6 +101,16 @@ function checkExistPrice(array = [], price) {
 	return false;
 }
 
+function checkRate(rate, checkValue) {
+	if (rate == null) {
+		return true;
+	}
+	if (checkValue >= rateOption[rate]) {
+		return true;
+	}
+	return false;
+}
+
 function CardBook(props) {
 	const navigate = useNavigate();
 	const book = props.item;
@@ -98,17 +131,31 @@ function CardBook(props) {
 				<div className='card-book-price-home'>{formatVND(roundMoney(price * sale))}</div>
 				<div className='card-book-old-price-home'>{isSale ? formatVND(roundMoney(price)) : ""}</div>
 				<div className='card-book-star-home'>
-					<RatingStar
-						count={5}
-						size={35}
-						value={rate}
-						isHalf={true}
-						activeColor="#F9EF00"
-						edit={false}
+					<StarRatings
+						starDimension="30px"
+						starSpacing="1px"
+						rating={book.rate || 0}
+						starRatedColor="#F9EF00"
+						numberOfStars={5}
 					/>
 					<div className='card-book-text-star-home'>({rate || 0})</div>
 				</div>
 			</div>
+		</div>
+	)
+}
+
+function StartOptionFilter(props) {
+	const { option } = props;
+	return (
+		<div>
+			<StarRatings
+				starDimension="20px"
+				starSpacing="1px"
+				rating={Number(option) || 0}
+				starRatedColor="#ffae00"
+				numberOfStars={5}
+			/>
 		</div>
 	)
 }
@@ -128,37 +175,70 @@ export default function SearchProduct() {
 	const [isExpandedPrice, setIsExpandPrice] = React.useState(false);
 	const { getCollapseProps: getCollapsePrice, getToggleProps: getTogglePrice } = useCollapse({ isExpanded: isExpandedPrice });
 
+	const [isExpandedRate, setIsExpandRate] = React.useState(false);
+	const { getCollapseProps: getCollapseRate, getToggleProps: getToggleRate } = useCollapse({ isExpanded: isExpandedRate });
+
 	const navigate = useNavigate();
 	let query = useQuery();
 	let category = query.getAll('category');
 	let subcategory = query.getAll('subcategory');
 	let keyword = query.get('keyword');
 	let price = query.getAll('price');
+	let rate = query.get('rate');
 
 
 	const [searchResult, setSearchResult] = React.useState([]);
 	const [listAllBooks, setListAllBooks] = React.useState([]);
+	const [checkedRate, setCheckedRate] = React.useState(null)
 	const [pageNumber, setPageNumber] = React.useState(1);
 	const [objCheckedCategory, setObjCheckedCategory] = React.useState({});
 	const [objlistCategory, setObjlistCategory] = React.useState([]);
-	const [objCheckedPrice, setObjCHeckedPrice] = React.useState({
+	const [objCheckedPrice, setObjCheckedPrice] = React.useState({
 		1: false, // Dưới 50k
 		2: false, // 50k - 100k
 		3: false, // 100k - 200k
 		4: false  // Trên 200k
 	})
-	const [showMore, setShowMore] = React.useState(false);
 
-	const btnShowMore = () => {
-		setShowMore(!showMore);
-		if (showMore == true) {
-			return <>
-				<i className="fa-solid fa-angle-up"></i>
-			</>
-		}
+	const onSort = (key) => {
+		const result = searchResult.sort((a, b) => {
+			if (key === 1) {
+				return a.rate > b.rate ? 1 : -1;
+			} else if (key === 2) {
+				return a.createAt > b.createAt ? 1 : -1;
+			} else if (key === 3) {
+				return a.price * a.sale > b.price * b.sale ? 1 : -1;
+			} else if (key === 4) {
+				return a.price * a.sale < b.price * b.sale ? 1 : -1;
+			}
+		});
+		setSearchResult(result);
 	}
 
 	React.useEffect(() => {
+		// set checked default for filter
+		// category
+		const newObjCheckedCategory = {};
+		category.forEach(key => {
+			newObjCheckedCategory[key] = true;
+		})
+		setObjCheckedCategory(newObjCheckedCategory);
+		// price
+		const newObjCheckedPrice = {
+			1: false, // Dưới 50k
+			2: false, // 50k - 100k
+			3: false, // 100k - 200k
+			4: false  // Trên 200k
+		};
+		price.forEach(key => {
+			newObjCheckedPrice[key] = true;
+		})
+		setObjCheckedPrice(newObjCheckedPrice);
+		// rate
+		if (rate) {
+			setCheckedRate(rate);
+		}
+
 		const objCat = {};
 		getAllBookSearch().then(result => {
 			for (let book of result) {
@@ -172,8 +252,7 @@ export default function SearchProduct() {
 	}, [])
 
 	React.useEffect(() => {
-		const listBooks = [];
-		if (!category.length && !subcategory.length && (keyword == null || keyword == "") && !price.length) {
+		if (!category.length && !subcategory.length && (keyword == null || keyword == "") && !price.length && (rate == null || rate == "")) {
 			setSearchResult(listAllBooks);
 			return;
 		}
@@ -181,34 +260,11 @@ export default function SearchProduct() {
 			return checkExist(category, book.catId)
 				&& checkKeyword(book.bookName, keyword)
 				&& checkExistPrice(price, (book.price * book.sale))
+				&& checkRate(rate, book.rate || 0)
 		})
 
-
-		// for (let book of listAllBooks) {
-		// 	if (checkExist(category, book.catId)) {
-		// 		listBooks.push(book);
-		// 		continue;
-		// 	}
-		// 	if (checkExist(subcategory, book.subCatId)) {
-		// 		listBooks.push(book);
-		// 		continue;
-		// 	}
-		// 	if (checkKeyword(book.bookName, keyword)) {
-		// 		listBooks.push(book);
-		// 		continue;
-		// 	}
-		// 	if (checkExistPrice(price, (book.price * book.sale))) {
-		// 		listBooks.push(book);
-		// 		continue;
-		// 	}
-
-		// }
 		setSearchResult(listResult);
 	}, [useLocation().search, listAllBooks])
-
-	const onSearch = () => {
-		navigate('/search?category=1&category=5');
-	}
 
 	const onCheckCategory = (checked, key) => {
 		objCheckedCategory[key] = checked;
@@ -217,8 +273,12 @@ export default function SearchProduct() {
 
 	const onCheckPrice = (checked, key) => {
 		objCheckedPrice[key] = checked;
-		setObjCHeckedPrice(objCheckedPrice);
+		setObjCheckedPrice(objCheckedPrice);
 	}
+
+	const handleCheckRate = (event) => {
+		setCheckedRate(event.target.value);
+	};
 
 	const onFillter = () => {
 		const listQueryCategory = [];
@@ -235,51 +295,95 @@ export default function SearchProduct() {
 			}
 		})
 
-		const query = `${encodeQueryData(listQueryCategory, 'category')}&${encodeQueryData(listQueryPrice, 'price')}`
+		const query = `${encodeQueryData(listQueryCategory, 'category')}&${encodeQueryData(listQueryPrice, 'price')}${keyword !== null ? '&keyword=' + keyword : ""}${checkedRate !== null ? '&rate=' + checkedRate : ""}`;
 		navigate(`/search?${query}`);
 	}
 
-	// 	var changeIcon = {() => {
+	const [sort, setSort] = React.useState(1);
 
-	// 	}
-	// }
+	const handleChange = (event) => {
+		setSort(event.target.value);
+		onSort(event.target.value);
+	};
+
 	return (
 		<div className="container-search">
 			<div className="container">
 				<div className="row">
 					<div className="col-3 pt-5 sidebar">
-						<button className="sidebar-btn" onClick={onFillter}>Tìm</button>
-						<div>
+						<div className="row mb-3 d-flex align-items-center">
+							<div className="col-4">
+								<button className="filter-button" onClick={onFillter}>Lọc</button>
+							</div>
+							<div className="col">
+								<FormControl fullWidth>
+									<InputLabel id="demo-simple-select-label">Sắp xếp theo</InputLabel>
+									<Select
+										labelId="demo-simple-select-label"
+										id="demo-simple-select"
+										value={sort}
+										label="Sắp xếp theo"
+										onChange={handleChange}
+									>
+										<MenuItem value={1}>{searchOption[1]}</MenuItem>
+										<MenuItem value={2}>{searchOption[2]}</MenuItem>
+										<MenuItem value={3}>{searchOption[3]}</MenuItem>
+										<MenuItem value={4}>{searchOption[4]}</MenuItem>
+									</Select>
+								</FormControl>
+							</div>
+						</div>
+						<div className="row">
 							<button className="sidebar-btn" {...getToggleCategory()} onClick={() => setIsExpandCategory(!isExpandedCategory)}>
-								{isExpandedCategory ? 'Thể loại - đóng' : 'Thể loại - mở'}
+								Thể loại
 								{isExpandedCategory ? <i className="fa-solid fa-angle-up"></i> : <i className="fa-solid fa-angle-down"></i>}
-
-
 							</button>
 							<section {...getCollapseCategory()}>
 								<FormGroup className="select-item">
 									{
 										Object.keys(objlistCategory).map((value, key) => {
 											return (
-												<FormControlLabel key={key} control={<Checkbox onChange={(event) => onCheckCategory(event.target.checked, value)} />} label={objlistCategory[value]} />
+												<FormControlLabel key={key} control={<Checkbox defaultChecked={objCheckedCategory[value]} onChange={(event) => onCheckCategory(event.target.checked, value)} />} label={objlistCategory[value]} />
 											)
 										})
 									}
 								</FormGroup>
 							</section>
 						</div>
-						<div>
+						<div className="row">
 							<button className="sidebar-btn" {...getTogglePrice()} onClick={() => setIsExpandPrice(!isExpandedPrice)}>
-								{isExpandedPrice ? 'Mức giá - đóng' : 'Mức giá - mở'}
+								Mức giá
 								{isExpandedPrice ? <i className="fa-solid fa-angle-up"></i> : <i className="fa-solid fa-angle-down"></i>}
-
 							</button>
 							<section {...getCollapsePrice()}>
 								<FormGroup className="select-item">
-									<FormControlLabel control={<Checkbox onChange={(event) => onCheckPrice(event.target.checked, 1)} />} label={"Dưới 50.000 đ"} />
-									<FormControlLabel control={<Checkbox onChange={(event) => onCheckPrice(event.target.checked, 2)} />} label={"50.000 đ - 100.000 đ"} />
-									<FormControlLabel control={<Checkbox onChange={(event) => onCheckPrice(event.target.checked, 3)} />} label={"100.000 đ - 200.000 đ"} />
-									<FormControlLabel control={<Checkbox onChange={(event) => onCheckPrice(event.target.checked, 4)} />} label={"Trên 200.000 đ"} />
+									<FormControlLabel control={<Checkbox defaultChecked={objCheckedPrice[1]} onChange={(event) => onCheckPrice(event.target.checked, 1)} />} label={"Dưới 50.000 đ"} />
+									<FormControlLabel control={<Checkbox defaultChecked={objCheckedPrice[2]} onChange={(event) => onCheckPrice(event.target.checked, 2)} />} label={"50.000 đ - 100.000 đ"} />
+									<FormControlLabel control={<Checkbox defaultChecked={objCheckedPrice[3]} onChange={(event) => onCheckPrice(event.target.checked, 3)} />} label={"100.000 đ - 200.000 đ"} />
+									<FormControlLabel control={<Checkbox defaultChecked={objCheckedPrice[4]} onChange={(event) => onCheckPrice(event.target.checked, 4)} />} label={"Trên 200.000 đ"} />
+								</FormGroup>
+							</section>
+						</div>
+						<div className="row">
+							<button className="sidebar-btn" {...getToggleRate()} onClick={() => setIsExpandRate(!isExpandedRate)}>
+								Đánh giá
+								{isExpandedRate ? <i className="fa-solid fa-angle-up"></i> : <i className="fa-solid fa-angle-down"></i>}
+							</button>
+							<section {...getCollapseRate()}>
+								<FormGroup className="select-item">
+									<RadioGroup
+										aria-labelledby="demo-radio-buttons-group-label"
+										defaultValue={rate}
+										name="radio-buttons-group"
+										onChange={handleCheckRate}
+									>
+										<FormControlLabel value="5" control={<Radio />} label={<StartOptionFilter option={5} />} />
+										<FormControlLabel value="4" control={<Radio />} label={<StartOptionFilter option={4} />} />
+										<FormControlLabel value="3" control={<Radio />} label={<StartOptionFilter option={3} />} />
+										<FormControlLabel value="2" control={<Radio />} label={<StartOptionFilter option={2} />} />
+										<FormControlLabel value="1" control={<Radio />} label={<StartOptionFilter option={1} />} />
+										<FormControlLabel value="0" control={<Radio />} label={<StartOptionFilter option={0} />} />
+									</RadioGroup>
 								</FormGroup>
 							</section>
 						</div>
