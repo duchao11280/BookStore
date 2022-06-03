@@ -122,3 +122,23 @@
     font-weight: 400;
     color: #F9B300;
 }
+
+.sidebar {
+	height: 100%;
+}
+
+.sidebar-btn {
+	background-color: #fff;
+	padding: 0 20px;
+    width: 100%;
+    border: none;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+}
+
+.select-item {
+	padding-left: 20px;
+}
