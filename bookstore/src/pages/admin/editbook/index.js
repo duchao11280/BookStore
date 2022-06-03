@@ -7,19 +7,36 @@ import TextField from '@mui/material/TextField';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import settings from '../../../config/settings';
 import { getAllCategory, getAllSubCatByCat } from '../../../services/category.services'
-
-
+import { updateBook } from '../../../services/book.service'
+import { ToastContainer, toast } from 'react-toastify';
 function Editbook() {
-    if (window.sessionStorage.getItem(settings.loginKey.role) != '0') {
+    if (window.sessionStorage.getItem(settings.loginKey.role) !== '0') {
         window.location.replace('/notfound')
     }
     const { id } = useParams();
-    const [bookDetails, setBookDetails] = React.useState({});
+    const [bookDetails, setBookDetails] = React.useState({
+        auth: null,
+        bookId: id,
+        bookName: null,
+        coverImg: null,
+        description: null,
+        language: null,
+        nxb: null,
+        price: null,
+        quantity: null,
+        sale: null,
+        subCatId: null,
+        thumbnails: null,
+        thumbnailsUrl: null,
+        tinyDescription: null,
+        year: null,
+    });
+    const [refresh, setRefresh] = React.useState(false);
     const [category, setCategory] = React.useState("");
     const [listCategory, setListCategory] = React.useState([]);
     const [listSubCat, setListSubCat] = React.useState([]);
     React.useEffect(() => {
-        getDetailBookById(id).then(result => setBookDetails(result.data));
+        getDetailBookById(id).then(result => { setBookDetails(result.data); });
         getAllCategory().then(result => setListCategory(result));
     }, [])
 
@@ -35,8 +52,10 @@ function Editbook() {
     }
 
     const converImageUrl = (image) => {
+
+
         if (typeof image === 'string' || image == null) {
-            return settings.urlImageKey + image
+            return image
         } else {
             return URL.createObjectURL(image);
         }
@@ -65,14 +84,32 @@ function Editbook() {
     };
 
     const onSubmit = () => {
-        console.log(bookDetails);
+
+
+        updateBook(bookDetails.bookId, bookDetails.bookName, bookDetails.auth,
+            bookDetails.description, bookDetails.language, bookDetails.year,
+            bookDetails.nxb, bookDetails.price, bookDetails.quantity, bookDetails.subCatId,
+            bookDetails.sale, bookDetails.coverImg, bookDetails.thumbnails, bookDetails.coverUrl, bookDetails.thumbnailsUrl).then(() => {
+                toast.success("cập nhật thành công", {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+
+                });
+                setRefresh(!refresh)
+            });
     }
 
     return (<>
         <div className="container-admin-editbook">
             <Sidebaradmin />
             <div className="content-admin-editbook">
-                <div className="body-content-admin-editbook mt-5">
+                <h3>Cập nhật sách</h3>
+                <div className="body-content-admin-editbook">
                     <div className="body-header-admin-editbook">
                         <Link to="/admin/book">
                             <i className="fa-solid fa-angle-left"></i>
@@ -84,9 +121,9 @@ function Editbook() {
                                 <h6>Ảnh đại diện</h6>
                                 <div className="d-flex flex-column">
                                     <img className="img-admin-edit-book-thumbnails"
-                                        src={converImageUrl(bookDetails.thumbnails)} alt="ảnh sách"
+                                        src={converImageUrl(bookDetails.thumbnailsUrl)} alt="ảnh sách"
                                     />
-                                    <input className='custom-file-input-none' type="file" name="images" id='id-image-thumbnails' multiple accept="image/*" onChange={(event) => onImageChange(event, 'thumbnails')} />
+                                    <input className='custom-file-input-none' type="file" name="images" id='id-image-thumbnails' multiple accept="image/*" onChange={(event) => onImageChange(event, 'thumbnailsUrl')} />
                                     <label className='custom-file-input' htmlFor='id-image-thumbnails'>
                                     </label>
                                 </div>
@@ -96,9 +133,9 @@ function Editbook() {
                                     <h6>Ảnh bìa</h6>
                                     <div className="d-flex flex-column">
                                         <img className="img-admin-edit-book-cover"
-                                            src={converImageUrl(bookDetails.cover)} alt="ảnh sách"
+                                            src={converImageUrl(bookDetails.coverUrl)} alt="ảnh sách"
                                         />
-                                        <input className='custom-file-input-none' type="file" name="images" id='id-image-cover' multiple accept="image/*" onChange={(event) => onImageChange(event, 'cover')} />
+                                        <input className='custom-file-input-none' type="file" name="images" id='id-image-cover' multiple accept="image/*" onChange={(event) => onImageChange(event, 'coverUrl')} />
                                         <label className='custom-file-input' htmlFor='id-image-cover'>
                                         </label>
                                     </div>
@@ -139,7 +176,7 @@ function Editbook() {
                                     <label className="col-sm-4 col-form-label h6">Thể loại chung</label>
                                     <div className="col-sm-8">
                                         <select className="combobox-book-admin-editbook" value={category}
-                                            onChange = {onChangeCat}>
+                                            onChange={onChangeCat}>
                                             {
                                                 listCategory.map((category, key) => {
                                                     return (
@@ -156,8 +193,8 @@ function Editbook() {
                                 <div className="form-group row">
                                     <label className="col-sm-4 col-form-label h6">Thể loại chi tiết</label>
                                     <div className="col-sm-8">
-                                        <select className="combobox-book-admin-editbook" value={bookDetails.catId} 
-                                        onChange = {onChangeSubCat}>
+                                        <select className="combobox-book-admin-editbook" value={bookDetails.catId}
+                                            onChange={onChangeSubCat}>
                                             {listSubCat.map((value, key) => {
                                                 return (
                                                     <option value={value.subCatId} key={value.subCatId}>{value.subCatName}</option>

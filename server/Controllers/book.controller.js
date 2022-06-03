@@ -2,7 +2,16 @@ const { exeQuery } = require('../utls/database');
 const db = require('../utls/database');
 exports.getAllBooks = async (req, res) => {
     try {
-        const result = await exeQuery(`Select * from books`);
+        const query =
+        'SELECT b.*, c.catId, r.rate, c.catName ' +
+        'FROM books b ' +
+        '    INNER JOIN subcategories s ON b.subCatId = s.subCatId ' +
+        '    INNER JOIN categories c ON c.catId = s.catId ' +
+        '    LEFT JOIN (SELECT bookId, AVG(rate) as rate ' +
+        '                            FROM rating ' +
+        '                            GROUP BY bookId) as r ON b.bookId = r.bookId ' +
+        'WHERE b.isDisable = 0 ';
+        const result = await exeQuery(query, []);
         res.status(200).json({ message: "Lấy dữ liệu thành công", data: result });
     } catch (error) {
         res.status(500).json({ message: "Thất bại", data: error });
@@ -132,11 +141,14 @@ exports.getDetailBookByID = async (req, res) => {
         let bookId = req.params.id;
         const query = `Select DISTINCT * from books where bookId = ?`
         const result = await db.exeQuery(query, [bookId]);
+
         if (result.length === 0) {
             res.status(402).json({ message: "Không có dữ liệu", statusCode: 402, data: [] });
             return;
         }
         result[0].thumbnailsUrl = process.env.DOMAIN_SERVER + '/public/images/' + result[0].thumbnails
+        result[0].coverUrl = process.env.DOMAIN_SERVER + '/public/images/' + result[0].coverImg
+        console.log(result)
         return res.status(200).json({ message: "Lấy dữ liệu thành công", statusCode: 200, data: result });
     } catch (error) {
         console.log(error)
@@ -177,7 +189,7 @@ exports.getRelatedBooks = async (req, res) => {
             ORDER BY createAt LIMIT 10;`
         const result = await db.exeQuery(query, [bookId, subCatId]);
         if (result.length === 0) {
-            res.status(402).json({ message: "Không có dữ liệu", statusCode: 402, data: [] });
+            res.status(204).json({ message: "Không có dữ liệu", statusCode: 204, data: [] });
             return;
         }
         result.forEach(element => {

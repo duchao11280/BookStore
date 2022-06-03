@@ -1,5 +1,6 @@
 const db = require('../utls/database')
 
+
 // exports.disableBookByBookId = async (req, res) => {
 //     try {
 //         const id = req.params.id;
@@ -41,22 +42,7 @@ exports.disableBookByBookId = async (req, res) => {
     db.releaseConnection(conn);
 }
 
-exports.updateBookByBookId = async (req, res) => {
-    let conn = await db.getConnection();
-    try {
-        const id = req.body.id;
-        conn = await db.beginTransaction(conn);
-        const query = 'update books set bookName=?, auth=?, description=?, year=?,' +
-            'nxb=?, quantity=?, subCatID=?, thumbnails=?, price=?, sale=? where bookId=?, '
-        const result = await db.queryTransaction(conn, query, [id]);
-        conn = await db.commitTransaction(conn);
-        res.status(200).json({ message: "Cập nhật dữ liệu thành công", data: result });
-    } catch (error) {
-        await db.rollback(conn);
-        res.status(500).json({ message: "Thất bại", data: error });
-    }
-    db.releaseConnection(conn);
-}
+
 
 exports.updateOrderStatusbyId = async (req, res) => {
     let conn = await db.getConnection();
@@ -150,9 +136,11 @@ exports.addBookByBookId = async (req, res) => {
     let conn = await db.getConnection();
     try {
         const { bookName, auth, description, language, year, nxb, price, quantity, subCatId, sale, coverImg, thumbnails } = req.body;
+        let hinhcover = req.files[0]?.filename
+        let hinhthumbnails = req.files[1]?.filename
         conn = await db.beginTransaction(conn);
         const query = 'insert into books (bookName, auth, description, language, year, nxb, price, quantity, subCatId, sale, coverImg, thumbnails   ) values(?,?,?,?,?,?,?,?,?,?,?,?) '
-        const result = await db.queryTransaction(conn, query, [bookName, auth, description, language, year, nxb, price, quantity, subCatId, sale, coverImg, thumbnails]);
+        const result = await db.queryTransaction(conn, query, [bookName, auth, description, language, year, nxb, price, quantity, subCatId, sale, hinhcover, hinhthumbnails]);
         conn = await db.commitTransaction(conn);
         res.status(200).json({ message: "Thêm dữ liệu thành công", });
     } catch (error) {
@@ -160,7 +148,46 @@ exports.addBookByBookId = async (req, res) => {
         res.status(500).json({ message: "Thất bại", data: error });
     }
     db.releaseConnection(conn);
+
 }
+
+exports.updateBookByBookId = async (req, res) => {
+    let conn = await db.getConnection();
+    try {
+        const { bookId, bookName, auth, description, language, year, nxb, price, quantity, subCatId, sale, coverImg, thumbnails, coverUrl, thumbnailsUrl } = req.body;
+        let hinhcover
+        let hinhthumbnails
+        // console.log(" thumnails  " + thumbnails);
+        // console.log(" thumbnailsUrl:  " + thumbnailsUrl);
+        // console.log(" coverImg:     " + coverImg);
+        // console.log(" coverUrl:     " + coverUrl);
+
+        if (thumbnailsUrl == null && coverUrl == null) {
+            hinhcover = req.files[0]?.filename
+            hinhthumbnails = req.files[1]?.filename
+        }
+        else if (thumbnailsUrl == null) {
+            hinhcover = coverImg
+            hinhthumbnails = req.files[0]?.filename
+        }
+        else if (coverUrl == null) {
+            hinhcover = req.files[0]?.filename
+            hinhthumbnails = thumbnails
+        }
+        conn = await db.beginTransaction(conn);
+        const query = 'update books set bookName=?, auth=?, description=?, year=?,' +
+            'nxb=?, language=?, quantity=?, subCatID=?, coverImg=?, thumbnails=?, price=?, sale=? where bookId=? '
+        const result = await db.queryTransaction(conn, query, [bookName, auth, description, year, nxb, language, quantity, subCatId, hinhcover, hinhthumbnails, price, sale, bookId]);
+        conn = await db.commitTransaction(conn);
+        res.status(200).json({ message: "Cập nhật dữ liệu thành công", data: result });
+    } catch (error) {
+        await db.rollback(conn);
+        res.status(500).json({ message: "Thất bại", data: error });
+    }
+    db.releaseConnection(conn);
+}
+
+
 
 
 exports.getAllOrder = async (req, res) => {

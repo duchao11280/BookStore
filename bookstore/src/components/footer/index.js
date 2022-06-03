@@ -14,14 +14,23 @@ export default function Header() {
                 </div>
                 <div className="col">
                     <div className="row">
-                        <div className="col">
-                            Dich vu
+                        <div className="col-sm-4 mt-5">
+                            <div className='text-title-footer'>Dịch vụ</div>
+                            <div className='text-subtitle-footer'>Điều khoản sử dụng</div>
+                            <div className='text-subtitle-footer'>Chính sách bảo mật</div>
+                            <div className='text-subtitle-footer'>Giới thiệu</div>
                         </div>
-                        <div className="col">
-                            Dich vu
+                        <div className="col-sm mt-5">
+                            <div className='text-title-footer'>Hỗ trợ</div>
+                            <div className='text-subtitle-footer'>Chính sách đổi trả - hoàn tiền</div>
+                            <div className='text-subtitle-footer'>Phương thức vận chuyển</div>
+                            <div className='text-subtitle-footer'>Phương thức thanh toán</div>
                         </div>
-                        <div className="col">
-                            Dich vu
+                        <div className="col-sm-4 mt-5">
+                            <div className='text-title-footer'>Tài khoản của tôi</div>
+                            <div className='text-subtitle-footer'>Thông tin cá nhân</div>
+                            <div className='text-subtitle-footer'>Danh sách quan tâm</div>
+                            <div className='text-subtitle-footer'>Lịch sử mua hàng</div>
                         </div>
                     </div>
                 </div>

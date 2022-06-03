@@ -8,3 +8,14 @@
 .icon-footer-logo {
     height: 100px;
 }
+
+.text-title-footer {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.text-subtitle-footer {
+    font-size: 16px;
+    margin-bottom: 15px;
+}

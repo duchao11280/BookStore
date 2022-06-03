@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import settings from '../../../config/settings';
 
 function Orderdetail() {
-    if (window.sessionStorage.getItem(settings.loginKey.role) != '0') {
+    if (window.sessionStorage.getItem(settings.loginKey.role) !== '0') {
         window.location.replace('/notfound')
     }
     const { id } = useParams();
@@ -46,10 +46,10 @@ function Orderdetail() {
             <div className="content-admin-orderdetail">
                 <div className="title-content-admin-orderdetail">
                     <h3>Chi tiết đơn hàng</h3>
-                    <div className="search-admin-orderdetail">
+                    {/* <div className="search-admin-orderdetail">
                         <input type="text" />
                         <i className="fa-solid fa-magnifying-glass"></i>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="body-content-admin-orderdetail">
                     <div className="body-header-admin-orderdetail">

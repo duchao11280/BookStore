@@ -39,6 +39,7 @@ export default function Header() {
     const [loginResult, setLoginResult] = React.useState(null);
     const [isLoading, setIsLoading] = React.useState(false);
     const [listAllCategory, setListAllCategory] = React.useState({});
+    const [searchInput, setSearchInput] = React.useState("");
     const { totalUniqueItems } = useCart();
     const navigate = useNavigate();
 
@@ -60,7 +61,10 @@ export default function Header() {
     }
 
     const redirect = (url) => {
-        navigate(url, { replace: true });
+        // navigate(url, { replace: true });
+        window.location.assign(url)
+        setIsOpenModalAccount(false);
+        setIsOpenCategory(false);
         window.scrollTo(0, 0)
     }
 
@@ -103,6 +107,19 @@ export default function Header() {
     }
 
     const onSignup = async (value) => {
+        if (value.password != value.confPassword) {
+            setSignupResult({
+                status: false,
+                message: "Mật khẩu không trùng khớp"
+            });
+            return;
+        } else if (value.password.length < 6) {
+            setSignupResult({
+                status: false,
+                message: "Mật khẩu phải có ít nhất 6 ký tự"
+            });
+            return;
+        }
         const result = await postSignup(value.phone, value.fullName, value.password, value.address);
         setSignupResult(result);
     }
@@ -128,11 +145,23 @@ export default function Header() {
                     </div>
                     <div className="item-header-text">{constant.TITLE_EVENT}</div>
                     <div className="container-header-search">
-                        <img alt='' src={search} className="icon-header" />
-                        <input className="input-header-search" placeholder={constant.INPUT_SEARCH} />
+                        <img alt='' src={search} className="icon-header" onClick={() => redirect('/search')} />
+                        <input
+                            className="input-header-search"
+                            placeholder={constant.INPUT_SEARCH}
+                            value={searchInput}
+                            onChange={(value) => {
+                                setSearchInput(value.target.value)
+                            }}
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter') {
+                                    navigate(`/search?keyword=${(searchInput)}`);
+                                }
+                            }}
+                        />
                     </div>
                     <div className="container-header-item">
-                        <div className='container-header-cart-item'>
+                        <div className='container-header-cart-item' onClick={() => redirect('/cart')} >
                             <img alt='' src={cart} className="icon-header" />
                             {totalUniqueItems === 0 || <span className='badge'>{totalUniqueItems}</span>}
                         </div>
@@ -157,15 +186,19 @@ export default function Header() {
                         <div className='row' style={{ width: '100%' }}>
                             {
                                 Object.keys(listAllCategory).map((category, key) => {
+                                    const categoryDetails = listAllCategory[category][0] || null;
+                                    const catId = categoryDetails ? categoryDetails.catId : null;
                                     return (
                                         <div className='col-sm-3 mb-3'>
-                                            <p className='text-category-header-modal'>
+                                            <p className='text-category-header-modal'
+                                                onClick={() => redirect(catId ? `/search?&category=${catId}` : `/search`)}>
                                                 {category}
                                             </p>
                                             {
                                                 listAllCategory[category].map((subcategory, key) => {
                                                     return (
-                                                        <p className='text-subcategory-header-modal'>
+                                                        <p className='text-subcategory-header-modal'
+                                                            onClick={() => redirect(catId ? `/search?&subcategory=${subcategory.subCatId}` : `/search`)}>
                                                             {subcategory.subCatName}
                                                         </p>
                                                     )
