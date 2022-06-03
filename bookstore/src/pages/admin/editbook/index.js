@@ -36,8 +36,9 @@ function Editbook() {
     const [listCategory, setListCategory] = React.useState([]);
     const [listSubCat, setListSubCat] = React.useState([]);
     React.useEffect(() => {
-        getDetailBookById(id).then(result => { setBookDetails(result.data); });
         getAllCategory().then(result => setListCategory(result));
+        getDetailBookById(id).then(result => { setBookDetails(result.data); setCategory(result.data.catId) });
+
     }, [])
 
     React.useEffect(() => {

@@ -160,8 +160,8 @@ export default function Header() {
                             }}
                         />
                     </div>
-                    <div className="container-header-item">
-                        <div className='container-header-cart-item' onClick={() => redirect('/cart')} >
+                    <div className="container-header-item" onClick={() => redirect('/cart')}>
+                        <div className='container-header-cart-item'  >
                             <img alt='' src={cart} className="icon-header" />
                             {totalUniqueItems === 0 || <span className='badge'>{totalUniqueItems}</span>}
                         </div>
@@ -239,7 +239,7 @@ export default function Header() {
                                 <img alt='' src={rightArrow} className='item-icon-header-account-modal ms-auto' />
                             </div> : null}
                             <div className='line-header-horizontal' />
-                            <div className='item-header-account-modal'>
+                            <div className='item-header-account-modal' onClick={() => { window.location.assign(`/searchorder`) }}>
                                 <img alt='' src={cartColor} className='icon-header' />
                                 <div className='item-text-header-account-modal'>{constant.TITLE_CART}</div>
                                 <img alt='' src={rightArrow} className='item-icon-header-account-modal ms-auto' />

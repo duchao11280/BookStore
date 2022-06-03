@@ -37,17 +37,17 @@ const CategoriesManagement = () => {
             .catch(() => { setListCategories([]) })
     }, [refresh])
 
+
     const handleOnAddCategory = () => {
         setShowModalInputCategory(true)
     }
 
     const handleOnEditCategory = (item) => {
         setIsEditCat(true);
-
         setCurrCat({
             catId: item.catId,
-            catName: item.catName
-
+            catName: item.catName,
+            thumbnails: item.thumbnails,
         });
         setShowModalInputCategory(true);
     }
@@ -94,7 +94,7 @@ const CategoriesManagement = () => {
         setShowModalAlert(false);
     }
     const ModelInputCategory = () => {
-        const [valueInput, setValueInput] = useState(isEditCat ? currCat : { catName: '' })
+        const [valueInput, setValueInput] = useState(isEditCat ? currCat : { catName: '', thumbnails: null })
         const handleChange = (e) => {
             const { name, value } = e.target;
             setValueInput({
@@ -102,12 +102,27 @@ const CategoriesManagement = () => {
                 [name]: value,
             });
         };
-
+        const converImageUrl = (image) => {
+            if (typeof image === 'string' || image == null) {
+                return settings.urlImageKey + image
+            } else {
+                return URL.createObjectURL(image);
+            }
+        }
+        const onImageChange = (event, key) => {
+            if (event.target.files && event.target.files[0]) {
+                const newCategory = { ...valueInput };
+                let img = event.target.files[0];
+                newCategory.thumbnails = img;
+                setValueInput(newCategory);
+                // URL.createObjectURL(img)
+            }
+        }
         const handleSubmit = (event) => {
             if (isEditCat) {
 
                 event.preventDefault();
-                updateCategory(valueInput.catId, valueInput.catName)
+                updateCategory(valueInput.catId, valueInput.catName, valueInput.thumbnails)
                     .then((response) => {
                         setRefresh(!refresh)
                         toast.success(response?.message, {
@@ -137,7 +152,7 @@ const CategoriesManagement = () => {
             } else {
 
                 event.preventDefault();
-                insertCategory(valueInput.catName)
+                insertCategory(valueInput.catName, valueInput.thumbnails)
                     .then((response) => {
                         setRefresh(!refresh)
                         toast.success(response?.message, {
@@ -194,7 +209,22 @@ const CategoriesManagement = () => {
                                 Vui lòng nhập tên thể loại
                         </Form.Control.Feedback>
                         </Form.Group>
+                        <div className='col-4'>
+                            <h6>Ảnh đại diện</h6>
+                            <div className="d-flex flex-column">
+                                <img className="img-admin-edit-book-thumbnails"
+                                    src={converImageUrl(valueInput.thumbnails)} alt="ảnh thể loại"
+                                />
+                                <input type="file"
+                                    required={valueInput.thumbnails !== null ? false : true}
+                                    name="thumbnails"
+                                    id='id-image-thumbnails'
+                                    accept="image/*"
+                                    onChange={(event) => onImageChange(event, 'thumbnails')} />
 
+
+                            </div>
+                        </div>
                     </Modal.Body>
                     <Modal.Footer>
                         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
