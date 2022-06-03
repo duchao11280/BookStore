@@ -1,0 +1,167 @@
+.container-search {
+	background-color: #F4F6F4;
+    min-height: 100vh;
+    padding-top: 65px;
+}
+
+.container-search div * {
+    z-index: 0;
+}
+
+#tracking-input {
+	width: 70%;
+}
+#btnTracking {
+	background: #e03;
+	border-radius: 5px;
+	border: 0;
+	color: #fff;
+	font-family: "SF UI Text Bold";
+	width: 154px;
+	height: 38px;
+	font-size: 16px;
+	text-transform: uppercase;
+	text-align: left;
+	padding: 0 15px;
+	position: relative;
+	margin-top: 15px;
+	cursor: pointer;
+}
+#btnTracking:after {
+	content: "";
+	display: inline-block;
+	width: 30px;
+	height: 38px;
+	background: url(https://viettelpost.vn/viettelpost-iframe/assets/images/ic-submit.png) left no-repeat;
+	position: absolute;
+	right: 25px;
+	top: 0;
+}
+.order-title {
+	font-weight: bold;
+	font-size: 23px;
+	color: red;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+.order-content {
+	font-weight: bold;
+	font-size: 15px;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+.order-price {
+	font-weight: bold;
+	font-size: 17px;
+	color: rgb(243, 229, 38);
+	margin-left: 15px;
+	margin-right: 15px;
+	min-height: 26px;
+}
+.order-status {
+	font-weight: bold;
+	font-size: 17px;
+	color: rgb(40, 237, 36);
+	margin-left: 15px;
+	margin-right: 15px;
+	min-height: 26px;
+}
+
+.card-book-home {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.card-book-home:hover {
+    cursor: pointer;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.10), 0 3px 10px 0 rgba(0, 0, 0, 0.10);
+}
+
+.card-book-title-home {
+    font-weight: bold;
+    font-size: 20px;
+    min-height: 60px;
+    margin-left: 15px;
+    margin-right: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* number of lines to show */
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.card-book-price-home {
+    font-weight: bold;
+    font-size: 23px;
+    color: red;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.card-book-old-price-home {
+    font-weight: bold;
+    font-size: 17px;
+    color: gray;
+    margin-left: 15px;
+    margin-right: 15px;
+    min-height: 26px;
+    text-decoration-line: line-through;
+}
+
+.card-book-star-home {
+    pointer-events: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.card-book-text-star-home {
+    margin-left: 10px;
+    font-size: 17px;
+    font-weight: 400;
+    color: #F9B300;
+}
+
+.sidebar {
+	height: 100%;
+}
+
+.sidebar-btn {
+	background-color: #fff;
+	padding: 0 20px;
+    width: 100%;
+    border: none;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+}
+
+.filter-button {
+	background-color: #fff;
+    width: 100%;
+    border: 1px solid rgb(226, 226, 226);
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+}
+
+.filter-button:hover {
+	border: 1px solid gray
+}
+
+.select-item {
+	padding-left: 20px;
+}
+
+.full-width {
+	width: 100%;
+}

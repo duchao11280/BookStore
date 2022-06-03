@@ -108,7 +108,8 @@ function Editbook() {
         <div className="container-admin-editbook">
             <Sidebaradmin />
             <div className="content-admin-editbook">
-                <div className="body-content-admin-editbook mt-5">
+                <h3>Cập nhật sách</h3>
+                <div className="body-content-admin-editbook">
                     <div className="body-header-admin-editbook">
                         <Link to="/admin/book">
                             <i className="fa-solid fa-angle-left"></i>

@@ -10,6 +10,7 @@ import {
     apiGetAllBook,
     apiDeleteBook,
     apiInsertBook,
+    apiGetAllBookSearch
 } from './apiUrl'
 
 export async function getDetailBookById(id) {
@@ -97,6 +98,15 @@ export async function getSaleBook() {
         return result.data?.data;
     } else {
         return [];
+    }
+}
+
+export async function getAllBookSearch() {
+    const result = await axios.get(apiGetAllBookSearch)
+    if (result.status === 200) {
+        return result.data?.data
+    } else {
+        return []
     }
 }
 

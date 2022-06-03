@@ -1,0 +1,13 @@
+.view-item {
+	cursor: pointer;
+	margin-left: 60px;
+	margin-top: 20px;
+}
+.view-item:hover {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+.view-main {
+	background-color: #f3d7d7;
+	margin-top: 100px;
+}
