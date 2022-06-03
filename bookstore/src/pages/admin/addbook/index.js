@@ -29,6 +29,8 @@ function Addbook() {
         tinyDescription: null,
         year: null
     });
+    const [error, setError] = React.useState(true)
+    const [textError, setTextError] = React.useState("")
     const [refresh, setRefresh] = React.useState(false);
     const [category, setCategory] = React.useState("");
     const [listCategory, setListCategory] = React.useState([]);
@@ -38,7 +40,7 @@ function Addbook() {
     }, [refresh]);
 
     React.useEffect(() => {
-        getAllSubCatByCat(category).then(result => { setListSubCat(result); console.log(result); });
+        getAllSubCatByCat(category).then(result => { setListSubCat(result); });
     }, [category])
 
     const onChangeTextBook = (event, key) => {
@@ -78,25 +80,101 @@ function Addbook() {
         setBookDetails(newBookDetails);
     };
 
+    const validate = () => {
+        if (bookDetails.cover === null) {
+            setTextError("bạn chưa chọn hình ảnh")
+            return;
+        }
+        else if (bookDetails.thumbnails === null) {
+            setTextError("bạn chưa chọn hình ảnh")
+            return
+        }
+        else if (bookDetails.bookName === null) {
+            setTextError("Tên sách không được để trống")
+            return
+        }
+        else if (bookDetails.language === null) {
+            setTextError("Ngôn ngữ chưa để trống")
+            return
+        }
+        else if (bookDetails.bookType === null) {
+            setTextError("Loại sách chưa được chọn")
+            return
+        }
+        else if (bookDetails.subCatId === null) {
+            setTextError("Chưa chọn thể loại")
+            return
+        }
+        else if (bookDetails.auth === null) {
+            setTextError("Tác giả không được để trống")
+            return
+        }
+        else if (bookDetails.nxb === null) {
+            setTextError("Nhà xuất bản không được để trống")
+            return
+        }
+        else if (bookDetails.year === null) {
+            setTextError("Năm xuất bản không được để trống")
+            return
+        }
+        else if (bookDetails.quantity === null) {
+            setTextError("Số lượng không được để trống")
+            return
+        }
+        else if (bookDetails.price === null) {
+            setTextError("Giá sách không được để trống")
+            return
+        }
+
+        else if (bookDetails.sale === null) {
+            setBookDetails(bookDetails.sale = 0)
+            return
+        }
+        else if (bookDetails.description === null) {
+            setTextError("Mô tả không được để trống")
+            return
+        }
+        else {
+            setTextError("")
+            setError(false)
+        }
+
+    }
     const onSubmit = () => {
 
+        validate();
         // console.log(bookDetails);
-        insertBook(bookDetails.bookName, bookDetails.auth,
-            bookDetails.description, bookDetails.language, bookDetails.year,
-            bookDetails.nxb, bookDetails.price, bookDetails.quantity, bookDetails.subCatId,
-            bookDetails.sale, bookDetails.cover, bookDetails.thumbnails).then(() => {
-                toast.success(" thêm thành công", {
-                    position: "top-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
+        if (error === false) {
+            insertBook(bookDetails.bookName, bookDetails.auth,
+                bookDetails.description, bookDetails.language, bookDetails.year,
+                bookDetails.nxb, bookDetails.price, bookDetails.quantity, bookDetails.subCatId,
+                bookDetails.sale, bookDetails.cover, bookDetails.thumbnails).then(() => {
+                    toast.success(" thêm thành công", {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
 
+                    });
+                    setRefresh(!refresh)
                 });
-                setRefresh(!refresh)
+        }
+        else if (error == true) {
+            toast.error(" thêm thất bại ", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
             });
+        }
+
     }
 
     return (<>
@@ -120,6 +198,9 @@ function Addbook() {
                                     <input className='custom-file-input-none' type="file" name="images" id='id-image-thumbnails' multiple accept="image/*" onChange={(event) => onImageChange(event, 'thumbnails')} />
                                     <label className='custom-file-input' htmlFor='id-image-thumbnails'>
                                     </label>
+                                    {
+                                        (bookDetails.thumbnails == null && error === true) ? <small style={{ color: "red" }}>Bạn chọn ảnh sách</small> : <text></text>
+                                    }
                                 </div>
                             </div>
                             <div className='col-8'>
@@ -132,6 +213,9 @@ function Addbook() {
                                         <input className='custom-file-input-none' type="file" name="images" id='id-image-cover' multiple accept="image/*" onChange={(event) => onImageChange(event, 'cover')} />
                                         <label className='custom-file-input' htmlFor='id-image-cover'>
                                         </label>
+                                        {
+                                            (bookDetails.cover == null && error === true) ? <small style={{ color: "red" }}>Bạn chưa chọn ảnh bìa sách</small> : <text></text>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -145,7 +229,13 @@ function Addbook() {
                                             onChange={(event) => {
                                                 onChangeTextBook(event, "bookName")
                                             }} />
+                                        {
+                                            (bookDetails.bookName == null && error === true) ? <small style={{ color: "red" }}>Bạn chưa nhập tên sách</small> : <text></text>
+                                        }
                                     </div>
+
+
+
                                 </div>
                             </div>
                             <div className='col-sm-1' />
@@ -157,6 +247,9 @@ function Addbook() {
                                             onChange={(event) => {
                                                 onChangeTextBook(event, "language")
                                             }} />
+                                        {
+                                            (bookDetails.language == null && error === true) ? <small style={{ color: "red" }}>Bạn chưa nhập ngôn ngữ</small> : <text></text>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -179,6 +272,7 @@ function Addbook() {
                                                 })
                                             }
                                         </select>
+
                                     </div>
                                 </div>
                             </div>
@@ -208,6 +302,9 @@ function Addbook() {
                                             onChange={(event) => {
                                                 onChangeTextBook(event, "auth")
                                             }} />
+                                        {
+                                            (bookDetails.auth == null && error === true) ? <small style={{ color: "red" }}>Bạn chưa nhập tác giá</small> : <text></text>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -220,6 +317,9 @@ function Addbook() {
                                             onChange={(event) => {
                                                 onChangeTextBook(event, "nxb")
                                             }} />
+                                        {
+                                            (bookDetails.nxb == null && error === true) ? <small style={{ color: "red" }}>bạn chưa nhập nhà xuất bản</small> : <text></text>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -233,6 +333,9 @@ function Addbook() {
                                             onChange={(event) => {
                                                 onChangeTextBook(event, "year")
                                             }} />
+                                        {
+                                            (bookDetails.year == null && error === true) ? <small style={{ color: "red" }}>Bạn chưa nhập năm xuất bản</small> : <text></text>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -245,6 +348,9 @@ function Addbook() {
                                             onChange={(event) => {
                                                 onChangeTextBook(event, "quantity")
                                             }} />
+                                        {
+                                            (bookDetails.quantity == null && error === true) ? <small style={{ color: "red" }}>bạn chưa nhập số lượng</small> : <text></text>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -258,6 +364,9 @@ function Addbook() {
                                             onChange={(event) => {
                                                 onChangeTextBook(event, "price")
                                             }} />
+                                        {
+                                            (bookDetails.price == null && error === true) ? <small style={{ color: "red" }}>Bạn chưa nhập giá sách</small> : <text></text>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -270,6 +379,7 @@ function Addbook() {
                                             onChange={(event) => {
                                                 onChangeTextBook(event, "sale")
                                             }} />
+
                                     </div>
                                 </div>
                             </div>
@@ -289,6 +399,9 @@ function Addbook() {
                                             onChangeTextBook(event, "description")
                                         }}
                                     />
+                                    {
+                                        (bookDetails.description == null && error === true) ? <small style={{ color: "red" }}>{textError}</small> : <text></text>
+                                    }
                                 </div>
                                 <div className='col' />
                             </div>

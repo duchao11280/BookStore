@@ -155,16 +155,28 @@ exports.updateBookByBookId = async (req, res) => {
     let conn = await db.getConnection();
     try {
         const { bookId, bookName, auth, description, language, year, nxb, price, quantity, subCatId, sale, coverImg, thumbnails, coverUrl, thumbnailsUrl } = req.body;
-        let hinhcover = req.files[0]?.filename
-        let hinhthumbnails = req.files[1]?.filename
-        console.log(" thumnails " + thumbnails);
-        console.log(" thumbnailsUrl: " + thumbnailsUrl);
-        console.log(" coverImg: " + coverImg);
-        console.log(" coverUrl " + coverUrl);
-        return
+        let hinhcover
+        let hinhthumbnails
+        // console.log(" thumnails  " + thumbnails);
+        // console.log(" thumbnailsUrl:  " + thumbnailsUrl);
+        // console.log(" coverImg:     " + coverImg);
+        // console.log(" coverUrl:     " + coverUrl);
+
+        if (thumbnailsUrl == null && coverUrl == null) {
+            hinhcover = req.files[0]?.filename
+            hinhthumbnails = req.files[1]?.filename
+        }
+        else if (thumbnailsUrl == null) {
+            hinhcover = coverImg
+            hinhthumbnails = req.files[0]?.filename
+        }
+        else if (coverUrl == null) {
+            hinhcover = req.files[0]?.filename
+            hinhthumbnails = thumbnails
+        }
         conn = await db.beginTransaction(conn);
         const query = 'update books set bookName=?, auth=?, description=?, year=?,' +
-            'nxb=?, language=?, quantity=?, subCatID=?, coverImg=?, thumbnails=?, price=?, sale=? where bookId=?, '
+            'nxb=?, language=?, quantity=?, subCatID=?, coverImg=?, thumbnails=?, price=?, sale=? where bookId=? '
         const result = await db.queryTransaction(conn, query, [bookName, auth, description, year, nxb, language, quantity, subCatId, hinhcover, hinhthumbnails, price, sale, bookId]);
         conn = await db.commitTransaction(conn);
         res.status(200).json({ message: "Cập nhật dữ liệu thành công", data: result });

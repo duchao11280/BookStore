@@ -36,9 +36,9 @@ function Editbook() {
     const [listCategory, setListCategory] = React.useState([]);
     const [listSubCat, setListSubCat] = React.useState([]);
     React.useEffect(() => {
-        getDetailBookById(id).then(result => { setBookDetails(result.data); console.log(result.data) });
+        getDetailBookById(id).then(result => { setBookDetails(result.data); });
         getAllCategory().then(result => setListCategory(result));
-    }, [refresh])
+    }, [])
 
     React.useEffect(() => {
         getAllSubCatByCat(category).then(result => setListSubCat(result));
@@ -52,7 +52,7 @@ function Editbook() {
     }
 
     const converImageUrl = (image) => {
-        console.log(image)
+
 
         if (typeof image === 'string' || image == null) {
             return image
@@ -84,7 +84,7 @@ function Editbook() {
     };
 
     const onSubmit = () => {
-        console.log(bookDetails);
+
 
         updateBook(bookDetails.bookId, bookDetails.bookName, bookDetails.auth,
             bookDetails.description, bookDetails.language, bookDetails.year,
