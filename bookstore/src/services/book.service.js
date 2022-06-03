@@ -9,6 +9,7 @@ import {
     apiGetListBookForOrder,
     apiGetAllBook,
     apiDeleteBook,
+    apiInsertBook,
     apiGetAllBookSearch
 } from './apiUrl'
 
@@ -132,3 +133,62 @@ export async function deleteBook(id) {
         }
     }
 }
+
+export async function insertBook(bookName, auth, description, language,
+    year, nxb, price, quantity, subCatId, sale, coverImg, thumbnails) {
+    var data = new FormData();
+    data.append("bookName", bookName);
+    data.append("auth", auth);
+    data.append("description", description);
+    data.append("language", language);
+    data.append("year", year);
+    data.append("nxb", nxb);
+    data.append("price", price);
+    data.append("quantity", quantity);
+    data.append("subCatId", subCatId);
+    data.append("sale", sale);
+    data.append("cover", coverImg);
+    data.append("thumbnails", thumbnails);
+    const response = await fetch(
+        ' http://localhost:1188' + `/api/admin/book/add`,
+        {
+            method: 'POST',
+            credentials: 'include',
+            body: data
+        }
+    );
+    const json = await response.json();
+    return json;
+}
+
+export async function updateBook(bookId, bookName, auth, description, language,
+    year, nxb, price, quantity, subCatId, sale, coverImg, thumbnails, coverUrl, thumbnailsUrl) {
+    var data = new FormData();
+    data.append('bookId', bookId);
+    data.append("bookName", bookName);
+    data.append("auth", auth);
+    data.append("description", description);
+    data.append("language", language);
+    data.append("year", year);
+    data.append("nxb", nxb);
+    data.append("price", price);
+    data.append("quantity", quantity);
+    data.append("subCatId", subCatId);
+    data.append("sale", sale);
+    data.append("coverImg", coverImg);
+    data.append("thumbnails", thumbnails);
+    data.append("thumbnailsUrl", thumbnailsUrl);
+    data.append("coverUrl", coverUrl);
+
+    const response = await fetch(
+        ' http://localhost:1188' + `/api/admin/book/update`,
+        {
+            method: 'POST',
+            credentials: 'include',
+            body: data
+        }
+    );
+    const json = await response.json();
+    return json;
+}
+

@@ -141,11 +141,14 @@ exports.getDetailBookByID = async (req, res) => {
         let bookId = req.params.id;
         const query = `Select DISTINCT * from books where bookId = ?`
         const result = await db.exeQuery(query, [bookId]);
+
         if (result.length === 0) {
             res.status(402).json({ message: "Không có dữ liệu", statusCode: 402, data: [] });
             return;
         }
         result[0].thumbnailsUrl = process.env.DOMAIN_SERVER + '/public/images/' + result[0].thumbnails
+        result[0].coverUrl = process.env.DOMAIN_SERVER + '/public/images/' + result[0].coverImg
+        console.log(result)
         return res.status(200).json({ message: "Lấy dữ liệu thành công", statusCode: 200, data: result });
     } catch (error) {
         console.log(error)
