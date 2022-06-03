@@ -4,6 +4,10 @@
     padding-top: 65px;
 }
 
+.container-search div * {
+    z-index: 0;
+}
+
 #tracking-input {
 	width: 70%;
 }
@@ -139,6 +143,25 @@
     font-weight: 500;
 }
 
+.filter-button {
+	background-color: #fff;
+    width: 100%;
+    border: 1px solid rgb(226, 226, 226);
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+}
+
+.filter-button:hover {
+	border: 1px solid gray
+}
+
 .select-item {
 	padding-left: 20px;
+}
+
+.full-width {
+	width: 100%;
 }

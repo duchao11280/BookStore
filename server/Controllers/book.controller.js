@@ -186,7 +186,7 @@ exports.getRelatedBooks = async (req, res) => {
             ORDER BY createAt LIMIT 10;`
         const result = await db.exeQuery(query, [bookId, subCatId]);
         if (result.length === 0) {
-            res.status(402).json({ message: "Không có dữ liệu", statusCode: 402, data: [] });
+            res.status(204).json({ message: "Không có dữ liệu", statusCode: 204, data: [] });
             return;
         }
         result.forEach(element => {

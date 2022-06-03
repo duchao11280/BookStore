@@ -61,7 +61,10 @@ export default function Header() {
     }
 
     const redirect = (url) => {
-        navigate(url, { replace: true });
+        // navigate(url, { replace: true });
+        window.location.assign(url)
+        setIsOpenModalAccount(false);
+        setIsOpenCategory(false);
         window.scrollTo(0, 0)
     }
 
@@ -142,15 +145,15 @@ export default function Header() {
                     </div>
                     <div className="item-header-text">{constant.TITLE_EVENT}</div>
                     <div className="container-header-search">
-                        <img alt='' src={search} className="icon-header" />
+                        <img alt='' src={search} className="icon-header" onClick={() => redirect('/search')} />
                         <input
                             className="input-header-search"
                             placeholder={constant.INPUT_SEARCH}
-                            value = {searchInput}
+                            value={searchInput}
                             onChange={(value) => {
                                 setSearchInput(value.target.value)
                             }}
-                            onKeyDown = {(event) => {
+                            onKeyDown={(event) => {
                                 if (event.key === 'Enter') {
                                     navigate(`/search?keyword=${(searchInput)}`);
                                 }
@@ -183,15 +186,19 @@ export default function Header() {
                         <div className='row' style={{ width: '100%' }}>
                             {
                                 Object.keys(listAllCategory).map((category, key) => {
+                                    const categoryDetails = listAllCategory[category][0] || null;
+                                    const catId = categoryDetails ? categoryDetails.catId : null;
                                     return (
                                         <div className='col-sm-3 mb-3'>
-                                            <p className='text-category-header-modal'>
+                                            <p className='text-category-header-modal'
+                                                onClick={() => redirect(catId ? `/search?&category=${catId}` : `/search`)}>
                                                 {category}
                                             </p>
                                             {
                                                 listAllCategory[category].map((subcategory, key) => {
                                                     return (
-                                                        <p className='text-subcategory-header-modal'>
+                                                        <p className='text-subcategory-header-modal'
+                                                            onClick={() => redirect(catId ? `/search?&subcategory=${subcategory.subCatId}` : `/search`)}>
                                                             {subcategory.subCatName}
                                                         </p>
                                                     )

@@ -71,15 +71,15 @@ export default function Home() {
                 <div className='row mt-5'>
                     <div className='col-lg-9 container-carousel-home'>
                         <div className="slideshow-container">
-                            <div className={slideIndex === 1 ? "item-slider-home-show" : "item-slider-home-hide fade"}>
-                                <img alt="" src={cover} className='image-carousel-home' />
-                            </div>
-                            <div className={slideIndex === 2 ? "item-slider-home-show" : "item-slider-home-hide fade"}>
-                                <img alt="" src={logo2} className='image-carousel-home' />
-                            </div>
-                            <div className={slideIndex === 3 ? "item-slider-home-show" : "item-slider-home-hide fade"}>
-                                <img alt="" src={logo} className='image-carousel-home' />
-                            </div>
+                            {
+                                listHotBooks.map((book, key) => {
+                                    return (
+                                        <div key={key} className={slideIndex === key + 1 ? "item-slider-home-show" : "item-slider-home-hide fade"}>
+                                            <img alt="" src={settings.urlImageKey + book.coverImg} className='image-carousel-home' />
+                                        </div>
+                                    )
+                                })
+                            }
                             <div className="item-prev-slider-home" onClick={() => plusSlides(-1)}>&#10094;</div>
                             <div className="item-next-slider-home" onClick={() => plusSlides(1)}>&#10095;</div>
                         </div>
