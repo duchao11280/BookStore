@@ -51,7 +51,7 @@ function checkExist(array = [], element) {
 }
 
 function checkKeyword(string = "", key = "") {
-	if (key==null || key == "") {
+	if (key == null || key == "") {
 		return true;
 	}
 	if (!string) {
@@ -71,7 +71,7 @@ function checkExistPrice(array = [], price) {
 	}
 	for (let i of array) {
 		const periodPrice = priceArray[i];
-		if (price >= periodPrice.startPrice && price <=periodPrice.endPrice) {
+		if (price >= periodPrice.startPrice && price <= periodPrice.endPrice) {
 			return true;
 		}
 	}
@@ -135,6 +135,7 @@ export default function SearchProduct() {
 	let keyword = query.get('keyword');
 	let price = query.getAll('price');
 
+
 	const [searchResult, setSearchResult] = React.useState([]);
 	const [listAllBooks, setListAllBooks] = React.useState([]);
 	const [pageNumber, setPageNumber] = React.useState(1);
@@ -146,6 +147,16 @@ export default function SearchProduct() {
 		3: false, // 100k - 200k
 		4: false  // Trên 200k
 	})
+	const [showMore, setShowMore] = React.useState(false);
+
+	const btnShowMore = () => {
+		setShowMore(!showMore);
+		if (showMore == true) {
+			return <>
+				<i className="fa-solid fa-angle-up"></i>
+			</>
+		}
+	}
 
 	React.useEffect(() => {
 		const objCat = {};
@@ -168,8 +179,8 @@ export default function SearchProduct() {
 		}
 		const listResult = listAllBooks.filter(book => {
 			return checkExist(category, book.catId)
-			&& checkKeyword(book.bookName, keyword)
-			&& checkExistPrice(price, (book.price * book.sale))
+				&& checkKeyword(book.bookName, keyword)
+				&& checkExistPrice(price, (book.price * book.sale))
 		})
 
 
@@ -226,21 +237,27 @@ export default function SearchProduct() {
 
 		const query = `${encodeQueryData(listQueryCategory, 'category')}&${encodeQueryData(listQueryPrice, 'price')}`
 		navigate(`/search?${query}`);
-
 	}
 
+	// 	var changeIcon = {() => {
+
+	// 	}
+	// }
 	return (
 		<div className="container-search">
 			<div className="container">
 				<div className="row">
-					<div className="col-3 pt-5">
-						<button onClick={onFillter}>Tim`</button>
+					<div className="col-3 pt-5 sidebar">
+						<button className="sidebar-btn" onClick={onFillter}>Tìm</button>
 						<div>
-							<button {...getToggleCategory()} onClick={() => setIsExpandCategory(!isExpandedCategory)}>
+							<button className="sidebar-btn" {...getToggleCategory()} onClick={() => setIsExpandCategory(!isExpandedCategory)}>
 								{isExpandedCategory ? 'Thể loại - đóng' : 'Thể loại - mở'}
+								{isExpandedCategory ? <i className="fa-solid fa-angle-up"></i> : <i className="fa-solid fa-angle-down"></i>}
+
+
 							</button>
 							<section {...getCollapseCategory()}>
-								<FormGroup>
+								<FormGroup className="select-item">
 									{
 										Object.keys(objlistCategory).map((value, key) => {
 											return (
@@ -252,11 +269,13 @@ export default function SearchProduct() {
 							</section>
 						</div>
 						<div>
-							<button {...getTogglePrice()} onClick={() => setIsExpandPrice(!isExpandedPrice)}>
+							<button className="sidebar-btn" {...getTogglePrice()} onClick={() => setIsExpandPrice(!isExpandedPrice)}>
 								{isExpandedPrice ? 'Mức giá - đóng' : 'Mức giá - mở'}
+								{isExpandedPrice ? <i className="fa-solid fa-angle-up"></i> : <i className="fa-solid fa-angle-down"></i>}
+
 							</button>
 							<section {...getCollapsePrice()}>
-								<FormGroup>
+								<FormGroup className="select-item">
 									<FormControlLabel control={<Checkbox onChange={(event) => onCheckPrice(event.target.checked, 1)} />} label={"Dưới 50.000 đ"} />
 									<FormControlLabel control={<Checkbox onChange={(event) => onCheckPrice(event.target.checked, 2)} />} label={"50.000 đ - 100.000 đ"} />
 									<FormControlLabel control={<Checkbox onChange={(event) => onCheckPrice(event.target.checked, 3)} />} label={"100.000 đ - 200.000 đ"} />
