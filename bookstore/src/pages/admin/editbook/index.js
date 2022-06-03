@@ -72,7 +72,8 @@ function Editbook() {
         <div className="container-admin-editbook">
             <Sidebaradmin />
             <div className="content-admin-editbook">
-                <div className="body-content-admin-editbook mt-5">
+                <h3>Cập nhật sách</h3>
+                <div className="body-content-admin-editbook">
                     <div className="body-header-admin-editbook">
                         <Link to="/admin/book">
                             <i className="fa-solid fa-angle-left"></i>
@@ -139,7 +140,7 @@ function Editbook() {
                                     <label className="col-sm-4 col-form-label h6">Thể loại chung</label>
                                     <div className="col-sm-8">
                                         <select className="combobox-book-admin-editbook" value={category}
-                                            onChange = {onChangeCat}>
+                                            onChange={onChangeCat}>
                                             {
                                                 listCategory.map((category, key) => {
                                                     return (
@@ -156,8 +157,8 @@ function Editbook() {
                                 <div className="form-group row">
                                     <label className="col-sm-4 col-form-label h6">Thể loại chi tiết</label>
                                     <div className="col-sm-8">
-                                        <select className="combobox-book-admin-editbook" value={bookDetails.catId} 
-                                        onChange = {onChangeSubCat}>
+                                        <select className="combobox-book-admin-editbook" value={bookDetails.catId}
+                                            onChange={onChangeSubCat}>
                                             {listSubCat.map((value, key) => {
                                                 return (
                                                     <option value={value.subCatId} key={value.subCatId}>{value.subCatName}</option>

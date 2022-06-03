@@ -101,7 +101,7 @@
     margin-bottom: 3px;
 }
 
-.text-subcategory-header-modal:hover, .text-category-header-modal:hover {
+.text-subcategory-header-modal:hover, .text-category-header-modal:hover, .icon-header:hover {
     cursor: pointer;
     color: #3179BC;
 }

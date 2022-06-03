@@ -4,6 +4,10 @@
     padding-top: 65px;
 }
 
+.container-search div * {
+    z-index: 0;
+}
+
 #tracking-input {
 	width: 70%;
 }

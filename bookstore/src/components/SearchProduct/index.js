@@ -60,7 +60,7 @@ function useQuery() {
 	return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
-function checkExist(array = [], element) {
+function checkExistCategory(array = [], element) {
 	if (array.length == 0) {
 		return true;
 	}
@@ -71,6 +71,16 @@ function checkExist(array = [], element) {
 		return true;
 	}
 	return false;
+}
+
+function checkExistSubcat(subcategory, book) {
+	if (!subcategory) {
+		return true;
+	}
+	if (subcategory == book) {
+		return true;
+	}
+	else return false;
 }
 
 function checkKeyword(string = "", key = "") {
@@ -181,7 +191,7 @@ export default function SearchProduct() {
 	const navigate = useNavigate();
 	let query = useQuery();
 	let category = query.getAll('category');
-	let subcategory = query.getAll('subcategory');
+	let subcategory = query.get('subcategory');
 	let keyword = query.get('keyword');
 	let price = query.getAll('price');
 	let rate = query.get('rate');
@@ -252,15 +262,16 @@ export default function SearchProduct() {
 	}, [])
 
 	React.useEffect(() => {
-		if (!category.length && !subcategory.length && (keyword == null || keyword == "") && !price.length && (rate == null || rate == "")) {
+		if (!category.length && (subcategory == null || subcategory == "") && (keyword == null || keyword == "") && !price.length && (rate == null || rate == "")) {
 			setSearchResult(listAllBooks);
 			return;
 		}
 		const listResult = listAllBooks.filter(book => {
-			return checkExist(category, book.catId)
+			return checkExistCategory(category, book.catId)
 				&& checkKeyword(book.bookName, keyword)
 				&& checkExistPrice(price, (book.price * book.sale))
 				&& checkRate(rate, book.rate || 0)
+				&& checkExistSubcat(subcategory, book.subCatId)
 		})
 
 		setSearchResult(listResult);
@@ -295,7 +306,7 @@ export default function SearchProduct() {
 			}
 		})
 
-		const query = `${encodeQueryData(listQueryCategory, 'category')}&${encodeQueryData(listQueryPrice, 'price')}${keyword !== null ? '&keyword=' + keyword : ""}${checkedRate !== null ? '&rate=' + checkedRate : ""}`;
+		const query = `${encodeQueryData(listQueryCategory, 'category')}&${encodeQueryData(listQueryPrice, 'price')}${keyword !== null ? '&keyword=' + keyword : ""}${checkedRate !== null ? '&rate=' + checkedRate : ""}${subcategory !== null ? '&subcategory=' + subcategory : ""}`;
 		navigate(`/search?${query}`);
 	}
 
