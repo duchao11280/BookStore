@@ -88,68 +88,198 @@ function Addbook() {
     const validate = () => {
         if (bookDetails.cover === null) {
             setTextError("bạn chưa chọn hình ảnh")
+            toast.error("bạn chưa chọn hình ảnh ", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
             setError(true);
             return true;;
         }
         else if (bookDetails.thumbnails === null) {
             setTextError("bạn chưa chọn hình ảnh")
+            toast.error("bạn chưa chọn hình ảnh ", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
             setError(true);
             return true;
         }
         else if (bookDetails.bookName === null) {
             setTextError("Tên sách không được để trống")
+            toast.error("Tên sách không được để trống ", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
             setError(true);
             return true;
         }
         else if (bookDetails.language === null) {
-            setTextError("Ngôn ngữ chưa để trống")
+            setTextError("Ngôn ngữ không được để trống")
+            toast.error("Ngôn ngữ không được để trống ", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
             setError(true);
             return true;
         }
         else if (bookDetails.bookType === null) {
             setTextError("Loại sách chưa được chọn")
+            toast.error("Loại sách chưa được chọn ", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
             setError(true);
 
             return true;
         }
         else if (bookDetails.subCatId == null) {
             setTextError("Chưa chọn thể loại")
+            toast.error("Chưa chọn thể loại ", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
             setError(true);
             return true;
         }
         else if (bookDetails.auth === null) {
             setTextError("Tác giả không được để trống")
+            toast.error("Tác giả không được để trống ", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
             setError(true);
             return true;
         }
         else if (bookDetails.nxb === null) {
             setTextError("Nhà xuất bản không được để trống")
+            toast.error("Nhà xuất bản không được để trống ", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
             setError(true);
             return true;
         }
         else if (bookDetails.year === null) {
             setTextError("Năm xuất bản không được để trống")
+            toast.error("Năm xuất bản không được để trống ", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
             setError(true);
             return true;
         }
         else if (bookDetails.quantity === null) {
             setTextError("Số lượng không được để trống")
+            toast.error("Số lượng không được để trống ", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
             setError(true);
             return true;
         }
         else if (bookDetails.price === null) {
             setTextError("Giá sách không được để trống")
+            toast.error("Giá sách không được để trống ", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
             setError(true);
             return true;
         }
 
         else if (bookDetails.sale === null) {
             setBookDetails(bookDetails.sale = 0)
+            toast.error("Khuyến mãi không được để trống", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
             setError(true);
             return true;
         }
         else if (bookDetails.description === null) {
             setTextError("Mô tả không được để trống")
+            toast.error("Mô tả không được để trống ", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+
+            });
             setError(true);
             return true;
         }
@@ -201,16 +331,16 @@ function Addbook() {
                 });
         }
         else {
-            toast.error(" thêm thất bại ", {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
+            // toast.error("có lỗi xảy ra ", {
+            //     position: "top-right",
+            //     autoClose: 3000,
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            //     progress: undefined,
 
-            });
+            // });
         }
 
     }
@@ -236,9 +366,9 @@ function Addbook() {
                                     <input className='custom-file-input-none' type="file" name="images" id='id-image-thumbnails' multiple accept="image/*" onChange={(event) => onImageChange(event, 'thumbnails')} />
                                     <label className='custom-file-input' htmlFor='id-image-thumbnails'>
                                     </label>
-                                    {
+                                    {/* {
                                         (bookDetails.thumbnails == null && error === true) ? <small style={{ color: "red" }}>Bạn chọn ảnh sách</small> : <text></text>
-                                    }
+                                    } */}
                                 </div>
                             </div>
                             <div className='col-8'>
@@ -251,9 +381,9 @@ function Addbook() {
                                         <input className='custom-file-input-none' type="file" name="images" id='id-image-cover' multiple accept="image/*" onChange={(event) => onImageChange(event, 'cover')} />
                                         <label className='custom-file-input' htmlFor='id-image-cover'>
                                         </label>
-                                        {
+                                        {/* {
                                             (bookDetails.cover == null && error === true) ? <small style={{ color: "red" }}>Bạn chưa chọn ảnh bìa sách</small> : <text></text>
-                                        }
+                                        } */}
                                     </div>
                                 </div>
                             </div>
@@ -267,9 +397,9 @@ function Addbook() {
                                             onChange={(event) => {
                                                 onChangeTextBook(event, "bookName")
                                             }} />
-                                        {
+                                        {/* {
                                             (bookDetails.bookName == null && error === true) ? <small style={{ color: "red" }}>Bạn chưa nhập tên sách</small> : <text></text>
-                                        }
+                                        } */}
                                     </div>
                                 </div>
                             </div>
@@ -282,9 +412,9 @@ function Addbook() {
                                             onChange={(event) => {
                                                 onChangeTextBook(event, "language")
                                             }} />
-                                        {
+                                        {/* {
                                             (bookDetails.language == null && error === true) ? <small style={{ color: "red" }}>Bạn chưa nhập ngôn ngữ</small> : <text></text>
-                                        }
+                                        } */}
                                     </div>
                                 </div>
                             </div>
@@ -337,9 +467,9 @@ function Addbook() {
                                             onChange={(event) => {
                                                 onChangeTextBook(event, "auth")
                                             }} />
-                                        {
+                                        {/* {
                                             (bookDetails.auth == null && error === true) ? <small style={{ color: "red" }}>Bạn chưa nhập tác giá</small> : <text></text>
-                                        }
+                                        } */}
                                     </div>
                                 </div>
                             </div>
@@ -352,9 +482,9 @@ function Addbook() {
                                             onChange={(event) => {
                                                 onChangeTextBook(event, "nxb")
                                             }} />
-                                        {
+                                        {/* {
                                             (bookDetails.nxb == null && error === true) ? <small style={{ color: "red" }}>bạn chưa nhập nhà xuất bản</small> : <text></text>
-                                        }
+                                        } */}
                                     </div>
                                 </div>
                             </div>
@@ -368,9 +498,9 @@ function Addbook() {
                                             onChange={(event) => {
                                                 onChangeTextBook(event, "year")
                                             }} />
-                                        {
+                                        {/* {
                                             (bookDetails.year == null && error === true) ? <small style={{ color: "red" }}>Bạn chưa nhập năm xuất bản</small> : <text></text>
-                                        }
+                                        } */}
                                     </div>
                                 </div>
                             </div>
@@ -383,9 +513,9 @@ function Addbook() {
                                             onChange={(event) => {
                                                 onChangeTextBook(event, "quantity")
                                             }} />
-                                        {
+                                        {/* {
                                             (bookDetails.quantity == null && error === true) ? <small style={{ color: "red" }}>bạn chưa nhập số lượng</small> : <text></text>
-                                        }
+                                        } */}
                                     </div>
                                 </div>
                             </div>
@@ -399,9 +529,9 @@ function Addbook() {
                                             onChange={(event) => {
                                                 onChangeTextBook(event, "price")
                                             }} />
-                                        {
+                                        {/* {
                                             (bookDetails.price == null && error === true) ? <small style={{ color: "red" }}>Bạn chưa nhập giá sách</small> : <text></text>
-                                        }
+                                        } */}
                                     </div>
                                 </div>
                             </div>
@@ -434,9 +564,9 @@ function Addbook() {
                                             onChangeTextBook(event, "description")
                                         }}
                                     />
-                                    {
+                                    {/* {
                                         (bookDetails.description == null && error === true) ? <small style={{ color: "red" }}>{textError}</small> : <text></text>
-                                    }
+                                    } */}
                                 </div>
                                 <div className='col' />
                             </div>
