@@ -142,38 +142,38 @@ function Addbook() {
     }
     const onSubmit = () => {
 
-        validate();
+        // validate();
         // console.log(bookDetails);
-        if (error === false) {
-            insertBook(bookDetails.bookName, bookDetails.auth,
-                bookDetails.description, bookDetails.language, bookDetails.year,
-                bookDetails.nxb, bookDetails.price, bookDetails.quantity, bookDetails.subCatId,
-                bookDetails.sale, bookDetails.cover, bookDetails.thumbnails).then(() => {
-                    toast.success(" thêm thành công", {
-                        position: "top-right",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
 
-                    });
-                    setRefresh(!refresh)
+        insertBook(bookDetails.bookName, bookDetails.auth,
+            bookDetails.description, bookDetails.language, bookDetails.year,
+            bookDetails.nxb, bookDetails.price, bookDetails.quantity, bookDetails.subCatId,
+            bookDetails.sale, bookDetails.cover, bookDetails.thumbnails).then(() => {
+                toast.success(" thêm thành công", {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+
                 });
-        }
-        else if (error == true) {
-            toast.error(" thêm thất bại ", {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-
+                setRefresh(!refresh)
             });
-        }
+
+        // else if (error == true) {
+        //     toast.error(" thêm thất bại ", {
+        //         position: "top-right",
+        //         autoClose: 3000,
+        //         hideProgressBar: false,
+        //         closeOnClick: true,
+        //         pauseOnHover: true,
+        //         draggable: true,
+        //         progress: undefined,
+
+        //     });
+        // }
 
     }
 
