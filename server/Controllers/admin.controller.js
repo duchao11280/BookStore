@@ -161,7 +161,6 @@ exports.updateBookByBookId = async (req, res) => {
         // console.log(" thumbnailsUrl:  " + thumbnailsUrl);
         // console.log(" coverImg:     " + coverImg);
         // console.log(" coverUrl:     " + coverUrl);
-
         if (thumbnailsUrl == null && coverUrl == null) {
             hinhcover = req.files[0]?.filename
             hinhthumbnails = req.files[1]?.filename
@@ -173,6 +172,12 @@ exports.updateBookByBookId = async (req, res) => {
         else if (coverUrl == null) {
             hinhcover = req.files[0]?.filename
             hinhthumbnails = thumbnails
+        }
+        if (hinhcover == null) {
+            hinhcover = coverImg;
+        }
+        if (hinhthumbnails == null) {
+            hinhthumbnails = thumbnails;
         }
         conn = await db.beginTransaction(conn);
         const query = 'update books set bookName=?, auth=?, description=?, year=?,' +

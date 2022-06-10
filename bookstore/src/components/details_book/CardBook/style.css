@@ -63,3 +63,6 @@
     height: 170px;
     object-fit: cover;
 }
+.realted-book-details-book div div div div{
+    max-width: 300px;
+}

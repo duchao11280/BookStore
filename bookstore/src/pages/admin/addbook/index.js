@@ -1,6 +1,6 @@
 import './addbook.css'
 import Sidebaradmin from '../../../components/sidebaradmin';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import React from 'react';
 import TextField from '@mui/material/TextField';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
@@ -9,6 +9,7 @@ import { getAllCategory, getAllSubCatByCat } from '../../../services/category.se
 import { insertBook } from '../../../services/book.service'
 import { ToastContainer, toast } from 'react-toastify';
 function Addbook() {
+    const navigate = useNavigate();
     if (window.sessionStorage.getItem(settings.loginKey.role) !== '0') {
         window.location.replace('/notfound')
     }
@@ -300,7 +301,7 @@ function Addbook() {
                 bookDetails.description, bookDetails.language, bookDetails.year,
                 bookDetails.nxb, bookDetails.price, bookDetails.quantity, bookDetails.subCatId,
                 bookDetails.sale, bookDetails.cover, bookDetails.thumbnails).then(() => {
-                    toast.success(" thêm thành công", {
+                    toast.success("Thêm thành công", {
                         position: "top-right",
                         autoClose: 3000,
                         hideProgressBar: false,
@@ -327,6 +328,7 @@ function Addbook() {
                         tinyDescription: null,
                         year: null
                     })
+                    navigate(-1)
                     setRefresh(!refresh)
                 });
         }

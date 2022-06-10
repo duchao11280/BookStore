@@ -139,7 +139,7 @@ exports.getDetailBookByID = async (req, res) => {
 
     try {
         let bookId = req.params.id;
-        const query = `Select DISTINCT * from books where bookId = ?`
+        const query = `Select DISTINCT books.*, catId from books INNER JOIN subcategories ON books.subCatId = subcategories.subCatId  where bookId = ?`
         const result = await db.exeQuery(query, [bookId]);
 
         if (result.length === 0) {
