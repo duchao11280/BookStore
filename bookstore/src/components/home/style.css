@@ -129,7 +129,8 @@
     width: 100%;
     height: 350px;
     border-radius: 50px;
-    object-fit: cover;
+    background-color: white;
+    object-fit: contain;
 }
 
 .container-carousel-home {

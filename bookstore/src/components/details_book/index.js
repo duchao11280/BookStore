@@ -384,12 +384,12 @@ export default function DetailsBook() {
                     <div className="title-description-details-book">
                         {constants.TITLE_DESCRIPTION}
                     </div>
-                    <p className="text-content-description-details-book">
+                    <div className="text-content-description-details-book">
                         {book.description}
-                    </p>
+                    </div>
                 </div>
                 <div className="my-5">
-                    <div>
+                    <div className="realted-book-details-book">
                         {
                             listBookRelated.length > 0 ?
                                 <div className="title-related-book-details-book">
@@ -397,7 +397,7 @@ export default function DetailsBook() {
                                 </div>
                                 : ""
                         }
-                        <Slider {...settingsCarousel}>
+                        <Slider {...settingsCarousel} >
                             {listBookRelated.map((bookItem, i) => {
                                 return (<CardBook book={bookItem} key={i} />)
                             })}

@@ -427,20 +427,20 @@ export default function SearchProduct() {
 					</div>
 					<div className="col">
 						<div className="container d-flex flex-column">
-							<div className="row mt-3">
+							{searchResult.length === 0 ? <div className="row mt-5"><h3 className="d-flex justify-content-center">Không tìm thấy sách</h3></div> : <div className="row mt-3">
 								{searchResult.slice(numberBookOnPage * (Number(pageNumber) - 1), numberBookOnPage * (Number(pageNumber) - 1) + numberBookOnPage).map(function (book, key) {
 									return <CardBook item={book} key={key} />;
 								})}
-							</div>
+							</div>}
 						</div>
 					</div>
 				</div>
-				<div className="row mt-5">
+				{searchResult.length <= numberBookOnPage ? null : <div className="row mt-5 mb-3">
 					<div className="col-3"></div>
 					<div className="col">
 						<Pagination className="d-flex justify-content-center" count={pageTotal} page={pageNumber} color="primary" onChange={(event, value) => onPageChange(value)} />
 					</div>
-				</div>
+				</div>}
 			</div>
 		</div>
 	);
