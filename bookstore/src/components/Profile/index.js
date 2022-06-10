@@ -378,7 +378,13 @@ export default function Profile() {
 				<div className="row mt-3">
 					<div className="col-3">
 						<div className="row mt-5">
-							<img src={avatar}></img>
+							<img
+								src={avatar}
+								style={{
+									width: "100px",
+									marginLeft: "105px",
+								}}
+							></img>
 						</div>
 						<div className="row d-flex ju">
 							{VIEWS.map((item) => {

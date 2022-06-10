@@ -60,7 +60,6 @@
 	color: rgba(0, 0, 0, 0.54);
 }
 .order-status-profile {
-	margin-top: 10px;
 	font-size: medium;
 	font-weight: bold;
 }
@@ -119,7 +118,6 @@
 	flex-grow: 1;
 	width: 980px;
 	box-sizing: border-box;
-	margin-left: 1.6875rem;
 	min-width: 0;
 	background: rgb(233, 233, 233);
 	box-shadow: 0 1px 2px 0 rgb(0 0 0 / 13%);
