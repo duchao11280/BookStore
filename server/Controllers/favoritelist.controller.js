@@ -16,10 +16,10 @@ exports.checkFavorited = async (req, res) => {
         let userId = req.params.userid
         let bookId = req.params.bookid
         if (await checkExistFavorited(userId, bookId)) {
-            res.status(200).json({ message: "Đã yêu thích", statusCode: 200, isFavorited: true });
+            res.status(200).json({ message: "Đã quan tâm", statusCode: 200, isFavorited: true });
             return;
         }
-        return res.status(200).json({ message: "Chưa yêu thích", statusCode: 200, isFavorited: false });
+        return res.status(200).json({ message: "Chưa quan tâm", statusCode: 200, isFavorited: false });
     } catch (error) {
         return res.status(500).json({ message: "Thất bại", statusCode: 500, isFavorited: false });
 
@@ -44,13 +44,13 @@ exports.insertFavorite = async (req, res) => {
         if (result) {
             res.status(200).json({
                 statusCode: 200,
-                message: "Yêu thích thành công"
+                message: "Quan tâm thành công"
             });
 
         } else {
             res.status(500).json({
                 statusCode: 500,
-                message: "Yêu thích thất bại"
+                message: "Quan tâm thất bại"
             });
 
         }
@@ -58,7 +58,7 @@ exports.insertFavorite = async (req, res) => {
         await db.rollback(conn)
         res.status(500).json({
             statusCode: 500,
-            message: "Có lỗi xảy ra, yêu thích thất bại"
+            message: "Có lỗi xảy ra, quan tâm thất bại"
         });
 
     }
@@ -103,4 +103,25 @@ exports.deleteFavorite = async (req, res) => {
     }
     db.releaseConnection(conn)
     return;
+}
+
+exports.getAllWishListByUserId = async (req, res) => {
+    try {
+        let userId = req.params.id;
+        const query = `SELECT books.*
+        FROM favoritelist, books
+        WHERE favoritelist.userId = ? and favoritelist.bookId = books.bookId and books.isDisable = 0`
+        const result = await db.exeQuery(query, [userId]);
+        if (result.length === 0) {
+            res.status(200).json({ message: "Không có dữ liệu", statusCode: 200, data: [] });
+            return;
+        }
+        result[0].thumbnailsUrl = process.env.DOMAIN_SERVER + '/public/images/' + result[0].thumbnails
+        result[0].coverUrl = process.env.DOMAIN_SERVER + '/public/images/' + result[0].coverImg
+
+        return res.status(200).json({ message: "Lấy dữ liệu thành công", statusCode: 200, data: result });
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ message: "Thất bại", statusCode: 500, data: error });
+    }
 }

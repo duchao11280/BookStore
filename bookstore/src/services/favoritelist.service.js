@@ -1,8 +1,8 @@
 import axios from './axios';
-import { 
-    apiDeleteFavoriteBook, 
-    apiCheckFavoriteBook, 
-    apiInsertFavoriteBook 
+import {
+    apiDeleteFavoriteBook,
+    apiCheckFavoriteBook,
+    apiInsertFavoriteBook
 } from './apiUrl'
 
 export async function checkFavorited(bookId, userId) {
@@ -55,4 +55,22 @@ export async function insertFavorite(userId, bookId) {
             message: result.data?.message
         }
     }
+}
+
+export async function getAllWishListByUserId(id) {
+    const result = await axios.get('/api/favoritelist/byuserid/' + id)
+    if (result.status === 200) {
+        return {
+            data: result.data?.data,
+            status: true,
+            message: result.data?.message
+        }
+    } else {
+        return {
+            status: false,
+            message: result.data?.message,
+            data: {}
+        }
+    }
+
 }

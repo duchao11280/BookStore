@@ -318,7 +318,7 @@ function Editbook() {
                             </div>
                         </div>
                         <div className='row d-flex justify-content-center mt-5'>
-                            <button className='button-admin-edit-book-add-image-submit' onClick={onSubmit}>Chỉnh sửa</button>
+                            <button className='button-admin-edit-book-add-image-submit' style={{ width: '45%' }} onClick={onSubmit}>Chỉnh sửa</button>
                         </div>
                     </div>
                 </div>

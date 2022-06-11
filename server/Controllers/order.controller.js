@@ -69,3 +69,21 @@ exports.insertOrder = async (req, res) => {
     db.releaseConnection(conn)
     return;
 }
+
+exports.getAllOrderByPhone = async (req, res) => {
+    try {
+        let phone = req.params.phone;
+        const query = `SELECT orderdetails.*, books.bookName, orders.status, orders.address
+        FROM orders, orderdetails, books
+        WHERE orders.orderId = orderdetails.orderId and books.bookId = orderdetails.bookId and orders.phone = ?`
+        const result = await db.exeQuery(query, [phone]);
+        if (result.length === 0) {
+            res.status(200).json({ message: "Không có dữ liệu", statusCode: 200, data: [] });
+            return;
+        }
+        return res.status(200).json({ message: "Lấy dữ liệu thành công", statusCode: 200, data: result });
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ message: "Thất bại", statusCode: 500, data: error });
+    }
+}

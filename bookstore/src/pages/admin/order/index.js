@@ -149,7 +149,7 @@ function Order() {
                                                                 return (
                                                                     <TableCell>
                                                                         <td className="link-orderdetail-adminbook">
-                                                                            <button className="btn-complete-admin-order " onClick={() => { navigate("/admin/order/orderdetail/" + row["orderId"]) }} >giao thành công</button>
+                                                                            <button className="btn-complete-admin-order " onClick={() => { navigate("/admin/order/orderdetail/" + row["orderId"]) }} >Giao thành công</button>
                                                                         </td>
                                                                     </TableCell>
 
