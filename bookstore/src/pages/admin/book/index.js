@@ -124,11 +124,11 @@ function Book() {
                                                         if (column.id == "button") {
                                                             return (
                                                                 <TableCell>
-                                                                    <img alt="" className="icon-admin-book " src={editIcon} onClick={() => {
+                                                                    <img alt="Chỉnh sửa" title="Chỉnh sửa" className="icon-admin-book " src={editIcon} onClick={() => {
                                                                         navigate("/admin/book/editbook/" + row["bookId"])
                                                                     }}
                                                                     />
-                                                                    <img alt="" className="icon-admin-book" src={deleteIcon} onClick={() => {
+                                                                    <img alt="Xóa" title="Xóa" className="icon-admin-book" src={deleteIcon} onClick={() => {
                                                                         handleDeleteBook(row["bookId"]);
                                                                     }} />
                                                                 </TableCell>

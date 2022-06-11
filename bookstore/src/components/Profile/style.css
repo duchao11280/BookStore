@@ -1,22 +1,21 @@
 .view-item {
-	cursor: pointer;
-	margin-left: 100px;
-	margin-top: 20px;
-	width: fit-content;
-	text-decoration: none;
+	padding-top: 20px;
+
 	color: rgba(0, 0, 0, 0.87);
-	font-weight: 500;
-	margin-right: 0.3125rem;
-	border: 1px solid #f4f6f4;
+
 }
-.view-item:hover {
+.item-left-profile{
+	cursor: pointer;
+	padding:10px 20px;
+}
+.item-left-profile:hover {
 	border-color: #ccc;
 	border-radius: 5px;
 	background-color: rgb(197, 198, 199);
 }
 .view-main {
 	/* background-color: #fdfdfd; */
-	margin-top: 100px;
+
 }
 .view-content-item {
 	margin: 20px 0px 20px 0px;
@@ -109,7 +108,7 @@
 .view-title {
 	font-weight: bold;
 	color: rgb(231, 101, 9);
-	margin: 20px;
+	margin-left: 40px;
 	font-family: Arial, Helvetica, sans-serif;
 	padding-top: 20px;
 }

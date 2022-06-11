@@ -52,6 +52,9 @@ export default function DetailsBook() {
             const bookById = await getDetailBookById(id)
             if (bookById.status) {
                 setBook({ ...book, ...bookById.data })
+            } else {
+                console.log(22)
+                window.location.replace('/notfound')
             }
             const allRatingByBookId = await getRatingByBookId(id);
             if (allRatingByBookId.status) {
@@ -310,7 +313,7 @@ export default function DetailsBook() {
                                 </div>
                                 {
                                     isLogin ?
-                                        <div className="col-2 " title="Yêu thích">
+                                        <div className="col-2 " title="Quan tâm">
                                             <img
                                                 alt=""
                                                 className="icon-favorite-details-book"

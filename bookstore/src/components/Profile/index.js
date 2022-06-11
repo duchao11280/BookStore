@@ -2,12 +2,14 @@ import React from "react";
 import avatar from "../../assets/icons/user.png";
 import "./style.css";
 import RatingStar from "react-rating-stars-component";
+import settings from '../../config/settings';
+import { getAllWishListByUserId } from '../../services/favoritelist.service'
 function CardBook(props) {
 	const { book } = props;
 	return (
-		<div className="col-md-4 mb-3">
+		<div className="col-md-4 mb-3" onClick={() => { window.location.assign(`/detailsbook/${book.bookId}`) }}>
 			<div className="card-book-home d-flex">
-				<img alt="" src={book.thumbnails} className="image-book-home mb-1 ms-auto me-auto" />
+				<img alt="" src={book.thumbnailsUrl} className="image-book-home mb-1 ms-auto me-auto" />
 				<div className="card-book-title-home">{book.bookName}</div>
 				<div className="card-book-price-home">{book.price} đ</div>
 				<div className="card-book-old-price-home">{book.oldPrice} </div>
@@ -28,9 +30,13 @@ export default function Profile() {
 		password: "",
 		confirmPassword: "",
 		address: "",
-		phone: "",
+		phone: window.sessionStorage.getItem(settings.loginKey.phone),
 		avatar: "",
 	});
+	if (window.sessionStorage.getItem(settings.loginKey.isLogin) !== "true") {
+		window.location.replace('/home')
+	}
+
 	const DUMMY_BOOKS = [
 		{
 			id: 0,
@@ -118,10 +124,21 @@ export default function Profile() {
 	var [orders, setOrders] = React.useState([...DUMMY_ORDER]);
 	var [orderFilter, setOrderFilter] = React.useState(-1);
 	var [books, setBooks] = React.useState([...DUMMY_BOOKS]);
-	var [wishlist, setWishlist] = React.useState([...DUMMY_BOOKS]);
+	var [wishlist, setWishlist] = React.useState([]);
 	const onViewChange = (index) => {
 		setView(index);
 	};
+	React.useEffect(() => {
+		(async () => {
+			if (window.sessionStorage.getItem(settings.loginKey.isLogin) == "true") {
+				let userId = window.sessionStorage.getItem(settings.loginKey.userId)
+				const resultWishList = await getAllWishListByUserId(userId)
+				if (resultWishList.status) {
+					setWishlist(resultWishList.data)
+				}
+			}
+		})();
+	}, [])
 	const VIEWS = [
 		{
 			id: 1,
@@ -137,7 +154,7 @@ export default function Profile() {
 		},
 		{
 			id: 3,
-			title: "WishList",
+			title: "Danh sách quan tâm",
 			class: "wishlist",
 			icon: "fa-solid fa-heart",
 		},
@@ -230,7 +247,7 @@ export default function Profile() {
 					</div>
 				</div>
 				<div className="row mb-2">
-					<div className="col-4">Tên</div>
+					<div className="col-4">Họ và Tên</div>
 					<div className="col-8">
 						<input
 							type="text"
@@ -241,7 +258,7 @@ export default function Profile() {
 						></input>
 					</div>
 				</div>
-				<div className="row mb-2">
+				{/* <div className="row mb-2">
 					<div className="col-4">Email</div>
 					<div className="col-8">
 						<input
@@ -252,7 +269,7 @@ export default function Profile() {
 							}}
 						></input>
 					</div>
-				</div>
+				</div> */}
 				<div className="row mb-2">
 					<div className="col-4">Số điện thoại</div>
 					<div className="col-8">
@@ -377,27 +394,27 @@ export default function Profile() {
 			<div className="container-xl  d-flex flex-column">
 				<div className="row mt-3">
 					<div className="col-3">
-						<div className="row mt-5">
+						<div className="row mt-5 d-flex justify-content-center">
 							<img
 								src={avatar}
 								style={{
 									width: "100px",
-									marginLeft: "105px",
 								}}
 							></img>
 						</div>
-						<div className="row d-flex ju">
+						<div className="row">
 							{VIEWS.map((item) => {
 								return (
 									<div
 										key={item.id}
-										className={" view-item"}
+										className="view-item"
 										onClick={() => {
 											onViewChange(item.id);
 										}}
 									>
-										<i className={item.icon}></i>
-										{item.title}
+										<div className="d-flex flex-row item-left-profile"><i className={item.icon} style={{ display: "flex", alignItems: "center" }}></i>
+											<div style={{ marginLeft: "10px" }}>{item.title}</div>
+										</div>
 									</div>
 								);
 							})}

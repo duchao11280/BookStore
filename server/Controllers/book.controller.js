@@ -139,11 +139,11 @@ exports.getDetailBookByID = async (req, res) => {
 
     try {
         let bookId = req.params.id;
-        const query = `Select DISTINCT books.*, catId from books INNER JOIN subcategories ON books.subCatId = subcategories.subCatId  where bookId = ?`
+        const query = `Select DISTINCT books.*, catId from books INNER JOIN subcategories ON books.subCatId = subcategories.subCatId  where bookId = ? and books.isDisable = 0`
         const result = await db.exeQuery(query, [bookId]);
 
         if (result.length === 0) {
-            res.status(402).json({ message: "Không có dữ liệu", statusCode: 402, data: [] });
+            res.status(204).json({ message: "Không có dữ liệu", statusCode: 204, data: [] });
             return;
         }
         result[0].thumbnailsUrl = process.env.DOMAIN_SERVER + '/public/images/' + result[0].thumbnails
