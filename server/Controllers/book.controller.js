@@ -3,14 +3,14 @@ const db = require('../utls/database');
 exports.getAllBooks = async (req, res) => {
     try {
         const query =
-        'SELECT b.*, c.catId, r.rate, c.catName ' +
-        'FROM books b ' +
-        '    INNER JOIN subcategories s ON b.subCatId = s.subCatId ' +
-        '    INNER JOIN categories c ON c.catId = s.catId ' +
-        '    LEFT JOIN (SELECT bookId, AVG(rate) as rate ' +
-        '                            FROM rating ' +
-        '                            GROUP BY bookId) as r ON b.bookId = r.bookId ' +
-        'WHERE b.isDisable = 0 ';
+            'SELECT b.*, c.catId, r.rate, c.catName ' +
+            'FROM books b ' +
+            '    INNER JOIN subcategories s ON b.subCatId = s.subCatId ' +
+            '    INNER JOIN categories c ON c.catId = s.catId ' +
+            '    LEFT JOIN (SELECT bookId, AVG(rate) as rate ' +
+            '                            FROM rating ' +
+            '                            GROUP BY bookId) as r ON b.bookId = r.bookId ' +
+            'WHERE b.isDisable = 0 ';
         const result = await exeQuery(query, []);
         res.status(200).json({ message: "Lấy dữ liệu thành công", data: result });
     } catch (error) {
@@ -117,8 +117,8 @@ exports.getSaleBook = async (req, res) => {
             '   LEFT JOIN (SELECT bookId, AVG(rate) as rate ' +
             '	    FROM rating ' +
             'GROUP BY bookId) as r ON rb.bookId = r.bookId ' +
-            'WHERE rb.isDisable = 0 ' +
-            'ORDER BY rb.sale desc, createAt desc ' +
+            'WHERE rb.isDisable = 0 and rb.sale < 1 ' +
+            'ORDER BY rb.sale asc, createAt desc ' +
             'LIMIT 8; ';
         const result = await exeQuery(query, []);
         res.json({
@@ -139,7 +139,7 @@ exports.getDetailBookByID = async (req, res) => {
 
     try {
         let bookId = req.params.id;
-        const query = `Select DISTINCT * from books where bookId = ?`
+        const query = `Select DISTINCT books.*, catId from books INNER JOIN subcategories ON books.subCatId = subcategories.subCatId  where bookId = ?`
         const result = await db.exeQuery(query, [bookId]);
 
         if (result.length === 0) {
@@ -148,7 +148,7 @@ exports.getDetailBookByID = async (req, res) => {
         }
         result[0].thumbnailsUrl = process.env.DOMAIN_SERVER + '/public/images/' + result[0].thumbnails
         result[0].coverUrl = process.env.DOMAIN_SERVER + '/public/images/' + result[0].coverImg
-        console.log(result)
+
         return res.status(200).json({ message: "Lấy dữ liệu thành công", statusCode: 200, data: result });
     } catch (error) {
         console.log(error)

@@ -7,7 +7,7 @@ export default function CardBook(props) {
     let book = props.book;
     const navigate = useNavigate();
     return (
-        <div className='col mx-3'>
+        <div className='col mx-3' >
             <div className='card-book-details-book d-flex' onClick={() => { window.location.assign('/detailsbook/' + book.bookId); }}>
                 <img alt='' src={book.thumbnailsUrl} className='image-book-details-book mb-1 ms-auto me-auto' />
                 <div className='card-book-title-details-book'>{book.bookName}</div>

@@ -9,6 +9,7 @@ import cover2 from '../../assets/imgs/cover2.png';
 import cover3 from '../../assets/imgs/cover3.jpg';
 import constants from './constants';
 import { getHotCategory } from '../../services/category.services';
+import Loading from '../loading'
 import {
     getHotBook,
     getBestSellerBook,
@@ -31,6 +32,7 @@ export default function Home() {
     const [listBestSellerBooks, setListBestSellerBook] = React.useState([]);
     const [listSaleBooks, setListSaleBook] = React.useState([]);
     const [listNewBooks, setListNewBook] = React.useState([]);
+    const [isLoading, setIsLoading] = React.useState(true)
     React.useEffect(() => {
         if (!start) {
             start = true;
@@ -45,7 +47,9 @@ export default function Home() {
             }
             setSlideIndex(indexNotState);
         }, constants.TIME_CHANGE_SLIDE);
-
+        setTimeout(() => {
+            setIsLoading(false)
+        }, 1500);
         getHotCategory().then(result => setListHotCategory(result)).catch(err => console.log(err));
         getHotBook().then(result => setListHotBook(result)).catch(err => console.log(err));
         getBestSellerBook().then(result => setListBestSellerBook(result)).catch(err => console.log(err));
@@ -67,6 +71,7 @@ export default function Home() {
 
     return (
         <div className='container-home'>
+            {isLoading && <Loading />}
             <div className='container-xl d-flex flex-column'>
                 <div className='row mt-5'>
                     <div className='col-lg-9 container-carousel-home'>
@@ -74,7 +79,9 @@ export default function Home() {
                             {
                                 listHotBooks.map((book, key) => {
                                     return (
-                                        <div key={key} className={slideIndex === key + 1 ? "item-slider-home-show" : "item-slider-home-hide fade"}>
+                                        <div key={key} title="Sách nổi bật"
+                                            onClick={() => { window.location.assign(`/detailsbook/${book.bookId}`) }}
+                                            className={slideIndex === key + 1 ? "item-slider-home-show" : "item-slider-home-hide fade"}>
                                             <img alt="" src={settings.urlImageKey + book.coverImg} className='image-carousel-home' />
                                         </div>
                                     )
@@ -86,10 +93,14 @@ export default function Home() {
                     </div>
                     <div className='col-lg'>
                         <div className='row'>
-                            <div className='col-12 container-image-button-home pb-3'>
+                            <div className='col-12 container-image-button-home pb-3'
+                                onClick={() => { window.location.assign(`/search`) }}
+                            >
                                 <img alt="" className='image-button-home' src={cover2} />
                             </div>
-                            <div className='col-12 container-image-button-home pt-3'>
+                            <div className='col-12 container-image-button-home pt-3'
+                                onClick={() => { window.location.assign(`/search`) }}
+                            >
                                 <img alt="" className='image-button-home' src={cover3} />
                             </div>
                         </div>
@@ -115,7 +126,7 @@ export default function Home() {
                         })
                     }
                 </div>
-                <div className='button-home-secondary me-auto ms-auto'>{constants.BUTTON_MORE}</div>
+                <div className='button-home-secondary me-auto ms-auto' onClick={() => { window.location.assign(`/search`) }}>{constants.BUTTON_MORE}</div>
                 <div className='row mt-5 text-title-home'>{constants.TITLE_BEST_SALER}</div>
                 <div className='row mt-3'>
                     {
@@ -126,7 +137,7 @@ export default function Home() {
                         })
                     }
                 </div>
-                <div className='button-home-secondary me-auto ms-auto mb-5'>{constants.BUTTON_MORE}</div>
+                <div className='button-home-secondary me-auto ms-auto mb-5' onClick={() => { window.location.assign(`/search`) }}>{constants.BUTTON_MORE}</div>
                 <div className='row mt-5 text-title-home'>{constants.TITLE_SALE_BOOK}</div>
                 <div className='row mt-3'>
                     {
@@ -137,7 +148,7 @@ export default function Home() {
                         })
                     }
                 </div>
-                <div className='button-home-secondary me-auto ms-auto mb-5'>{constants.BUTTON_MORE}</div>
+                <div className='button-home-secondary me-auto ms-auto mb-5' onClick={() => { window.location.assign(`/search`) }}>{constants.BUTTON_MORE}</div>
             </div>
         </div>
     )
@@ -146,7 +157,9 @@ export default function Home() {
 function CardCategory(props) {
     const category = props.item || {};
     return (
-        <div className='col-2 d-flex flex-column align-items-center card-category-home'>
+        <div className='col-2 d-flex flex-column align-items-center card-category-home'
+            onClick={() => { window.location.assign(`/search?category=${category.catId}`) }}
+        >
             <img alt={category.catName} src={settings.urlImageKey + category.thumbnails} className='image-category-home mb-2' />
             <p>{category.catName}</p>
         </div>
@@ -166,7 +179,7 @@ function CardBook(props) {
     } = book;
     const isSale = book.sale < 1 ? true : false;
     return (
-        <div className='col-3 mb-3' onClick={() => navigate('/detailsbook/' + bookId)}>
+        <div className='col-3 mb-3' onClick={() => window.location.assign('/detailsbook/' + bookId)}>
             <div className='card-book-home d-flex'>
                 <img alt='' src={settings.urlImageKey + thumbnails} className='image-book-home mb-1 ms-auto me-auto' />
                 <div className='card-book-title-home'>{bookName}</div>

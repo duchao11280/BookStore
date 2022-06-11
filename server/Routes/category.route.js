@@ -7,13 +7,14 @@ const {
     disableSubCat, disableCat, getHotCategory,
     getAllCategory, getAllSubCatByCat } = require('../Controllers/category.controller');
 const router = express.Router();
+const uploadimage = require('../utls/uploadimage')
 
 router.get('/getall', getAllCatAndSubCat);
 router.get('/gethot', getHotCategory);
 
-router.post('/insertcat/', insertCategory)
+router.post('/insertcat/', uploadimage.single('thumbnails'), insertCategory)
 
-router.put('/updatecatname/:id', updateCatName)
+router.put('/updatecatname/:id', uploadimage.single('thumbnails'), updateCatName)
 
 router.post('/insertsubcat/:id', insertSubCategory)
 

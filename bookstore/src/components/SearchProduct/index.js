@@ -1,7 +1,6 @@
 import React from "react";
 import "./style.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import RatingStar from "react-rating-stars-component";
 import useCollapse from 'react-collapsed'
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -15,11 +14,12 @@ import RadioGroup from '@mui/material/RadioGroup';
 import Checkbox from '@mui/material/Checkbox';
 import { getAllBookSearch } from '../../services/book.service';
 import settings from '../../config/settings';
+import Pagination from '@mui/material/Pagination';
 import {
 	formatVND,
 	roundMoney
 } from '../../utls/number';
-
+import Loading from '../loading'
 const priceArray = {
 	1: {
 		startPrice: 0,
@@ -49,11 +49,13 @@ const rateOption = {
 }
 
 const searchOption = {
-	1: 'Đánh giá cao nhất',
-	2: 'Mới nhất',
+	1: 'Mới nhất',
+	2: 'Đánh giá cao nhất',
 	3: 'Giá tăng dần',
 	4: 'Giá giảm dần'
 }
+
+const numberBookOnPage = 12;
 
 function useQuery() {
 	const { search } = useLocation();
@@ -134,7 +136,7 @@ function CardBook(props) {
 	} = book;
 	const isSale = book.sale < 1 ? true : false;
 	return (
-		<div className='col-4 mb-3' onClick={() => navigate('/detailsbook/' + bookId)}>
+		<div className='col-4 mb-3' onClick={() => window.location.assign('/detailsbook/' + bookId)}>
 			<div className='card-book-home d-flex'>
 				<img alt='' src={settings.urlImageKey + thumbnails} className='image-book-home mb-1 ms-auto me-auto' />
 				<div className='card-book-title-home'>{bookName}</div>
@@ -187,7 +189,7 @@ export default function SearchProduct() {
 
 	const [isExpandedRate, setIsExpandRate] = React.useState(false);
 	const { getCollapseProps: getCollapseRate, getToggleProps: getToggleRate } = useCollapse({ isExpanded: isExpandedRate });
-
+	const [isLoading, setIsLoading] = React.useState(true)
 	const navigate = useNavigate();
 	let query = useQuery();
 	let category = query.getAll('category');
@@ -196,7 +198,7 @@ export default function SearchProduct() {
 	let price = query.getAll('price');
 	let rate = query.get('rate');
 
-
+	const [pageTotal, setPageTotal] = React.useState(1);
 	const [searchResult, setSearchResult] = React.useState([]);
 	const [listAllBooks, setListAllBooks] = React.useState([]);
 	const [checkedRate, setCheckedRate] = React.useState(null)
@@ -213,9 +215,9 @@ export default function SearchProduct() {
 	const onSort = (key) => {
 		const result = searchResult.sort((a, b) => {
 			if (key === 1) {
-				return a.rate > b.rate ? 1 : -1;
+				return a.createAt < b.createAt ? 1 : -1;
 			} else if (key === 2) {
-				return a.createAt > b.createAt ? 1 : -1;
+				return a.rate < b.rate ? 1 : -1;
 			} else if (key === 3) {
 				return a.price * a.sale > b.price * b.sale ? 1 : -1;
 			} else if (key === 4) {
@@ -248,7 +250,9 @@ export default function SearchProduct() {
 		if (rate) {
 			setCheckedRate(rate);
 		}
-
+		setTimeout(() => {
+			setIsLoading(false)
+		}, 1500);
 		const objCat = {};
 		getAllBookSearch().then(result => {
 			for (let book of result) {
@@ -258,6 +262,14 @@ export default function SearchProduct() {
 			}
 			setObjlistCategory(objCat);
 			setListAllBooks(result);
+			const n = result.length;
+			if (n > 0) {
+				let number = Math.round(n / numberBookOnPage);
+				if (number < n / numberBookOnPage) {
+					number++;
+				}
+				setPageTotal(number);
+			}
 		})
 	}, [])
 
@@ -276,6 +288,18 @@ export default function SearchProduct() {
 
 		setSearchResult(listResult);
 	}, [useLocation().search, listAllBooks])
+
+	React.useEffect(() => {
+		setPageNumber(1);
+		const n = searchResult.length;
+		if (n > 0) {
+			let number = Math.round(n / numberBookOnPage);
+			if (number < n / numberBookOnPage) {
+				number++;
+			}
+			setPageTotal(number);
+		}
+	}, [searchResult.length])
 
 	const onCheckCategory = (checked, key) => {
 		objCheckedCategory[key] = checked;
@@ -317,16 +341,22 @@ export default function SearchProduct() {
 		onSort(event.target.value);
 	};
 
+	const onPageChange = (page) => {
+		setPageNumber(page);
+	}
+
 	return (
 		<div className="container-search">
+			{isLoading && <Loading />}
 			<div className="container">
+
 				<div className="row">
 					<div className="col-3 pt-5 sidebar">
 						<div className="row mb-3 d-flex align-items-center">
-							<div className="col-4">
+							<div className="col-sm-3">
 								<button className="filter-button" onClick={onFillter}>Lọc</button>
 							</div>
-							<div className="col">
+							<div className="col-sm-9">
 								<FormControl fullWidth>
 									<InputLabel id="demo-simple-select-label">Sắp xếp theo</InputLabel>
 									<Select
@@ -401,14 +431,20 @@ export default function SearchProduct() {
 					</div>
 					<div className="col">
 						<div className="container d-flex flex-column">
-							<div className="row mt-3">
-								{searchResult.map(function (book, key) {
+							{searchResult.length === 0 && !isLoading ? <div className="row mt-5"><h3 className="d-flex justify-content-center">Không tìm thấy sách</h3></div> : <div className="row mt-3">
+								{searchResult.slice(numberBookOnPage * (Number(pageNumber) - 1), numberBookOnPage * (Number(pageNumber) - 1) + numberBookOnPage).map(function (book, key) {
 									return <CardBook item={book} key={key} />;
 								})}
-							</div>
+							</div>}
 						</div>
 					</div>
 				</div>
+				{searchResult.length <= numberBookOnPage ? null : <div className="row mt-5 pb-5">
+					<div className="col-3"></div>
+					<div className="col">
+						<Pagination className="d-flex justify-content-center" count={pageTotal} page={pageNumber} color="primary" onChange={(event, value) => onPageChange(value)} />
+					</div>
+				</div>}
 			</div>
 		</div>
 	);

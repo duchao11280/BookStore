@@ -3,7 +3,7 @@ const db = require('../utls/database');
 async function getAllCatAndSubCat(req, res) {
     try {
         const query =
-            'SELECT catName, c.catId, subCatName, subCatId ' +
+            'SELECT catName, c.catId, subCatName, subCatId, c.thumbnails ' +
             'FROM categories c LEFT JOIN subcategories s on c.catId = s.catId ' +
             'WHERE c.isDisable = 0 and (s.isdisable = 0 or s.isdisable is null) '
         const result = await db.exeQuery(query, []);
@@ -25,10 +25,12 @@ async function getAllCatAndSubCat(req, res) {
 async function insertCategory(req, res) {
     let conn = await db.getConnection();
     try {
+        console.log(req)
         let catName = req.body.catName;
-        let query = `INSERT INTO categories(catName) VALUES (?)`
+        let filename = req.file.filename;
+        let query = `INSERT INTO categories(catName,thumbnails) VALUES (?,?)`
         conn = await db.beginTransaction(conn);
-        const result = await db.queryTransaction(conn, query, [catName]);
+        const result = await db.queryTransaction(conn, query, [catName, filename]);
         await db.commitTransaction(conn);
         if (result) {
             res.status(200).json({
@@ -59,9 +61,18 @@ async function updateCatName(req, res) {
     try {
         let catId = req.params.id
         let catName = req.body.catName;
-        let query = `UPDATE categories set catName =? Where catId = ?`
         conn = await db.beginTransaction(conn);
-        const result = await db.queryTransaction(conn, query, [catName, catId]);
+        let result
+        if (req.file) {
+            let filename = req.file.filename;
+            console.log(filename)
+            let query = `UPDATE categories set catName =?, thumbnails =? Where catId = ?`
+            result = await db.queryTransaction(conn, query, [catName, filename, catId]);
+        } else {
+            let query = `UPDATE categories set catName =? Where catId = ?`
+            result = await db.queryTransaction(conn, query, [catName, catId]);
+        }
+
         await db.commitTransaction(conn);
 
         if (result) {

@@ -8,7 +8,7 @@ function Order(props) {
 			<div className="card-book-home d-flex">
 				<div className="order-title ">{order.bookName}</div>
 				<div className=" order-price ">{order.price}</div>
-				<div className=" order-status">{"status: " + order.status}</div>
+				<div className=" order-status">{"Trạng thái: " + order.status}</div>
 			</div>
 		</div>
 	);
@@ -19,7 +19,7 @@ export default function SearchOrder() {
 
 	const TITLE = "Tìm kiếm đơn hàng";
 	const TRACKING_IMG = "https://viettelpost.vn/viettelpost-iframe/assets/images/tracking-img.svg";
-	const INPUT_SEARCH = "Nhập mã đơn hàng cần tìm kiếm VD : 12354,45677";
+	const INPUT_SEARCH = "Nhập số điện thoại của bạn";
 	var DummyData = [
 		{
 			orderID: "1",
@@ -31,7 +31,7 @@ export default function SearchOrder() {
 			price: 76000,
 			quantity: 80,
 			sale: 0.8,
-			status: "Delivering",
+			status: "Đang giao",
 			phone: "0",
 		},
 		{
@@ -44,7 +44,7 @@ export default function SearchOrder() {
 			price: 76000,
 			quantity: 80,
 			sale: 0.8,
-			status: "Delivering",
+			status: "Đang giao",
 			phone: "1",
 		},
 		{
@@ -57,7 +57,7 @@ export default function SearchOrder() {
 			price: 76000,
 			quantity: 80,
 			sale: 0.8,
-			status: "Received",
+			status: "Đã nhận hàng",
 			phone: "2",
 		},
 		{
@@ -70,7 +70,7 @@ export default function SearchOrder() {
 			price: 76000,
 			quantity: 80,
 			sale: 0.8,
-			status: "Accepted",
+			status: "Giao thất bại",
 			phone: "3",
 		},
 	];

@@ -6,6 +6,7 @@ import { useCart } from 'react-use-cart'
 import { getListBookForOrder } from '../../services/book.service'
 import { insertOrder } from '../../services/order.service'
 import { ToastContainer, toast } from 'react-toastify';
+import Loading from '../loading'
 export default function CartPage() {
     const { items, emptyCart, updateItemQuantity, removeItem } = useCart()
     const [listBookOrder, setListBookOrder] = useState([])
@@ -35,7 +36,10 @@ export default function CartPage() {
                     setListBookOrder([])
                 }
             }
-            setIsLoading(false);
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 2000);
+
         })();
 
     }, [])
@@ -205,7 +209,7 @@ export default function CartPage() {
                         </div>
                     }
                 </div>
-                : <div>Loading...</div>
+                : <Loading />
             }
         </div>
     )

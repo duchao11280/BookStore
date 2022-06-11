@@ -36,14 +36,33 @@ function Editbook() {
     const [listCategory, setListCategory] = React.useState([]);
     const [listSubCat, setListSubCat] = React.useState([]);
     React.useEffect(() => {
-        getDetailBookById(id).then(result => { setBookDetails(result.data); });
         getAllCategory().then(result => setListCategory(result));
+        getDetailBookById(id).then(result => { setBookDetails(result.data); setCategory(result.data.catId) });
+
     }, [])
 
     React.useEffect(() => {
-        getAllSubCatByCat(category).then(result => setListSubCat(result));
-    }, [category])
+        getAllSubCatByCat(category).then(result => {
+            setListSubCat(result);
+            let index = checkExistSubCatId(result, bookDetails.subCatId);
+            if (index >= 0) {
+                setBookDetails({ ...bookDetails, subCatId: result[index].subCatId })
+            } else
+                setBookDetails({ ...bookDetails, subCatId: result[0].subCatId })
 
+        });
+    }, [category])
+    const checkExistSubCatId = (arr, subCatId) => {
+        if (arr == null) {
+            return -1;
+        }
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].subCatId === subCatId) {
+                return i;
+            }
+        }
+        return -1;
+    }
     const onChangeTextBook = (event, key) => {
         const { target: { name, value } } = event;
         const newBookDetails = { ...bookDetails };
@@ -79,12 +98,11 @@ function Editbook() {
     const onChangeSubCat = (e) => {
         const { name, value } = e.target;
         const newBookDetails = { ...bookDetails };
-        newBookDetails['catId'] = value;
+        newBookDetails['subCatId'] = value;
         setBookDetails(newBookDetails);
     };
 
     const onSubmit = () => {
-
 
         updateBook(bookDetails.bookId, bookDetails.bookName, bookDetails.auth,
             bookDetails.description, bookDetails.language, bookDetails.year,
@@ -193,7 +211,7 @@ function Editbook() {
                                 <div className="form-group row">
                                     <label className="col-sm-4 col-form-label h6">Thể loại chi tiết</label>
                                     <div className="col-sm-8">
-                                        <select className="combobox-book-admin-editbook" value={bookDetails.catId}
+                                        <select className="combobox-book-admin-editbook" value={bookDetails.subCatId}
                                             onChange={onChangeSubCat}>
                                             {listSubCat.map((value, key) => {
                                                 return (
