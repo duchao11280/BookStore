@@ -87,10 +87,10 @@ function Book() {
             <div className="content-admin-book">
                 <div className="title-content-admin-book">
                     <h3>Sách</h3>
-                    <div className="search-admin-book">
+                    {/* <div className="search-admin-book">
                         <input type="text" />
                         <i className="fa-solid fa-magnifying-glass"></i>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="body-content-admin-book">
                     <div className="body-header-admin-book">

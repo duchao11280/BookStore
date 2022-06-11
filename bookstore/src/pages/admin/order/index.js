@@ -61,10 +61,10 @@ function Order() {
             <div className="content-admin-order">
                 <div className="title-content-admin-order">
                     <h3>Đơn hàng</h3>
-                    <div className="search-admin-order">
+                    {/* <div className="search-admin-order">
                         <input type="text" />
                         <i className="fa-solid fa-magnifying-glass"></i>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="body-content-admin-order">
                     <div className="body-header-admin-order">
