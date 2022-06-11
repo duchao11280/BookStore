@@ -435,7 +435,7 @@ export default function SearchProduct() {
 						</div>
 					</div>
 				</div>
-				{searchResult.length <= numberBookOnPage ? null : <div className="row mt-5 mb-3">
+				{searchResult.length <= numberBookOnPage ? null : <div className="row mt-5 pb-5">
 					<div className="col-3"></div>
 					<div className="col">
 						<Pagination className="d-flex justify-content-center" count={pageTotal} page={pageNumber} color="primary" onChange={(event, value) => onPageChange(value)} />

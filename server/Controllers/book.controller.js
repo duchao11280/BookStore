@@ -117,8 +117,8 @@ exports.getSaleBook = async (req, res) => {
             '   LEFT JOIN (SELECT bookId, AVG(rate) as rate ' +
             '	    FROM rating ' +
             'GROUP BY bookId) as r ON rb.bookId = r.bookId ' +
-            'WHERE rb.isDisable = 0 ' +
-            'ORDER BY rb.sale desc, createAt desc ' +
+            'WHERE rb.isDisable = 0 and rb.sale < 1 ' +
+            'ORDER BY rb.sale asc, createAt desc ' +
             'LIMIT 8; ';
         const result = await exeQuery(query, []);
         res.json({

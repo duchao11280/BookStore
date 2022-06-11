@@ -121,7 +121,7 @@ export default function Home() {
                         })
                     }
                 </div>
-                <div className='button-home-secondary me-auto ms-auto'>{constants.BUTTON_MORE}</div>
+                <div className='button-home-secondary me-auto ms-auto' onClick={() => { window.location.assign(`/search`) }}>{constants.BUTTON_MORE}</div>
                 <div className='row mt-5 text-title-home'>{constants.TITLE_BEST_SALER}</div>
                 <div className='row mt-3'>
                     {
@@ -132,7 +132,7 @@ export default function Home() {
                         })
                     }
                 </div>
-                <div className='button-home-secondary me-auto ms-auto mb-5'>{constants.BUTTON_MORE}</div>
+                <div className='button-home-secondary me-auto ms-auto mb-5' onClick={() => { window.location.assign(`/search`) }}>{constants.BUTTON_MORE}</div>
                 <div className='row mt-5 text-title-home'>{constants.TITLE_SALE_BOOK}</div>
                 <div className='row mt-3'>
                     {
@@ -143,7 +143,7 @@ export default function Home() {
                         })
                     }
                 </div>
-                <div className='button-home-secondary me-auto ms-auto mb-5'>{constants.BUTTON_MORE}</div>
+                <div className='button-home-secondary me-auto ms-auto mb-5' onClick={() => { window.location.assign(`/search`) }}>{constants.BUTTON_MORE}</div>
             </div>
         </div>
     )
