@@ -9,6 +9,7 @@ import cover2 from '../../assets/imgs/cover2.png';
 import cover3 from '../../assets/imgs/cover3.jpg';
 import constants from './constants';
 import { getHotCategory } from '../../services/category.services';
+import Loading from '../loading'
 import {
     getHotBook,
     getBestSellerBook,
@@ -31,6 +32,7 @@ export default function Home() {
     const [listBestSellerBooks, setListBestSellerBook] = React.useState([]);
     const [listSaleBooks, setListSaleBook] = React.useState([]);
     const [listNewBooks, setListNewBook] = React.useState([]);
+    const [isLoading, setIsLoading] = React.useState(true)
     React.useEffect(() => {
         if (!start) {
             start = true;
@@ -45,7 +47,9 @@ export default function Home() {
             }
             setSlideIndex(indexNotState);
         }, constants.TIME_CHANGE_SLIDE);
-
+        setTimeout(() => {
+            setIsLoading(false)
+        }, 1500);
         getHotCategory().then(result => setListHotCategory(result)).catch(err => console.log(err));
         getHotBook().then(result => setListHotBook(result)).catch(err => console.log(err));
         getBestSellerBook().then(result => setListBestSellerBook(result)).catch(err => console.log(err));
@@ -67,6 +71,7 @@ export default function Home() {
 
     return (
         <div className='container-home'>
+            {isLoading && <Loading />}
             <div className='container-xl d-flex flex-column'>
                 <div className='row mt-5'>
                     <div className='col-lg-9 container-carousel-home'>
@@ -74,7 +79,7 @@ export default function Home() {
                             {
                                 listHotBooks.map((book, key) => {
                                     return (
-                                        <div key={key}
+                                        <div key={key} title="Sách nổi bật"
                                             onClick={() => { window.location.assign(`/detailsbook/${book.bookId}`) }}
                                             className={slideIndex === key + 1 ? "item-slider-home-show" : "item-slider-home-hide fade"}>
                                             <img alt="" src={settings.urlImageKey + book.coverImg} className='image-carousel-home' />
@@ -174,7 +179,7 @@ function CardBook(props) {
     } = book;
     const isSale = book.sale < 1 ? true : false;
     return (
-        <div className='col-3 mb-3' onClick={() => navigate('/detailsbook/' + bookId)}>
+        <div className='col-3 mb-3' onClick={() => window.location.assign('/detailsbook/' + bookId)}>
             <div className='card-book-home d-flex'>
                 <img alt='' src={settings.urlImageKey + thumbnails} className='image-book-home mb-1 ms-auto me-auto' />
                 <div className='card-book-title-home'>{bookName}</div>

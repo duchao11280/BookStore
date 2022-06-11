@@ -92,7 +92,10 @@
     border-radius: 10px;
     border: none;
     padding:10px;
-    background-color: #FD9696;
+    background-color: #fc7676;
+}
+.contain-btn-order-details-book:hover{
+    background-color: #f74a4a;
 }
 .text-btn-order-details-book{
     color: white;

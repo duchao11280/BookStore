@@ -19,7 +19,7 @@ import {
 	formatVND,
 	roundMoney
 } from '../../utls/number';
-
+import Loading from '../loading'
 const priceArray = {
 	1: {
 		startPrice: 0,
@@ -136,7 +136,7 @@ function CardBook(props) {
 	} = book;
 	const isSale = book.sale < 1 ? true : false;
 	return (
-		<div className='col-4 mb-3' onClick={() => navigate('/detailsbook/' + bookId)}>
+		<div className='col-4 mb-3' onClick={() => window.location.assign('/detailsbook/' + bookId)}>
 			<div className='card-book-home d-flex'>
 				<img alt='' src={settings.urlImageKey + thumbnails} className='image-book-home mb-1 ms-auto me-auto' />
 				<div className='card-book-title-home'>{bookName}</div>
@@ -189,7 +189,7 @@ export default function SearchProduct() {
 
 	const [isExpandedRate, setIsExpandRate] = React.useState(false);
 	const { getCollapseProps: getCollapseRate, getToggleProps: getToggleRate } = useCollapse({ isExpanded: isExpandedRate });
-
+	const [isLoading, setIsLoading] = React.useState(true)
 	const navigate = useNavigate();
 	let query = useQuery();
 	let category = query.getAll('category');
@@ -250,7 +250,9 @@ export default function SearchProduct() {
 		if (rate) {
 			setCheckedRate(rate);
 		}
-
+		setTimeout(() => {
+			setIsLoading(false)
+		}, 1500);
 		const objCat = {};
 		getAllBookSearch().then(result => {
 			for (let book of result) {
@@ -345,7 +347,9 @@ export default function SearchProduct() {
 
 	return (
 		<div className="container-search">
+			{isLoading && <Loading />}
 			<div className="container">
+
 				<div className="row">
 					<div className="col-3 pt-5 sidebar">
 						<div className="row mb-3 d-flex align-items-center">
@@ -427,7 +431,7 @@ export default function SearchProduct() {
 					</div>
 					<div className="col">
 						<div className="container d-flex flex-column">
-							{searchResult.length === 0 ? <div className="row mt-5"><h3 className="d-flex justify-content-center">Không tìm thấy sách</h3></div> : <div className="row mt-3">
+							{searchResult.length === 0 && !isLoading ? <div className="row mt-5"><h3 className="d-flex justify-content-center">Không tìm thấy sách</h3></div> : <div className="row mt-3">
 								{searchResult.slice(numberBookOnPage * (Number(pageNumber) - 1), numberBookOnPage * (Number(pageNumber) - 1) + numberBookOnPage).map(function (book, key) {
 									return <CardBook item={book} key={key} />;
 								})}
