@@ -17,7 +17,7 @@ function Sidebaradmin() {
         </Link>
         <Link to="/admin/categories">
           <li className="itemlist-admin">
-            <i className="fa-solid fa fa-bars"></i>Danh mục
+            <i className="fa-solid fa fa-bars"></i>Thể loại
                 </li>
         </Link>
       </ul>

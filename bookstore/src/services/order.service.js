@@ -91,3 +91,20 @@ export async function updateOrderStatusbyId(status, orderId) {
 
 }
 
+export async function getListOrdersByPhone(phone) {
+    const result = await axios.get("api/order/getorderbyid/" + phone);
+    if (result.status === 200) {
+        return {
+            data: result.data?.data,
+            status: true,
+            message: result.data?.message
+        }
+    } else {
+        return {
+            status: false,
+            message: result.data?.message,
+            data: []
+        }
+    }
+}
+

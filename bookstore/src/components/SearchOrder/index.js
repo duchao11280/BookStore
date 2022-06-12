@@ -1,91 +1,132 @@
 import React from "react";
 import "./style.css";
+import useCollapse from 'react-collapsed';
+import { getListOrdersByPhone } from "../../services/order.service";
+import Loading from "../loading";
+import { groupArrayByKey } from "../../utls/utilities";
+import { formatVND } from "../../utls/number";
+
 function Order(props) {
-	console.log(props);
-	const { order } = props;
+	const { books } = props;
+	console.log(books);
+	let order = {
+		orderId: null,
+		createAt: null,
+		status: null,
+		address: null,
+	}
+	let totalPrice = 0;
+	if (books && books.length) {
+		order = books[0];
+		books.forEach(element => {
+			totalPrice += Number(element.price);
+		});
+	}
+
+
+	const getStatusString = (status) => {
+		switch (Number(status)) {
+			case 0:
+				return "Đang đợi xác nhận";
+			case 1:
+				return "Đang giao";
+			case 2:
+				return "Đã hủy đơn hàng";
+			case 3:
+				return "Giao hàng thất bại";
+			case 4:
+				return "Đã giao hàng thành công";
+			default:
+				return "Không xác định";
+		}
+	}
+
+	const getStatusStyle = (status) => {
+		const stt = Number(status);
+		if (stt === 4) {
+			return "order-card-info-status-done"
+		} else if (stt === 2) {
+			return "order-card-info-status-fail"
+		} else {
+			return "order-card-info-status-process"
+		}
+	}
+
+	const getDateString = (date) => {
+		const newDate = new Date(date);
+		if (isNaN(newDate)) {
+			return "";
+		}
+		return `${newDate.getDate()}/${newDate.getMonth() + 1}/${newDate.getFullYear()}`
+	}
+
+	const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
+
 	return (
-		<div className="col-12 mb-3">
-			<div className="card-book-home d-flex">
-				<div className="order-title ">{order.bookName}</div>
-				<div className=" order-price ">{order.price}</div>
-				<div className=" order-status">{"Trạng thái: " + order.status}</div>
-			</div>
-		</div>
+		<>
+			<tr className="col-12 container-order-card">
+				<td className="container-order-card-row"><span className="order-card-title">Mã đơn:</span> <span className="order-card-info ">{order.orderId}</span></td>
+				<td className="container-order-card-row"><span className="order-card-title">Ngày đặt hàng:</span> <span className="order-card-info ">{getDateString(order.createAt)}</span></td>
+				<td className="container-order-card-row"><span className="order-card-title">Tổng tiền:</span> <span className="order-card-info ">{formatVND(totalPrice)}</span></td>
+				<td className="container-order-card-row"><span className="order-card-title">Trạng thái:</span> <span className={"order-card-info " + getStatusStyle(order.status)}>{getStatusString(order.status)}</span></td>
+				<td className="button-order-card-row-expand">
+					<button {...getToggleProps()} className="button-order-card-row-expand">
+						{isExpanded ? <i className="fa-solid fa-angle-up"></i> : <i className="fa-solid fa-angle-down"></i>}
+					</button>
+				</td>
+			</tr>
+			<tr className="col-12 container-order-card">
+				<td colSpan="5" className={isExpanded ? "container-card-order-details" : "order-line"} >
+					<div {...getCollapseProps()} >
+					<table className="col-12">
+						<tbody>
+							{books.map(function (book, index) {
+								return <tr>
+									<td className="card-order-details-bookname">{book.bookName}</td>
+									<td className="card-order-details-number">Số lượng: {book.number}</td>
+									<td className="card-order-details-price">Đơn giá: {formatVND(book.price)}</td>
+								</tr>
+							})}
+						</tbody>
+					</table>
+					</div>
+				</td>
+			</tr>
+		</>
 	);
 }
 export default function SearchOrder() {
 	const [searchResult, setSearchResult] = React.useState([]);
 	const [searchValue, setSearchValue] = React.useState("");
+	const [isLoading, setIsLoading] = React.useState("");
 
 	const TITLE = "Tìm kiếm đơn hàng";
 	const TRACKING_IMG = "https://viettelpost.vn/viettelpost-iframe/assets/images/tracking-img.svg";
 	const INPUT_SEARCH = "Nhập số điện thoại của bạn";
-	var DummyData = [
-		{
-			orderID: "1",
-			bookId: 1,
-			bookName: "Bến Xe (Tái Bản 2020)",
-			nxb: "NXB Văn học",
-			auth: "Thương Thái Vy",
-			year: 2020,
-			price: 76000,
-			quantity: 80,
-			sale: 0.8,
-			status: "Đang giao",
-			phone: "0",
-		},
-		{
-			orderID: "2",
-			bookId: 1,
-			bookName: "Bến Đò",
-			nxb: "NXB Văn học",
-			auth: "Thương Thái Vy",
-			year: 2020,
-			price: 76000,
-			quantity: 80,
-			sale: 0.8,
-			status: "Đang giao",
-			phone: "1",
-		},
-		{
-			orderID: "3",
-			bookId: 1,
-			bookName: "Bến cầu",
-			nxb: "NXB Văn học",
-			auth: "Thương Thái Vy",
-			year: 2020,
-			price: 76000,
-			quantity: 80,
-			sale: 0.8,
-			status: "Đã nhận hàng",
-			phone: "2",
-		},
-		{
-			orderID: "4",
-			bookId: 1,
-			bookName: "Bến Xe (Tái Bản 2020)",
-			nxb: "NXB Văn học",
-			auth: "Thương Thái Vy",
-			year: 2020,
-			price: 76000,
-			quantity: 80,
-			sale: 0.8,
-			status: "Giao thất bại",
-			phone: "3",
-		},
-	];
+	const [listOrders, setListOrders] = React.useState([]);
 
 	const filerByKeyWord = function (data, key, keyWord) {
 		return data.filter((item) => item[key] == keyWord);
 	};
 	const Search = function (keyWord) {
-		setSearchResult(filerByKeyWord(DummyData, "phone", keyWord));
+		setIsLoading(true);
+		getListOrdersByPhone(keyWord).then(result => {
+			setSearchResult(groupArrayByKey(result.data, "orderId"));
+			setTimeout(() => {
+				setIsLoading(false);
+			}, 1000);
+		}).catch(err => {
+			setTimeout(() => {
+				setIsLoading(false);
+			}, 1000);
+		})
 	};
 	const onSearchValueChange = function (e) {
 		setSearchValue(e.target.value);
 	};
 	return (
 		<div className="container-home">
+			{isLoading && <Loading />}
 			<div className="container-xl d-flex flex-column">
 				<div className="row mt-3">
 					<h1>{TITLE} </h1>
@@ -110,9 +151,13 @@ export default function SearchOrder() {
 				</div>
 				<div className="row mt-3">
 					<h2>Kết quả</h2>
-					{searchResult.map(function (item) {
-						return <Order order={item} />;
-					})}
+					<table className="container-order-table">
+						<tbody>
+							{Object.keys(searchResult).map(function (key, index) {
+								return <Order books={searchResult[key]} key={index} />;
+							})}
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
