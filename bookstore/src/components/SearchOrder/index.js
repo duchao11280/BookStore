@@ -82,7 +82,7 @@ function Order(props) {
 						<tbody>
 							{books.map(function (book, index) {
 								return <tr>
-									<td className="card-order-details-bookname">{book.bookName}</td>
+									<td className="card-order-details-bookname" title={book.bookName}>{book.bookName}</td>
 									<td className="card-order-details-number">Số lượng: {book.number}</td>
 									<td className="card-order-details-price">Đơn giá: {formatVND(book.price)}</td>
 								</tr>
@@ -96,7 +96,7 @@ function Order(props) {
 	);
 }
 export default function SearchOrder() {
-	const [searchResult, setSearchResult] = React.useState([]);
+	const [searchResult, setSearchResult] = React.useState(null);
 	const [searchValue, setSearchValue] = React.useState("");
 	const [isLoading, setIsLoading] = React.useState("");
 
@@ -111,7 +111,11 @@ export default function SearchOrder() {
 	const Search = function (keyWord) {
 		setIsLoading(true);
 		getListOrdersByPhone(keyWord).then(result => {
-			setSearchResult(groupArrayByKey(result.data, "orderId"));
+			if (result.data.length) {
+				setSearchResult(groupArrayByKey(result.data, "orderId"));
+			} else {
+				setSearchResult(null);
+			}
 			setTimeout(() => {
 				setIsLoading(false);
 			}, 1000);
@@ -119,6 +123,7 @@ export default function SearchOrder() {
 			setTimeout(() => {
 				setIsLoading(false);
 			}, 1000);
+			setSearchResult(null)
 		})
 	};
 	const onSearchValueChange = function (e) {
@@ -150,14 +155,16 @@ export default function SearchOrder() {
 					</div>
 				</div>
 				<div className="row mt-3">
-					<h2>Kết quả</h2>
-					<table className="container-order-table">
+					<h2>{searchResult ? "Kết quả" : "Không tìm thấy đơn hàng"}</h2>
+					{
+						searchResult && <table className="container-order-table">
 						<tbody>
 							{Object.keys(searchResult).map(function (key, index) {
 								return <Order books={searchResult[key]} key={index} />;
 							})}
 						</tbody>
 					</table>
+					}
 				</div>
 			</div>
 		</div>
