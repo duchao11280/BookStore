@@ -228,7 +228,7 @@ export default function Header() {
                             </div> : null}
                             {!isLogin ? <div className='button-header-account-modal-primary mt-3' onClick={() => { changeModal(constant.MODAL_LOGIN_STATE) }}>{constant.BUTTON_LOGIN}</div> : null}
                             {!isLogin ? <div className='text-button-header-account-modal-signup'>{constant.TITLE_NOT_ACC}<span onClick={() => { changeModal(constant.MODAL_SIGNUP_STATE) }}>{constant.BUTTON_SIGNUP_NOW}</span></div> : null}
-                            {isLogin ? <div className='item-header-account-modal mt-3'>
+                            {isLogin ? <div className='item-header-account-modal mt-3' onClick={() => { window.location.assign("/profile") }}>
                                 <img alt='' src={account} className='icon-header' />
                                 <div className='item-text-header-account-modal'>{constant.TITLE_INFO_ACC}</div>
                                 <img alt='' src={rightArrow} className='item-icon-header-account-modal ms-auto' />

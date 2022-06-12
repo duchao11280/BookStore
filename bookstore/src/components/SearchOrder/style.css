@@ -1,6 +1,7 @@
 #tracking-input {
 	width: 70%;
 }
+
 #btnTracking {
 	background: #e03;
 	border-radius: 5px;
@@ -17,6 +18,7 @@
 	margin-top: 15px;
 	cursor: pointer;
 }
+
 #btnTracking:after {
 	content: "";
 	display: inline-block;
@@ -27,6 +29,7 @@
 	right: 25px;
 	top: 0;
 }
+
 .order-title {
 	font-weight: bold;
 	font-size: 23px;
@@ -34,12 +37,14 @@
 	margin-left: 15px;
 	margin-right: 15px;
 }
+
 .order-content {
 	font-weight: bold;
 	font-size: 15px;
 	margin-left: 15px;
 	margin-right: 15px;
 }
+
 .order-price {
 	font-weight: bold;
 	font-size: 17px;
@@ -48,6 +53,7 @@
 	margin-right: 15px;
 	min-height: 26px;
 }
+
 .order-status {
 	font-weight: bold;
 	font-size: 17px;
@@ -55,4 +61,78 @@
 	margin-left: 15px;
 	margin-right: 15px;
 	min-height: 26px;
+}
+
+.container-order-card {
+	background-color: white;
+}
+
+.container-order-card-row {
+	background-color: white;
+	padding: 10px 5px;
+}
+
+.button-order-card-row-expand {
+	width: 50px !important;
+	padding: 10px 5px;
+	border: none;
+	background-color: white;
+}
+
+.button-order-card-row-expand:focus {
+	outline: none;
+	background-color: white;
+}
+
+.container-order-table {
+	border-collapse: separate;
+	border-spacing: 0 0px;
+}
+
+.order-card-title {
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.order-card-info {
+	font-size: 18px;
+}
+
+.order-card-info-status-done {
+	color: green;
+}
+
+.order-card-info-status-process {
+	color: chocolate;
+}
+
+.order-card-info-status-fail {
+	color: red;
+}
+
+.container-card-order-details {
+	border-bottom: 1px solid gray;
+	padding: 10px 5px;
+}
+
+.card-order-details-bookname {
+	display: inline-block;
+    width: 50%;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+
+.card-order-details-number {
+    width: 20%;
+}
+
+.card-order-details-price {
+    width: 30%;
+}
+
+.order-line {
+	height: 0px;
+	width: 100%;
+	border-bottom: 1px solid gray;
 }
